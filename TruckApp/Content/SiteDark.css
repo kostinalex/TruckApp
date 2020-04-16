@@ -1,0 +1,317 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: #2d2d2d;
+    color: white;
+}
+.modal-dialog{
+    color:black;
+}
+
+
+
+h1, h2, h3 {
+    color: white;
+}
+
+#save_confirmation {
+    width: 400px;
+    background-color: #2feab3;
+    border-color: #1faf84;
+}
+
+    #save_confirmation:hover {
+        background-color: #1faf84;
+        border-color: #1faf84;
+    }
+
+#user_actions {
+    background-color: #26b3ea;
+    border-color: #137ba5;
+    margin-left: 20px;
+}
+
+    #user_actions:hover {
+        background-color: #137ba5;
+        border-color: #137ba5;
+        margin-left: 20px;
+    }
+
+#delete_load,#deleteButton {
+    margin-left: 20px;
+    background-color: #fb6259;
+    border-color: #f7483e;
+    float: right;
+}
+.btn-link:hover {
+    color: #fd5353;
+}
+    .download_attachment:hover {
+    color: #000000;
+    text-decoration: underline !important;
+}
+
+    #delete_load:hover, #deleteButton:hover {
+        margin-left: 20px;
+        background-color: #f7483e;
+        border-color: #c3352d;
+        float: right;
+    }
+
+#custom_label_browse {
+    color: white;
+    cursor: pointer;
+    background-color: #196b8a;
+    padding: 9px 12px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    border: solid #054965;
+    border-radius: 4px;
+    border-width: 0 1px 4px 1px;
+}
+
+    #custom_label_browse:hover {
+        background-color: #2d94bd;
+        border-color: #196b8a;
+        margin-top: 1px;
+        border-bottom-width: 3px;
+    }
+
+.btn-primary {
+    background-color: #196b8a;
+    border-color: #054965;
+}
+
+    .btn-primary:hover {
+        color: #ffffff;
+        background-color: #2d94bd;
+        border-color: #196b8a;
+    }
+
+table, .dataTables_scroll {
+    background-color: white;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+@media only screen and (min-width : 1200px) {
+    .container {
+        max-width: 1700px !important;
+    }
+}
+
+.field-validation-error {
+    color: red;
+}
+
+.input-validation-error {
+    border: 2px solid red;
+}
+
+input[type=text], select.form-control, textarea.form-control {
+    background-color: #5b6163;
+    color: white;
+}
+
+table {
+    background-color: #5b6163;
+}
+
+tr:hover {
+    background-color: #7b8e92 !important;
+    color: white !important;
+}
+.form-control[disabled] {
+    background-color: #2d2d2d;
+}
+/*.navbar-color{
+    background-color:red;
+}*/
+.my-navbar {
+    background-color: #000000;
+    border-color: #232323;
+    font-size: 20px;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #afadad !important;
+}
+.navbar-inverse .navbar-nav > li > a:hover{
+    color: white !important;
+}
+
+
+.navbar-inverse .navbar-brand {
+    color: #cce9f1; /*#999999;*/
+}
+
+    .navbar-inverse .navbar-brand:hover,
+    .navbar-inverse .navbar-brand:focus {
+        color: white;
+        /*font-size: 101%;*/
+    }
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #cce9f1; /*#999999;*/
+}
+a, .btn-link {
+    color: #ffffff;
+}
+
+    .navbar-inverse .navbar-nav > li > a:hover,
+    .navbar-inverse .navbar-nav > li > a:focus {
+        color: white;
+        /*font-size: 101%;*/
+    }
+
+.navbar-brand {
+    font-size: 20px;
+}
+
+
+
+li.my-navbar-list:hover {
+    background-color: #1fadd2;
+}
+
+#my-image {
+    height: 40px;
+    margin: 3px;
+    opacity: 1;
+}
+.navbar-link {
+    /*padding: 0px !important;
+    padding-top: 15px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;*/
+    padding: 15px !important;
+    font-weight: bold;
+    font-size: 14px;
+    /*background-color: #6bd7f3;*/
+}
+
+    /*.navbar-link:hover {
+        background-color: #6bd7f3!important;
+    }*/
+
+.navbar-link2 {
+    /*padding: 0px !important;
+    padding-top: 15px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;*/
+    padding: 0px !important;
+    font-weight: bold;
+    font-size: 14px;
+    /*background-color: #6bd7f3;*/
+}
+
+label{
+    font-size:11px;
+}
+
+.btn-new-confirmation{
+    margin-bottom:10px;
+}
+
+@media (min-width: 768px) {
+    .page-body {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+
+    .page-navbar {
+        padding-left: 70px;
+        padding-right: 70px;
+    }
+}
+
+.two-line-label{
+    width:50px;
+}
+.number_field {
+    text-align: right;
+}
+.date_input_field {
+    text-align: right;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.time_input_field {
+    text-align: right;
+}
+.form-group{
+    margin-bottom:0px;
+}
+
+hr {
+    margin: 5px;
+    /*border: 2px solid #eeeeee;*/
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #cce9f1;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: #3cbee0;
+    border: 0;
+    font-weight: bold;
+}
+
+
+    .dropdown-item:hover, .dropdown-item:focus {
+        color: white;
+        text-decoration: none;
+        background-color: #6bd7f3;
+    }
+
+    .dropdown-item.active, .dropdown-item:active {
+        color: white;
+        text-decoration: none;
+        background-color: #3cbee0;
+    }
+
+    .dropdown-item.disabled, .dropdown-item:disabled {
+        color: white;
+        pointer-events: none;
+        background-color: transparent;
+    }
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-header {
+    display: block;
+    padding: 0.5rem 1.5rem;
+    margin-bottom: 0;
+    font-size: 0.765625rem;
+    color: #999;
+    white-space: nowrap;
+}
+
+.dropdown-item-text {
+    display: block;
+    padding: 0.25rem 1.5rem;
+    color: rgba(0, 0, 0, 0.5);
+}

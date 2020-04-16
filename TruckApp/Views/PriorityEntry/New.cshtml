@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New</h2>
+
+<form id="newPriorityEntry">
+    <div class="form-group">
+        <label>PriorityEntry Name</label>
+        <input id="priorityEntry" type="text" value="" class="form-control" />
+    </div>
+    <button class="btn btm-primary">Submit</button>
+</form>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+
+            var priorityEntryId = window.location.pathname
+                .toUpperCase()
+                .replace("/PRIORITYENTRY/EDIT/", "")
+                .replace("#", "")
+                .trim();
+            console.log("priorityEntryId=" + priorityEntryId);
+
+            if (window.location.pathname.toUpperCase() != "/priorityEntry/New".toUpperCase()) {
+                console.log("It's not a new Item.");
+                $("h2").text("Edit PriorityEntry");
+                $.get("/api/priorityEntry/" + priorityEntryId, function (data) {
+                    $("#priorityEntry").val(data.name);
+                    console.log("priorityEntryNameFromAPI to the input field=" + data.name);
+                }, "json");
+
+                $("#newPriorityEntry").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/priorityEntry/" + priorityEntryId,
+                        method: "PUT",
+                        data: { "id": priorityEntryId, "name": $("#priorityEntry").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#priorityEntry").val());
+                            window.location = window.location.origin + "/priorityEntry";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to update priorityEntry");
+                        })
+                });
+            }
+            else {
+                console.log("It's a new Item.");
+                $("h2").text("New PriorityEntry")
+                $("#newPriorityEntry").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/priorityEntry",
+                        method: "POST",
+                        data: { "name": $("#priorityEntry").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#priorityEntry").val());
+                            window.location = window.location.origin + "/priorityEntry";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to create new priorityEntry");
+                        })
+                });
+            }
+        });
+    </script>
+}

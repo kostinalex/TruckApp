@@ -1,0 +1,379 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p><h3>Load Confirmations</h3></p>
+
+<a href="/LoadConfirmations/New" class="btn btn-primary btn-new-confirmation">New load</a>
+
+
+
+<div class="row">
+
+    <div class="form-group col-sm-2">
+        <label for="customer_name">Customer name</label>
+        <input class="form-control" id="customer_name" type="text">
+    </div>
+
+    <div style="margin-top:20px;">
+        <div class="form-group col-sm-1" id="credit_hold_field" >
+            <div class="row">
+                <input class="form-check-input" type="checkbox" id="credit_hold">
+                <label class="form-check-label" for="credit_hold">Credit hold</label>
+            </div>
+            <div class="row">
+                <input class="form-check-input" type="checkbox" id="pod_checkbox">
+                <label class="form-check-label" for="pod_checkbox">POD</label>
+            </div>
+        </div>
+
+        <div class="form-group col-sm-1" id="credit_hold_field">
+            <div class="row">
+                <input class="form-check-input" type="checkbox" id="void_status">
+                <label class="form-check-label" for="void_status">Void</label>
+            </div>
+            <div class="row">
+                <input class="form-check-input" type="checkbox" id="closed_status">
+                <label class="form-check-label" for="closed_status">Close Load</label>
+            </div>
+        </div>
+
+
+        <div class="form-group col-sm-1" id="exported_status_field" style="padding:0;">
+            <input class="form-check-input" type="checkbox" id="exported_status">
+            <label class="form-check-label" for="exported_status">Exported Load</label>
+        </div>
+
+
+
+
+
+
+
+        <div class="form-group col-sm-1" style="margin-top:5px;">
+            <a id="apply_condition" class="btn btn-primary" style="margin-top:0px;">Apply Condition</a>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<table id="load_confirmations" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Load Id</th>
+            <th>Confirmation number</th>
+            @*<th>Customer Id</th>*@
+            <th>Customer Name</th>
+            @*<th>Dispatch Id</th>*@
+            <th>Dispatch Name</th>
+            <th>Credit Hold</th>
+            <th>POD</th>
+            <th>Void</th>
+            <th>Closed</th>
+            <th>Exported</th>
+            <th>Rate</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+    </tbody>
+</table>
+
+
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            var table = $("#load_confirmations").DataTable({
+                ajax: {
+                    url: "/api/loadconfirmations",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "id",
+                    },
+                    {
+                        data: "confNumber",
+                    },
+                    //{
+                    //    data: "customer.id",
+                    //},
+                    {
+                        data: "customer.name",
+                    },
+                    //{
+                    //    data: "",
+                    //    render: function (data, type, dispatch) {
+                    //        return dispatch.id;
+                    //    }
+                    //},
+                    //{
+                    //    data: "dispatch.name",
+                    //},
+                    {
+                        data: "",
+                        render: function (data, type, dispatch) {
+                            console.log("Yo" + dispatch.name);
+                            return "";
+                        }
+                    },
+
+                    {
+                        data: "creditHold",
+                        render: function (data) {
+                            if (data == true) {
+                                return "<input type='checkbox' onclick='return false;' checked>";
+                            }
+                            else {
+                                return "<input type='checkbox' onclick='return false;'>";
+                            }
+
+                        }
+                    },
+                    {
+                        data: "pod",
+                        render: function (data) {
+                            if (data == true) {
+                                return "<input type='checkbox' onclick='return false;' checked>";
+                            }
+                            else {
+                                return "<input type='checkbox' onclick='return false;'>";
+                            }
+
+                        }
+                    },
+
+                    {
+                        data: "void",
+                        render: function (data) {
+                            if (data == true) {
+                                return "<input type='checkbox' onclick='return false;' checked>";
+                            }
+                            else {
+                                return "<input type='checkbox' onclick='return false;'>";
+                            }
+
+                        }
+                    },
+                    {
+                        data: "closed",
+                        render: function (data) {
+                            if (data == true) {
+                                return "<input type='checkbox' onclick='return false;' checked>";
+                            }
+                            else {
+                                return "<input type='checkbox' onclick='return false;'>";
+                            }
+
+                        }
+                    },
+                    {
+                        data: "exported",
+                        render: function (data) {
+                            if (data == true) {
+                                return "<input type='checkbox' onclick='return false;' checked>";
+                            }
+                            else {
+                                return "<input type='checkbox' onclick='return false;'>";
+                            }
+
+                        }
+                    },
+
+                    {
+                        data: "rate"
+                    }
+
+                ],
+                paging: false,
+                rowCallback: function (row, data) {
+                    //$(row).attr("data-href","/loadconfirmations/edit/"+data.id);
+                    //$(row).addClass("clickable-row");
+                    $(row).css("cursor", "pointer");
+                    $(row).on("click", function () {
+                        window.location = "/loadconfirmations/edit/" + data.id;
+                    });
+                }
+
+            });
+
+
+           
+
+
+            $("#apply_condition").on("click", function () {
+                console.log("Condition button was pressed");
+
+                $("#load_confirmations").DataTable().clear().destroy();
+
+
+                var table = $("#load_confirmations").DataTable({
+                    ajax: {
+                        url: "/api/getloadreport",
+                        method: "POST",
+                        dataSrc: "",
+                        data: {
+                            "creditHold": ($("#credit_hold").prop("checked") == false ? null : true),
+                            "pod": ($("#pod_checkbox").prop("checked") == false ? null : true), 
+                            "void": ($("#void_status").prop("checked") == false ? null : true),
+                            "closed": ($("#closed_status").prop("checked") == false ? null : true),
+                            "exported": ($("#exported_status").prop("checked") == false ? null : true)
+                        }
+                    },
+                    columns: [
+                        {
+                            data: "id",
+                        },
+                        {
+                            data: "confNumber",
+                        },
+                        //{
+                        //    data: "customer.id",
+                        //},
+                        {
+                            data: "customer.name",
+                        },
+                        //{
+                        //    data: "",
+                        //    render: function (data, type, dispatch) {
+                        //        return dispatch.id;
+                        //    }
+                        //},
+                        //{
+                        //    data: "dispatch.name",
+                        //},
+                        {
+                            data: "",
+                            render: function (data, type, dispatch) {
+                                console.log("Yo" + dispatch.name);
+                                return "";
+                            }
+                        },
+
+                        {
+                            data: "creditHold",
+                            render: function (data) {
+                                if (data == true) {
+                                    return "<input type='checkbox' onclick='return false;' checked>";
+                                }
+                                else {
+                                    return "<input type='checkbox' onclick='return false;'>";
+                                }
+
+                            }
+                        },
+                        {
+                            data: "pod",
+                            render: function (data) {
+                                if (data == true) {
+                                    return "<input type='checkbox' onclick='return false;' checked>";
+                                }
+                                else {
+                                    return "<input type='checkbox' onclick='return false;'>";
+                                }
+
+                            }
+                        },
+
+                        {
+                            data: "void",
+                            render: function (data) {
+                                if (data == true) {
+                                    return "<input type='checkbox' onclick='return false;' checked>";
+                                }
+                                else {
+                                    return "<input type='checkbox' onclick='return false;'>";
+                                }
+
+                            }
+                        },
+                        {
+                            data: "closed",
+                            render: function (data) {
+                                if (data == true) {
+                                    return "<input type='checkbox' onclick='return false;' checked>";
+                                }
+                                else {
+                                    return "<input type='checkbox' onclick='return false;'>";
+                                }
+
+                            }
+                        },
+                        {
+                            data: "exported",
+                            render: function (data) {
+                                if (data == true) {
+                                    return "<input type='checkbox' onclick='return false;' checked>";
+                                }
+                                else {
+                                    return "<input type='checkbox' onclick='return false;'>";
+                                }
+
+                            }
+                        },
+
+                        {
+                            data: "rate"
+                        }
+
+                    ],
+                    paging: false,
+                    rowCallback: function (row, data) {
+                        //$(row).attr("data-href","/loadconfirmations/edit/"+data.id);
+                        //$(row).addClass("clickable-row");
+                        $(row).css("cursor", "pointer");
+                        $(row).on("click", function () {
+                            window.location = "/loadconfirmations/edit/" + data.id;
+                        });
+                    }
+
+                });
+
+
+            });
+
+
+
+            ////////////////////TYPEAHEAD//////////////////////////////////////////
+
+            var customers = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/api/customers?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+
+            $('#customer_name').typeahead({
+                hint: true,
+                minLength: 3,
+                highlight: true
+            }, {
+                name: 'customers',
+                display: 'name',
+                source: customers,
+                limit: 10
+            }).on("typeahead:select", function (e, customer) {
+                console.log("The customer was selected");
+
+            });
+
+
+        });
+
+
+        
+     
+
+
+    </script>
+}

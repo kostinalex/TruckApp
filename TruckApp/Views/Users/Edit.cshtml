@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 id="user_name"></h2>
+
+
+<h3>Roles Assigned to User</h3>
+
+<div class="row">
+    <div class="form-group col-sm-2">
+        <label for="roles_select">Roles</label>
+        <select class="form-control" id="roles_select"></select>
+    </div>
+    <div class="form-group col-sm-1">
+        <a id="new_role" class="btn btn-primary" style="margin-top:25px;">Add Role</a>
+    </div>
+</div>
+
+    <div class="row">
+        <div class="form-group col-sm-4">
+            <table id="roles_table" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+
+    @section scripts
+    {
+        <script>
+            $(document).ready(function () {
+                console.log("Document ready");
+
+
+                var getUrlParameter = function getUrlParameter(sParam) {
+                    var sPageURL = window.location.search.substring(1),
+                        sURLVariables = sPageURL.split('&'),
+                        sParameterName,
+                        i;
+
+                    for (i = 0; i < sURLVariables.length; i++) {
+                        sParameterName = sURLVariables[i].split('=');
+
+                        if (sParameterName[0] === sParam) {
+                            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                        }
+                    }
+                };
+
+                var userId = getUrlParameter("user")
+                console.log("userId=" + userId);
+
+                /////////////GET USER NAME///////////////////////////
+
+                $.ajax({
+                    url: "/api/getusername",
+                    method: "POST",
+                    data: {
+                        "userId": userId
+                    },
+                    success: function (data) {
+                        //console.log("The attachment was deleted");
+                        $("#user_name").html("User name: " + data);
+                    },
+                    error: function () {
+                        bootbox.alert("Failed to get name");
+                    }
+                });
+
+                /////////////TABLE///////////////////////////
+                var table1 = $("#roles_table").DataTable({
+                    ajax: {
+                        url: "/api/getuser",
+                        method: "POST",
+                        data: {
+                            "userId": userId
+                        },
+                        dataSrc: ""
+                    },
+                    columns: [
+                        {
+                            data: "",
+                            render: function (data, type, role) {
+                                return role;
+                            }
+                        },
+                        {
+                            data: "",
+                            render: function (data, type, role) {
+                                return "<button class='btn-link js-delete-role' data-role-id=" + role + ">Delete</button>";
+                            }
+                        }
+                    ],
+                    scrollY: '50vh',
+                    scrollCollapse: true,
+                    searching: false,
+                    paging: false
+
+                });
+
+
+                ///////////////////DELETE BUTTONS////////////////////////
+                $("#roles_table").on("click", ".js-delete-role", function () {
+                    console.log("Delete role button was pressed");
+                    var button = $(this);
+                    bootbox.confirm("Are you sure you want to delete the role?", function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/api/users",
+                                method: "DELETE",
+                                data: {
+                                    "userId": userId,
+                                    "userRole": button.attr("data-role-id")
+                                },
+                                success: function () {
+                                    //console.log("The attachment was deleted");
+                                    table1.ajax.reload();
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                                    bootbox.alert("Failed to delete role");
+                                }
+                            });
+                        }
+                    });
+                });
+
+                /////////FILL DROPDOWN MENU/////////////////////
+                $.get("/api/roles", function (data) {
+                    ////console.log("hazmat=" + data);
+                    var roles_html = "";
+                    for (var i = 0, len = data.length; i < len; i++) {
+                        ////console.log("Hazmat=" + data[i].name);
+                        roles_html = roles_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
+                    }
+                    //console.log("roles_html=" + roles_html);
+                    $("#roles_select").html(roles_html);
+                }, "json");
+
+                /////////NEW ROLE/////////////////////
+                $("#new_role").on("click", function () {
+                    //console.log("New role button was pressed");
+
+                    //console.log("select=" + $('#roles_select').find(":selected").text());
+
+
+
+                    $.ajax({
+                        url: "/api/users",
+                        type: 'POST',
+                        data: {
+                            "userId": userId,
+                            "userRole": $('#roles_select').find(":selected").text()
+                        }
+                    })
+                        .done(function () {
+                            console.log("New role was added");
+                            table1.ajax.reload();
+                            //table1.ajax.reload();
+                        })
+                        .fail(function () {
+                            //console.log("fail");
+                            bootbox.alert("Failed to add role");
+                        })
+                });
+
+
+
+            });
+        </script>
+    }

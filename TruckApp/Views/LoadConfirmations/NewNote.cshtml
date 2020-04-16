@@ -1,0 +1,198 @@
+﻿
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New</h2>
+
+@{
+    if (User.IsInRole("CanManageNotes") || Request.RawUrl.ToString().ToUpper().IndexOf("NEW")!=-1)
+    {
+        <div class="form-group">
+            <input class="form-control mandatory" id="header" type="text">
+            <textarea class="form-control mandatory" id="noteContent" rows="5"></textarea>
+        </div>
+
+        <a id="newNote" class="btn btn-primary">Save</a>
+        <a href="#" id="deleteButton" class="btn btn-primary">Delete Note</a>
+    }
+    else
+    {
+        <div class="form-group">
+            <input class="form-control" id="header" type="text" disabled>
+            <textarea class="form-control" id="noteContent" rows="5" disabled></textarea>
+        </div>
+    }
+}
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+
+            var noteId = window.location.pathname
+                .toUpperCase()
+                .replace("/LOADCONFIRMATIONS/EDITNOTE/", "")
+                .replace("#", "")
+                .trim();
+            console.log("noteId=" + noteId);
+
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-"
+                + ((currentdate.getMonth() + 1) < 10 ? "0" : "") + (currentdate.getMonth() + 1) + "-"
+                + (currentdate.getDate() < 10 ? "0" : "") + (currentdate.getDate()) + "T"
+                + (currentdate.getHours() < 10 ? "0" : "") + currentdate.getHours() + ":"
+                + (currentdate.getMinutes() < 10 ? "0" : "") + currentdate.getMinutes() + ":"
+                + (currentdate.getSeconds() < 10 ? "0" : "") + currentdate.getSeconds();
+            console.log("current datetime=" + datetime);
+
+            $("input[type='text']").change(function () {
+                var input = $(this);
+                input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').toUpperCase().trim());
+                input.css("border-color", "");
+                if (input.val().length > 100) {
+                    bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
+                        input.val("");
+                    });
+                }
+            });
+
+            $("input[type='text']").on("focus", function () {
+                $(this).select();
+            });
+
+            $("textarea").change(function () {
+                var input = $(this);
+                input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').trim());
+                input.css("border-color", "");
+                if (input.val().length > 200) {
+                    bootbox.alert("You exceeded maximum length of input (200 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
+                        input.val("");
+                    });
+                }
+            });
+
+            $("textarea").on("focus", function () {
+                $(this).select();
+            });
+
+            if (!noteId.includes("NEW")) {
+                console.log("It's not a new Item.");
+                $("h2").text("Edit note");
+                $.get("/api/note/" + noteId, function (data) {
+                    $("#header").val(data.header);
+                    $("#noteContent").val(data.noteContent);
+                    console.log("headerFromAPI to the input field=" + data.header);
+                }, "json");
+
+                $("#newNote").on("click", function (e) {
+                    console.log("Submit button was pressed");
+                if (isFormValid() == false) {
+                    bootbox.alert("Please, fill out highlighted fields.");
+                } else {
+                    
+                        e.preventDefault();
+                        $.ajax({
+                            url: "/api/note/" + noteId,
+                            method: "PUT",
+                            data: {
+                                "header": $("#header").val(),
+                                "noteContent": $("#noteContent").val(),
+                                "dateAdded": datetime
+                            }
+                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#header").val());
+                                window.location = document.referrer;
+                            })
+                            .fail(function () {
+                                console.log("fail" + vm);
+                                bootbox.alert("Failed to update note");
+                            })
+                    
+                    }
+                });
+
+                
+            }
+            else {
+                console.log("It's a new Item.");
+
+                $("#deleteButton").remove();
+
+                var confirmationId = window.location.pathname
+                    .toUpperCase()
+                    .replace("/LOADCONFIRMATIONS/NEWNOTE/", "")
+                    .replace("#", "")
+                    .trim();
+                console.log("confirmationId=" + confirmationId);
+
+                $("h2").text("New note")
+
+
+                $("#newNote").on("click", function (e) {
+                    console.log("Submit button was pressed");
+
+                    if (isFormValid() == false) {
+                        bootbox.alert("Please, fill out highlighted fields.");
+                    } else {
+                        e.preventDefault();
+                        $.ajax({
+                            url: "/api/notes",
+                            method: "POST",
+                            data: {
+                                "header": $("#header").val(),
+                                "noteContent": $("#noteContent").val(),
+                                "dateAdded": datetime,
+                                "loadConfirmationId": confirmationId
+                            }
+                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#header").val());
+                                window.location = document.referrer;
+                            })
+                            .fail(function () {
+                                console.log("fail. Header=" + $("#header").val() +
+                                    " noteContent=" + $("#noteContent").val() +
+                                    " dateAdded=" + datetime);
+                                bootbox.alert("Failed to create new note");
+                            })
+                    }
+
+                   
+                });
+            }
+
+            function isFormValid() {
+                var isValid = true;
+                $(".mandatory").each(function () {
+                    
+                    var element = $(this);
+                    if (element.val() == "" && element.attr("id") != undefined) {
+                        isValid = false;
+                        element.css("border-color", "#ff4136");
+                        console.log("element id=" + element.attr("id"));
+                    }
+                });
+                return isValid;
+            }
+
+            $("#deleteButton").on("click", function () {
+                bootbox.confirm("Are you sure you want to delete the note?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/note/" + noteId,
+                            method: "DELETE",
+                            success: function () {
+                                window.location = document.referrer;
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

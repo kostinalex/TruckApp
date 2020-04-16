@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New</h2>
+
+<form id="newDriver">
+    <div class="form-group">
+        <label>Driver Name</label>
+        <input id="driver" type="text" value="" class="form-control" />
+    </div>
+    <button class="btn btm-primary">Submit</button>
+</form>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+
+            var driverId = window.location.pathname
+                .toUpperCase()
+                .replace("/DRIVERS/EDIT/", "")
+                .replace("#", "")
+                .trim();
+            console.log("driverId=" + driverId);
+
+            if (window.location.pathname.toUpperCase() != "/drivers/New".toUpperCase()) {
+                console.log("It's not a new Item.");
+                $("h2").text("Edit driver");
+                $.get("/api/drivers/" + driverId, function (data) {
+                    $("#driver").val(data.name);
+                    console.log("driverNameFromAPI to the input field=" + data.name);
+                }, "json");
+
+                $("#newDriver").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/drivers/" + driverId,
+                        method: "PUT",
+                        data: { "id": driverId, "name": $("#driver").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#driver").val());
+                            window.location = window.location.origin + "/drivers";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to update driver");
+                        })
+                });
+            }
+            else {
+                console.log("It's a new Item.");
+                $("h2").text("New driver")
+                $("#newDriver").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/drivers",
+                        method: "POST",
+                        data: { "name": $("#driver").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#driver").val());
+                            window.location = window.location.origin + "/drivers";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to create new driver");
+                        })
+                });
+            }
+        });
+    </script>
+}

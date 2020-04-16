@@ -1,0 +1,306 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: #f7fafb;
+    color: #52a9bd;
+}
+#save_confirmation {
+    width: 400px;
+    background-color: #6dc5ab;
+    border-color: #60b79d;
+}
+/*/////////////////////////////////////////////////////////////////////////////////////////////////*/
+.my_jumbotron {
+    background-color: #95ecf3;
+    color: #666875;
+    padding: 30px;
+    border-radius: 8px!important;
+}
+
+hr {
+    border-color: #ced1d6;
+}
+
+.lead {
+    color: #6f6f6f;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+}
+.home_special {
+    background-color: #3e839c !important;
+    border-color: #133948 !important;
+    width:300px!important;
+
+}
+    .home_special:hover {
+        background-color: #6fbcd8 !important;
+        border-color: #3a8fb1!important;
+
+    }
+/*/////////////////////////////////////////////////////////////////////////////////////////////////*/
+#save_confirmation:hover {
+    background-color: #5ba28d;
+    border-color: #3d7968;
+}
+
+#user_actions {
+    background-color: #7cc8e6;
+    border-color: #71b2cc;
+    margin-left: 20px;
+}
+
+    #user_actions:hover {
+        background-color: #71b2cc;
+        border-color: #508ba2;
+        margin-left: 20px;
+    }
+
+#delete_load,#deleteButton {
+    margin-left: 20px;
+    background-color: #fb6259;
+    border-color: #f7483e;
+    float: right;
+}
+
+
+.download_attachment:hover {
+    color: #1c51a0;
+    text-decoration: underline !important;
+}
+
+    #delete_load:hover, #deleteButton:hover {
+        margin-left: 20px;
+        background-color: #f7483e;
+        border-color: #c3352d;
+        float: right;
+    }
+
+#custom_label_browse {
+    color: white;
+    cursor: pointer;
+    background-color: #b8c0c3;
+    padding: 9px 12px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    border: solid #9ea3a5;
+    border-radius: 4px;
+    border-width: 0 1px 4px 1px;
+}
+
+    #custom_label_browse:hover {
+        background-color: #9ea3a5;
+        border-color: #5a5c5d;
+        margin-top: 1px;
+        border-bottom-width: 3px;
+    }
+
+table, .dataTables_scroll {
+    background-color: white;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+@media only screen and (min-width : 1200px) {
+    .container {
+        max-width: 1700px !important;
+    }
+}
+
+.field-validation-error {
+    color: red;
+}
+
+.input-validation-error {
+    border: 2px solid red;
+}
+
+/*.navbar-color{
+    background-color:red;
+}*/
+.my-navbar {
+    background-color: #3cbee0;
+    border-color: #1fadd2;
+    font-size: 20px;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #cce9f1; /*#999999;*/
+}
+
+    .navbar-inverse .navbar-brand:hover,
+    .navbar-inverse .navbar-brand:focus {
+        color: white;
+        /*font-size: 101%;*/
+    }
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #cce9f1; /*#999999;*/
+}
+
+    .navbar-inverse .navbar-nav > li > a:hover,
+    .navbar-inverse .navbar-nav > li > a:focus {
+        color: white;
+        /*font-size: 101%;*/
+    }
+
+.navbar-brand {
+    font-size: 20px;
+}
+
+.btn-primary {
+    background-color: #b8c0c3;
+    border-color: #9ea3a5;
+}
+
+    .btn-primary:hover {
+        color: #ffffff;
+        background-color: #9ea3a5;
+        border-color: #5a5c5d;
+    }
+
+li.my-navbar-list:hover {
+    background-color: #1fadd2;
+}
+
+#my-image {
+    height: 40px;
+    margin: 3px;
+    opacity: 1;
+}
+.navbar-link {
+    /*padding: 0px !important;
+    padding-top: 15px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;*/
+    padding: 15px !important;
+    font-weight: bold;
+    font-size: 14px;
+    /*background-color: #6bd7f3;*/
+}
+
+    /*.navbar-link:hover {
+        background-color: #6bd7f3!important;
+    }*/
+
+.navbar-link2 {
+    /*padding: 0px !important;
+    padding-top: 15px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;*/
+    padding: 0px !important;
+    font-weight: bold;
+    font-size: 14px;
+    /*background-color: #6bd7f3;*/
+}
+
+label{
+    font-size:11px;
+}
+
+.btn-new-confirmation{
+    margin-bottom:10px;
+}
+
+@media (min-width: 768px) {
+    .page-body {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+
+    .page-navbar {
+        padding-left: 70px;
+        padding-right: 70px;
+    }
+}
+
+.two-line-label{
+    width:50px;
+}
+.number_field {
+    text-align: right;
+}
+.date_input_field {
+    text-align: right;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.time_input_field {
+    text-align: right;
+}
+.form-group{
+    margin-bottom:0px;
+}
+
+hr {
+    margin: 5px;
+    /*border: 2px solid #eeeeee;*/
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #cce9f1;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: #3cbee0;
+    border: 0;
+    font-weight: bold;
+}
+
+
+    .dropdown-item:hover, .dropdown-item:focus {
+        color: white;
+        text-decoration: none;
+        background-color: #6bd7f3;
+    }
+
+    .dropdown-item.active, .dropdown-item:active {
+        color: white;
+        text-decoration: none;
+        background-color: #3cbee0;
+    }
+
+    .dropdown-item.disabled, .dropdown-item:disabled {
+        color: white;
+        pointer-events: none;
+        background-color: transparent;
+    }
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-header {
+    display: block;
+    padding: 0.5rem 1.5rem;
+    margin-bottom: 0;
+    font-size: 0.765625rem;
+    color: #999;
+    white-space: nowrap;
+}
+
+.dropdown-item-text {
+    display: block;
+    padding: 0.25rem 1.5rem;
+    color: rgba(0, 0, 0, 0.5);
+}

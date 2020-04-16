@@ -1,0 +1,2110 @@
+﻿@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+
+@Html.ValidationSummary()
+
+
+<div class="row">
+    <div class="form-group col-sm-6">
+        @*---------------------------------------------------------------------------------------------------------------------
+            ----------------------------------------NAME ROW----------------------------------------------------------------
+            ---------------------------------------------------------------------------------------------------------------------*@
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="pickup_name">Pick Up Facility Name</label>
+                <input class="form-control mandatory" id="pickup_name" type="text">
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="delivery_name">Delivery Facility Name</label>
+                <input class="form-control mandatory" id="delivery_name" type="text">
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="customer_name">Customer name</label>
+                <input class="form-control" id="customer_name" type="text">
+            </div>
+
+        </div>
+        @*---------------------------------------------------------------------------------------------------------------------
+            ----------------------------------------ADDRESS ROW----------------------------------------------------------------
+            ---------------------------------------------------------------------------------------------------------------------*@
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="pickup_address">Pick Up Address</label>
+                <input class="form-control mandatory" id="pickup_address" type="text">
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="delivery_address">Delivery Address</label>
+                <input class="form-control mandatory" id="delivery_address" type="text">
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="customer_address">Customer address</label>
+                <input class="form-control" id="customer_address" type="text">
+            </div>
+
+        </div>
+        @*---------------------------------------------------------------------------------------------------------------------
+            ----------------------------------------CITY ROW----------------------------------------------------------------
+            ---------------------------------------------------------------------------------------------------------------------*@
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="pickup_city">Pick Up City</label>
+                <input class="form-control mandatory" id="pickup_city" type="text">
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="delivery_city">Delivery City</label>
+                <input class="form-control mandatory" id="delivery_city" type="text">
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="customer_city">Customer city</label>
+                <input class="form-control" id="customer_city" type="text">
+            </div>
+
+        </div>
+        @*---------------------------------------------------------------------------------------------------------------------
+            ----------------------------------------STATE AND COUNTRY ROW----------------------------------------------------------------
+            ---------------------------------------------------------------------------------------------------------------------*@
+        <div class="row">
+            <div class="form-group col-sm-2">
+                <label class="two-line-label" for="pickup_state">State</label>
+                <input class="form-control mandatory" id="pickup_state" type="text">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="pickup_country">Country</label>
+                <input class="form-control mandatory" id="pickup_country" type="text">
+            </div>
+            <div class="form-group col-sm-2">
+                <label class="two-line-label" for="delivery_state">State</label>
+                <input class="form-control mandatory" id="delivery_state" type="text">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="delivery_country">Country</label>
+                <input class="form-control mandatory" id="delivery_country" type="text">
+            </div>
+            <div class="form-group col-sm-2">
+                <label class="two-line-label" for="customer_state">State</label>
+                <input class="form-control" id="customer_state" type="text">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="customer_country">Country</label>
+                <input class="form-control" id="customer_country" type="text">
+            </div>
+
+        </div>
+        @*---------------------------------------------------------------------------------------------------------------------
+            ----------------------------------------ZIPCODE ROW----------------------------------------------------------------
+            ---------------------------------------------------------------------------------------------------------------------*@
+        <div class="row">
+            <div class="form-group col-sm-2">
+                <label for="pickup_zipcode">Zipcode</label>
+                <input class="form-control mandatory" id="pickup_zipcode" type="text">
+            </div>
+            <div class="form-group col-sm-2">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="delivery_zipcode">Zipcode</label>
+                <input class="form-control mandatory" id="delivery_zipcode" type="text">
+            </div>
+            <div class="form-group col-sm-2">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="customer_zipcode">Zipcode</label>
+                <input class="form-control" id="customer_zipcode" type="text">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="customer_id">Customer id</label>
+                <input class="form-control number mandatory" id="customer_id" type="text" style="text-align:right;">
+            </div>
+
+        </div>
+    </div>
+
+    @*---------------------------------------------------------------------------------------------------------------------
+        ----------------------------------------NOTES TABLE----------------------------------------------------------------
+        ---------------------------------------------------------------------------------------------------------------------*@
+    <div class="form-group col-sm-6" style="border:1px solid #ececec; padding:5px; background-color:white;">
+        <table id="notes-table" class="table table-bordered table-hover">
+            <thead>
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <p style="font-size:18px;font-weight:bold;margin-top:6px;margin-left:20px;">Load Notes</p>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <a id="newNoteButton" class="btn btn-primary">New Note</a>
+                    </div>
+
+                </div>
+
+                    <tr>
+                        <th>Note</th>
+                        <th>Date Added</th>
+                    </tr>
+</thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<hr />
+@*style="margin-top:10px;"*@
+
+@*---------------------------------------------------------------------------------------------------------------------
+    ----------------------------------------FREIGHT DESC ROW----------------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------*@
+
+<div class="row">
+    <div class="form-group col-sm-2">
+        <label for="freight_description">Freight description</label>
+        <input class="form-control mandatory" id="freight_description" type="text">
+    </div>
+    <div class="form-group col-sm-1">
+        <label for="confirmation_weight">Weight,lbs</label>
+        <input class="form-control number mandatory" id="confirmation_weight" type="text" style="text-align:right;">
+    </div>
+    <div class="form-group col-sm-1">
+        <label for="number_of_pallets">Pallets</label>
+        <input class="form-control number mandatory" id="number_of_pallets" type="text" style="text-align:right;">
+    </div>
+
+    @{
+        if (Request.RawUrl.ToString().ToUpper().IndexOf("EDIT") != -1)
+        {
+            if (!User.IsInRole("CanUpdateRate"))
+            {
+                <div class="form-group col-sm-1">
+                    <label for="confirmation_rate">Rate</label>
+                    <input class="form-control number mandatory" id="confirmation_rate" type="text" style="text-align:right;" disabled>
+                </div>
+            }
+            else
+            {
+                <div class="form-group col-sm-1">
+                    <label for="confirmation_rate">Rate</label>
+                    <input class="form-control number mandatory" id="confirmation_rate" type="text" style="text-align:right;">
+                </div>
+            }
+
+        }
+        else
+        {
+            <div class="form-group col-sm-1">
+                <label for="confirmation_rate">Rate</label>
+                <input class="form-control number mandatory" id="confirmation_rate" type="text" style="text-align:right;">
+            </div>
+        }
+    }
+
+    <div class="form-group col-sm-2">
+        <label for="hazmat_number">HazMat code</label>
+        <input class="form-control number" id="hazmat_number" type="text" style="text-align:right;">
+    </div>
+    <div class="form-group col-sm-1">
+        <label for="pb_number">PB number</label>
+        <input class="form-control number_field" id="pb_number" type="text" disabled>
+    </div>
+    <div class="form-group col-sm-2">
+        <label for="confirmation_number">Confirmation number</label>
+        <input class="form-control mandatory" id="confirmation_number" type="text">
+    </div>
+    <div class="form-group col-sm-2">
+        <label for="customs_broker">Customs broker</label>
+        <input class="form-control mandatory" id="customs_broker" type="text">
+    </div>
+</div>
+
+
+<hr />
+
+@*---------------------------------------------------------------------------------------------------------------------
+    ----------------------------------------DROPDOWN ROW----------------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------*@
+
+<div class="row">
+    <div class="form-group col-sm-2">
+        <label for="hazmat">HazMat status</label>
+        <select class="form-control" id="hazmat"></select>
+    </div>
+    <div class="form-group col-sm-2">
+        <label for="equipment">equipment</label>
+        <select class="form-control" id="equipment"></select>
+    </div>
+    <div class="form-group col-sm-2">
+        <label for="priority_delivery">Priority delivery</label>
+        <select class="form-control" id="priority_delivery"></select>
+    </div>
+    <div class="form-group col-sm-2">
+        <label for="priority_entry">Priority entry</label>
+        <select class="form-control" id="priority_entry"></select>
+    </div>
+    <div class="form-group col-sm-2">
+        <label for="dispatch">Dispatch</label>
+        <select class="form-control" id="dispatch"></select>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="form-group col-sm-2">
+        <input class="form-control" id="show_attached_file" type="text" style="text-align:right;" disabled>
+    </div>
+    <div class="form-group col-sm-1" style="margin:0;">
+
+
+        <label id="custom_label_browse" for="fileToAttach">BROWSE</label>
+        <input type="file" name="files" id="fileToAttach" style="opacity: 0;position: absolute;z-index: -1;" />
+
+
+
+
+        @*<input id="fileToAttach" type="file" class="form-control-file" name="files" style="margin-top:5px; background-color:red;" />*@
+    </div>
+    <div class="form-group col-sm-1">
+        <a id="newAttachmentButton" class="btn btn-primary">Attach</a>
+    </div>
+    <div class="form-group col-sm-2" id="credit_hold_field">
+        <input class="form-check-input" type="checkbox" id="credit_hold">
+        <label class="form-check-label" for="credit_hold">Credit hold</label>
+    </div>
+    <div class="form-group col-sm-2" id="POD_field">
+        <input class="form-check-input" type="checkbox" id="pod_checkbox">
+        <label class="form-check-label" for="pod_checkbox">POD</label>
+    </div>
+
+</div>
+
+@*---------------------------------------------------------------------------------------------------------------------
+    ----------------------------------------ATTACHMENTS TABLE AND TIME TABLE----------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------*@
+
+
+<div class="row">
+
+    <div class="form-group col-sm-4" style="border:1px solid #ececec; padding:5px; background-color:white; margin-top:10px;">
+        <table id="attachmentsTable" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Link</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    @*---------------------------------------------------------------------------------------------------------------------
+        ----------------------------------------TIME TABLE----------------------------------------------------------------
+        ---------------------------------------------------------------------------------------------------------------------*@
+    <div class="form-group col-sm-1">
+        <label for="pu_date1">Pick Up Date</label>
+        <input class="form-control date_input_field mandatory" type="text" value="" id="pu_date1" />
+
+        <label for="del_date1">Delivery Date</label>
+        <input class="form-control date_input_field mandatory" type="text" value="" id="del_date1" />
+    </div>
+
+    <div class="form-group col-sm-1">
+        <label for="pu_time1">Pick Up Time</label>
+        <input class="form-control time_input_field mandatory" type="text" value="" id="pu_time1" />
+
+        <label for="del_time1">Delivery Time</label>
+        <input class="form-control time_input_field mandatory" type="text" value="" id="del_time1" />
+    </div>
+
+    <div class="form-group col-sm-1">
+        <label for="pu_date2">Pick Up Date</label>
+        <input class="form-control date_input_field mandatory" type="text" value="" id="pu_date2" />
+
+        <label for="del_date2">Delivery Date</label>
+        <input class="form-control date_input_field mandatory" type="text" value="" id="del_date2" />
+    </div>
+
+    <div class="form-group col-sm-1">
+        <label for="pu_time2">Pick Up Time</label>
+        <input class="form-control time_input_field mandatory" type="text" value="" id="pu_time2" />
+
+        <label for="del_time2">Delivery Time</label>
+        <input class="form-control time_input_field mandatory" type="text" value="" id="del_time2" />
+    </div>
+
+
+</div>
+
+@*---------------------------------------------------------------------------------------------------------------------
+    ----------------------------------------STOPS TABLE----------------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------*@
+
+<div class="row">
+    <div class="form-group col-sm-1">
+        <label for="stop_facility_name">Facility Name</label>
+        <input class="form-control mandatory_stop" id="stop_facility_name" name="" type="text">
+    </div>
+    <div class="form-group col-sm-1">
+        <label for="stop_address">Address</label>
+        <input class="form-control mandatory_stop" id="stop_address" name="" type="text">
+    </div>
+    <div class="form-group col-sm-1">
+        <label for="stop_city">City</label>
+        <input class="form-control mandatory_stop" id="stop_city" name="" type="text">
+    </div>
+    <div class="form-group col-sm-1">
+        <label for="stop_state">State</label>
+        <input class="form-control mandatory_stop" id="stop_state" name="" type="text">
+    </div>
+    <div class="form-group col-sm-1">
+        <label for="stop_country">Country</label>
+        <input class="form-control mandatory_stop" id="stop_country" name="" type="text">
+    </div>
+    <div class="form-group col-sm-1">
+        <label for="stop_zipcode">Zipcode</label>
+        <input class="form-control mandatory_stop" id="stop_zipcode" name="" type="text">
+    </div>
+
+    @*EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE*@
+    <div class="form-group col-sm-1">
+        <label for="stop_date1">Date</label>
+        <input class="form-control date_input_field" id="stop_date1" name="" type="text">
+    </div>
+    <div class="form-group col-sm-1">
+        <label for="stop_time1">Time</label>
+        <input class="form-control time_input_field" id="stop_time1" name="" type="text">
+    </div>
+    <div class="form-group col-sm-1">
+        <label for="stop_date2">Date</label>
+        <input class="form-control date_input_field" id="stop_date2" name="" type="text">
+    </div>
+    <div class="form-group col-sm-1">
+        <label for="stop_time2">Time</label>
+        <input class="form-control time_input_field" id="stop_time2" name="" type="text">
+    </div>
+    @*EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE*@
+
+
+
+    <div class="form-group col-sm-2">
+        <a id="newStopButton" class="btn btn-primary" style="margin-top:25px;">Add Stop</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-sm-12" style="border:1px solid #ececec; padding:5px; background-color:white;margin-top:15px;">
+        <table id="stopsTable" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Facility Name</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Country</th>
+                    <th>Zipcode</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+    <hr />
+    <hr />
+
+
+
+    @Html.AntiForgeryToken()
+
+<div class="row">
+    @*<button type="submit" id="save_confirmation" class="btn btn-primary" style="width:400px;">Save</button>*@
+    <div class="form-group col-sm-4">
+        <a id="save_confirmation" class="btn btn-primary" style="">Save</a>
+    </div>
+
+    @{
+        if (User.IsInRole("CanSeeUsersActionsWithLoad"))
+        {
+            <div class="form-group col-sm-4">
+                <a id="user_actions" class="btn btn-primary" style="">Actions</a>
+            </div>
+        }
+
+
+
+        if (User.IsInRole("CanVoidLoad"))
+        {
+            <div class="form-group col-sm-2" id="void_status_field">
+                <input class="form-check-input" type="checkbox" id="void_status">
+                <label class="form-check-label" for="void_status">Void</label>
+            </div>
+
+
+            //<a id="delete_load" class="btn btn-primary" style="">Void Load Confirmation</a>
+        }
+
+
+        if (User.IsInRole("CanCloseLoad"))
+        {
+            <div class="form-group col-sm-2" id="closed_status_field">
+                <input class="form-check-input" type="checkbox" id="closed_status">
+                <label class="form-check-label" for="closed_status">Close Load</label>
+            </div>
+        }
+
+
+        if (User.IsInRole("CanExportLoad")) 
+        { 
+            <div class="form-group col-sm-2" id="exported_status_field">
+                <input class="form-check-input" type="checkbox" id="exported_status">
+                <label class="form-check-label" for="exported_status">Exported Load</label>
+            </div>
+        }
+
+    }
+
+</div>
+
+
+
+
+            @section scripts
+{
+                @Scripts.Render("~/bundles/jqueryval")
+<script>
+                    $(document).ready(function () {
+                        //console.log("Document ready");
+
+                        
+
+                        var confirmationId = window.location.pathname
+                            .toUpperCase()
+                            .replace("/LOADCONFIRMATIONS/EDIT/", "")
+                            .replace("#", "")
+                            .trim();
+                        console.log("confirmationId=" + confirmationId);
+
+
+                        var currentdate = new Date();
+                        var datetime = currentdate.getFullYear() + "-"
+                            + ((currentdate.getMonth() + 1) < 10 ? "0" : "") + (currentdate.getMonth() + 1) + "-"
+                            + (currentdate.getDate() < 10 ? "0" : "") + (currentdate.getDate()) + "T"
+                            + (currentdate.getHours() < 10 ? "0" : "") + currentdate.getHours() + ":"
+                            + (currentdate.getMinutes() < 10 ? "0" : "") + currentdate.getMinutes() + ":"
+                            + (currentdate.getSeconds() < 10 ? "0" : "") + currentdate.getSeconds();
+                        console.log("current datetime=" + datetime);
+
+                        $("#fileToAttach").change(function () {
+                            //console.log("File attached");
+                            var fileName = $(this).val();
+                            fileName = fileName.slice(fileName.lastIndexOf("\\") + 1)
+                            $("#show_attached_file").val(fileName);
+                        });
+
+                        $("input[type='text']").click(function () {
+                            $(this).select();
+                        });
+
+                        //------------------------ DROPDOWN--------------------------------
+
+                        $.get("/api/hazmat", function (data) {
+                            ////console.log("hazmat=" + data);
+                            var hazmat_html = "";
+                            for (var i = 0, len = data.length; i < len; i++) {
+                                ////console.log("Hazmat=" + data[i].name);
+                                hazmat_html = hazmat_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
+                            }
+                            //console.log("Hazmat=" + hazmat_html);
+                            $("#hazmat").html(hazmat_html);
+                        }, "json");
+
+                        $.get("/api/equipment", function (data) {
+                            ////console.log("equipment=" + data);
+                            var equipment_html = "";
+                            for (var i = 0, len = data.length; i < len; i++) {
+                                ////console.log("Hazmat=" + data[i].name);
+                                equipment_html = equipment_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
+                            }
+                            //console.log("equipment=" + equipment_html);
+                            $("#equipment").html(equipment_html);
+                        }, "json");
+
+                        $.get("/api/prioritydelivery", function (data) {
+                            ////console.log("priority_delivery=" + data);
+                            var priority_delivery_html = "";
+                            for (var i = 0, len = data.length; i < len; i++) {
+                                ////console.log("Hazmat=" + data[i].name);
+                                priority_delivery_html = priority_delivery_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
+                            }
+                            //console.log("priority_delivery=" + priority_delivery_html);
+                            $("#priority_delivery").html(priority_delivery_html);
+                        }, "json");
+
+                        $.get("/api/priorityentry", function (data) {
+                            ////console.log("priority_entry=" + data);
+                            var priority_entry_html = "";
+                            for (var i = 0, len = data.length; i < len; i++) {
+                                ////console.log("Hazmat=" + data[i].name);
+                                priority_entry_html = priority_entry_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
+                            }
+                            //console.log("priority_entry=" + priority_entry_html);
+                            $("#priority_entry").html(priority_entry_html);
+                        }, "json");
+
+                        $.get("/api/dispatch", function (data) {
+                            ////console.log("dispatch=" + data);
+                            var dispatch_html = "";
+                            for (var i = 0, len = data.length; i < len; i++) {
+                                ////console.log("Hazmat=" + data[i].name);
+                                dispatch_html = dispatch_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
+                            }
+                            //console.log("dispatch=" + dispatch_html);
+                            $("#dispatch").html(dispatch_html);
+                        }, "json");
+
+                        
+
+
+                        /////////////////////////////VALIDATION///////////////////////////////////////////////////
+
+                        $("input.number").change(function () {
+                            console.log("You changed a number.");
+                            var input = $(this);
+                            input.val(input.val().toString().replace(/\D/g, '').trim()); 
+                            if (input.val()>60000) {
+                                bootbox.alert("You exceeded maximum number limit (60000). You entered " + input.val() + ". Please make sure it's not a mistake.");
+                            }
+                            if (input.attr("id") == "number_of_pallets"&&input.val()>60) {
+                                bootbox.alert("You exceeded limit for pallets (60). You entered " + input.val() + ". Please make sure it's not a mistake.");
+                            }
+                            if (input.attr("id") == "confirmation_rate" && input.val() > 10000) {
+                                bootbox.alert("You exceeded limit for rate (10000). You entered " + input.val() + ". Please make sure it's not a mistake.");
+                            }
+
+                        });
+
+                        $("input[type='text']").change(function () {
+                            var input = $(this);
+                            input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').toUpperCase().trim());
+                            input.css("border-color", "");
+                            if (input.val().length > 100) {
+                                bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length+" char. Please be more succinct.", function () {
+                                    input.val("");
+                                });
+                            }
+                        });
+
+                        $("input[type='text']").on("focus", function () {
+                            $(this).select();
+                        });
+
+                        $(".date_input_field").change(function () {
+                            $(this).css("background-color", "");
+
+                            if ($(this).val().length == 4) {
+                                $(this).val($(this).val().toString().slice(0, 2) +
+                                    "-" + $(this).val().toString().slice(2, 4) + "-" + currentdate.getFullYear());
+                            }
+
+                            if ($(this).val().length == 2) {
+                                $(this).val($(this).val().toString().slice(0, 2) +
+                                    "-" + ((currentdate.getMonth() + 1) < 10 ? "0" : "") +
+                                    (currentdate.getMonth() + 1) + "-" + currentdate.getFullYear());
+                            }
+
+                            if ($(this).val().length == 1) {
+                                $(this).val("0" + $(this).val().toString().slice(0) +
+                                    "-" + ((currentdate.getMonth() + 1) < 10 ? "0" : "") +
+                                    (currentdate.getMonth() + 1) + "-" + currentdate.getFullYear());
+                            }
+
+                            if ($(this).val().length == 3) {
+                                $(this).val("0" + $(this).val().toString().slice(0, 1) +
+                                    "-" + $(this).val().toString().slice(1, 3) + "-" + currentdate.getFullYear());
+                            }
+
+                            if ($(this).val().length == 8) {
+                                $(this).val($(this).val().toString().slice(0, 2) +
+                                    "-" + $(this).val().toString().slice(2, 4) + "-" + $(this).val().toString().slice(4, 9));
+                            }
+
+                            var dateArr = $(this).val().split("-");
+
+                            //for (i = 0; i < dateArr.length; i++) {
+                            //console.log("array=" + dateArr[i]);
+                            if (dateArr[0] > 31) {
+                                $(this).css("background-color", "#ff4136");
+                                bootbox.alert("Please enter a valid DAY. Your DAY is larger than 31");
+                                bootbox.alert("Please enter a valid DAY. Your DAY is larger than 31");
+                            }
+                            if (dateArr[0] > 29 && dateArr[1] == "02") {
+                                $(this).css("background-color", "#ff4136");
+                                bootbox.alert("Please enter a valid DAY. Your DAY is larger than 29");
+                                bootbox.alert("Please enter a valid DAY. Your DAY is larger than 29");
+                            }
+                            if (dateArr[1] > 12) {
+                                $(this).css("background-color", "#ff4136");
+                                bootbox.alert("Please enter a valid MONTH. Your MONTH is larger than 12");
+                                bootbox.alert("Please enter a valid MONTH. Your MONTH is larger than 12");
+                            }
+                            if (dateArr[2] > 2030 || dateArr[2] < 2020) {
+                                $(this).css("background-color", "#ff4136");
+                                bootbox.alert("Please enter a valid YEAR. Your YEAR is larger than 2030 or smaller than 2020");
+                                bootbox.alert("Please enter a valid YEAR. Your YEAR is larger than 2030 or smaller than 2020");
+                            }
+
+                            if (dateArr[0] < currentdate.getDate() &&
+                                dateArr[1] <= (currentdate.getMonth() + 1)
+                                && dateArr[2] <= currentdate.getFullYear()) {
+                                $(this).css("background-color", "#ff4136");
+                                bootbox.alert("Please enter a valid DATE. Your DATE has passed");
+                                bootbox.alert("Please enter a valid DATE. Your DATE has passed");
+                            }
+                            //}
+
+                            if ($(this).attr("id") == "pu_date1") {
+                                //console.log("You just pressed");
+                                $("#pu_time1").focus();
+                            }
+
+                            if ($(this).attr("id") == "pu_date2") {
+                                //console.log("You just pressed");
+                                $("#pu_time2").focus();
+                            }
+
+                            if ($(this).attr("id") == "del_date1") {
+                                //console.log("You just pressed");
+                                $("#del_time1").focus();
+                            }
+
+                            if ($(this).attr("id") == "del_date2") {
+                                //console.log("You just pressed");
+                                $("#del_time2").focus();
+                            }
+
+                            if ($(this).attr("id") == "stop_date1") {
+                                //console.log("You just pressed");
+                                $("#stop_time1").focus();
+                            }
+
+
+                            if ($(this).attr("id") == "stop_date2") {
+                                //console.log("You just pressed");
+                                $("#stop_time2").focus();
+                            }
+
+
+                        });
+
+                        $(".time_input_field").change(function () {
+                            console.log("pressed");
+                            $(this).css("background-color", "");
+
+                            if ($(this).val().length == 4) {
+                                $(this).val($(this).val().toString().slice(0, 2) +
+                                    ":" + $(this).val().toString().slice(2, 4));
+                            }
+
+                            if ($(this).val().length == 2) {
+                                $(this).val($(this).val().toString().slice(0, 2) + ":00");
+                            }
+
+                            var dateArr = $(this).val().split(":");
+
+                            //for (i = 0; i < dateArr.length; i++) {
+                            //console.log("array=" + dateArr[i]);
+                            if (dateArr[0] > 23) {
+                                $(this).css("background-color", "#ff4136");
+                                bootbox.alert("Please enter a valid TIME. Your HOURS are larger than 23");
+                                bootbox.alert("Please enter a valid TIME. Your HOURS are larger than 23");
+                            }
+                            if (dateArr[1] > 59) {
+                                $(this).css("background-color", "#ff4136");
+                                bootbox.alert("Please enter a valid TIME. Your MINUTES are larger than 59");
+                                bootbox.alert("Please enter a valid TIME. Your MINUTES are larger than 59");
+                            }
+                            //}
+
+                            if ($(this).attr("id") == "pu_time1") {
+                                //console.log("You just pressed");
+                                $("#pu_date2").focus();
+                            }
+                            if ($(this).attr("id") == "pu_time2") {
+                                //console.log("You just pressed");
+                                $("#del_date1").focus();
+                            }
+
+                            if ($(this).attr("id") == "del_time1") {
+                                //console.log("You just pressed");
+                                $("#del_date2").focus();
+                            }
+
+                            if ($(this).attr("id") == "stop_time1") {
+                                console.log("You just pressed");
+                                $("#stop_date2").focus();
+                            }
+
+
+                        });
+
+
+                        /////////////////////ACTIONS BUTTON/////////////////////////////////////////////
+                        if (!confirmationId.includes("NEW") && confirmationId != "") {
+                            $("#user_actions").on("click", function () {
+                                console.log("Actions button was pressed");
+                                window.location = "/loadconfirmations/UserActionsForLoad?loadconfirmation=" + confirmationId;
+                            });
+                        } else {
+                            $("#user_actions").on("click", function () {
+                                //console.log("New stop button was pressed");
+                                bootbox.alert("Please, save the changes and get PB number.");
+                            });
+                        }
+
+
+                        var pu_stop_id = "";
+                        var del_stop_id = "";
+
+
+                        //---------------------------------------------------------------------------------
+                        //------------------------SAVE ----------------------------------------------------
+                        //---------------------------------------------------------------------------------
+                        if (!confirmationId.includes("NEW") && confirmationId != "") {
+                            //console.log("It's not a new confirmation. Conf Id="+confirmationId);
+                            $("#save_confirmation").on("click", function () {
+                                console.log("Save confirmation button was pressed");
+
+                                if (ValidationBeforeSave() == false) {
+                                    bootbox.alert("Warning. Not all fields are filled out. Please fill out highlighted fields to save the information.", function () {
+                                        return console.log("Abort Saving procedure.");
+                                    });
+                                } else {
+                                    $.ajax({
+                                        url: "/api/loadconfirmations/" + confirmationId,
+                                        method: "PUT",
+                                        data: {
+                                            //"id": confirmationId,
+                                            "customerId": $("#customer_id").val(),
+
+                                            "hazMatStatusId": $("#hazmat").val(),
+                                            "equipmentId": $("#equipment").val(),
+                                            "priorityDeliveryId": $("#priority_delivery").val(),
+                                            "priorityEntryId": $("#priority_entry").val(),
+                                            "dispatchId": $("#dispatch").val(),
+                                            "creditHold": $("#credit_hold").prop("checked"),
+                                            "pod": $("#pod_checkbox").prop("checked"),
+                                            "void": $("#void_status").prop("checked"),
+                                            "exported": $("#exported_status").prop("checked"),
+                                            "closed": $("#closed_status").prop("checked"),
+
+                                            "freightDescription": $("#freight_description").val(),
+                                            "weight": $("#confirmation_weight").val(),
+                                            "numberOfPallets": $("#number_of_pallets").val(),
+                                            "rate": $("#confirmation_rate").val(),
+                                            "hazMatNumber": $("#hazmat_number").val(),
+                                            "confNumber": $("#confirmation_number").val(),
+                                            "customsBroker": $("#customs_broker").val()
+                                        }
+                                    })
+                                        .done(function () {
+                                            //console.log("The confirmation was updated. Conf number=");
+                                            //------------------------UPDATE PU STOP---------------------------
+                                            //console.log("pu_stop_id2=" + pu_stop_id);
+                                            //console.log("del_stop_id2=" + del_stop_id);
+
+                                            var puDate1Arr = $("#pu_date1").val().split("-");
+                                            var puDate1 = puDate1Arr[2] + "-" + puDate1Arr[1] + "-" + puDate1Arr[0];
+                                            var puDate2Arr = $("#pu_date2").val().split("-");
+                                            var puDate2 = puDate2Arr[2] + "-" + puDate2Arr[1] + "-" + puDate2Arr[0];
+
+                                            $.ajax({
+                                                url: "/api/stops/" + pu_stop_id,
+                                                method: "PUT",
+                                                data: {
+                                                    "facilityName": $("#pickup_name").val(),
+                                                    "address": $("#pickup_address").val(),
+                                                    "city": $("#pickup_city").val(),
+                                                    "state": $("#pickup_state").val(),
+                                                    "country": $("#pickup_country").val(),
+                                                    "zipCode": $("#pickup_zipcode").val(),
+                                                    "date1": puDate1 + "T" + $("#pu_time1").val() + ":00",
+                                                    "date2": puDate2 + "T" + $("#pu_time2").val() + ":00"
+                                                }
+                                            })
+                                                .done(function () {
+                                                    ////console.log("The pu stop was updated.");
+                                                    //------------------------UPDATE DEL STOP---------------------------
+                                                    var delDate1Arr = $("#del_date1").val().split("-");
+                                                    var delDate1 = delDate1Arr[2] + "-" + delDate1Arr[1] + "-" + delDate1Arr[0];
+                                                    var delDate2Arr = $("#del_date2").val().split("-");
+                                                    var delDate2 = delDate2Arr[2] + "-" + delDate2Arr[1] + "-" + delDate2Arr[0];
+                                                    $.ajax({
+                                                        url: "/api/stops/" + del_stop_id,
+                                                        method: "PUT",
+                                                        data: {
+                                                            "facilityName": $("#delivery_name").val(),
+                                                            "address": $("#delivery_address").val(),
+                                                            "city": $("#delivery_city").val(),
+                                                            "state": $("#delivery_state").val(),
+                                                            "country": $("#delivery_country").val(),
+                                                            "zipCode": $("#delivery_zipcode").val(),
+                                                            "date1": delDate1 + "T" + $("#del_time1").val() + ":00",
+                                                            "date2": delDate2 + "T" + $("#del_time2").val() + ":00"
+                                                        }
+                                                    })
+                                                        .done(function () {
+                                                            ////console.log("The del stop was updated.");
+
+
+
+                                                            console.log("Updating the location");
+                                                            window.location = window.location.origin + "/loadconfirmations/edit/" + confirmationId;
+                                                        })
+                                                        .fail(function () {
+                                                            //console.log("fail to update del stop");
+                                                            bootbox.alert("Failed to update del stop");
+                                                        })
+                                                })
+                                                .fail(function () {
+                                                    //console.log("fail to update pu stop");
+                                                    bootbox.alert("Failed to update pu stop");
+                                                })
+
+                                        })
+                                        .fail(function () {
+                                            bootbox.alert("Failed to update the load confirmation");
+                                        })
+                                }
+
+                            });
+                        }
+                        else {
+                            //console.log("It's a new confirmation");
+                            $("#save_confirmation").on("click", function () {
+                                //console.log("Save confirmation button was pressed");
+
+
+
+                                
+                                
+
+                                if (ValidationBeforeSave() == false) {
+                                    bootbox.alert("Warning. Not all fields are filled out or filled out improperly. Please fill out highlighted fields to save the information.", function () {
+                                        return console.log("Abort Saving procedure.");
+
+                                    });
+                                }
+                                else {
+                                    $.ajax({
+                                        url: "/api/loadconfirmations",
+                                        method: "POST",
+                                        data: {
+                                            "customerId": $("#customer_id").val(),
+
+                                            "hazMatStatusId": $("#hazmat").val(),
+                                            "equipmentId": $("#equipment").val(),
+                                            "priorityDeliveryId": $("#priority_delivery").val(),
+                                            "priorityEntryId": $("#priority_entry").val(),
+                                            "dispatchId": $("#dispatch").val(),
+                                            "creditHold": $("#credit_hold").prop("checked"),
+                                            "pod": $("#pod_checkbox").prop("checked"),
+                                            "void": $("#void_status").prop("checked"),
+                                            "exported": $("#exported_status").prop("checked"),
+                                            "closed": $("#closed_status").prop("checked"),
+                                            "freightDescription": $("#freight_description").val(),
+                                            "weight": $("#confirmation_weight").val(),
+                                            "numberOfPallets": $("#number_of_pallets").val(),
+                                            "rate": $("#confirmation_rate").val(),
+                                            "hazMatNumber": $("#hazmat_number").val(),
+                                            "confNumber": $("#confirmation_number").val(),
+                                            "customsBroker": $("#customs_broker").val(),
+                                        }
+                                    })
+                                        .done(function (data) {
+                                            //console.log("New confirmation was created. Conf number=" + data.id);
+                                            confirmationId = data.id;
+                                            //console.log("Creating new PU stop");
+
+                                            var puDate1Arr = $("#pu_date1").val().split("-");
+                                            var puDate1 = puDate1Arr[2] + "-" + puDate1Arr[1] + "-" + puDate1Arr[0];
+                                            var puDate2Arr = $("#pu_date2").val().split("-");
+                                            var puDate2 = puDate2Arr[2] + "-" + puDate2Arr[1] + "-" + puDate2Arr[0];
+
+                                            var puStopId = "";
+                                            var delStopId = "";
+
+                                            $.ajax({
+                                                url: "/api/STOPS/" + confirmationId,
+                                                method: "POST",
+                                                data: {
+                                                    "loadConfirmationId": confirmationId,
+                                                    "orderNumber": 1,
+                                                    "puStatus": true,
+                                                    "delStatus": false,
+
+                                                    "facilityName": $("#pickup_name").val(),
+                                                    "address": $("#pickup_address").val(),
+                                                    "city": $("#pickup_city").val(),
+                                                    "state": $("#pickup_state").val(),
+                                                    "country": $("#pickup_country").val(),
+                                                    "zipCode": $("#pickup_zipcode").val(),
+
+                                                    "date1": puDate1 + "T" + $("#pu_time1").val() + ":00",
+                                                    "date2": puDate2 + "T" + $("#pu_time2").val() + ":00"
+                                                }
+                                            })
+                                                .done(function (data) {
+
+                                                    puStopId = data.id;
+                                                    //console.log("New PU stop was created. Id number=" + puStopId);
+                                                })
+                                                .fail(function () {
+                                                    bootbox.alert("Failed to create a PU STOP");
+                                                })
+                                            //console.log("Creating new DEL stop");
+
+                                            var delDate1Arr = $("#del_date1").val().split("-");
+                                            var delDate1 = delDate1Arr[2] + "-" + delDate1Arr[1] + "-" + delDate1Arr[0];
+                                            var delDate2Arr = $("#del_date2").val().split("-");
+                                            var delDate2 = delDate2Arr[2] + "-" + delDate2Arr[1] + "-" + delDate2Arr[0];
+
+                                            $.ajax({
+                                                url: "/api/STOPS/" + confirmationId,
+                                                method: "POST",
+                                                data: {
+                                                    "loadConfirmationId": confirmationId,
+                                                    "orderNumber": 2,
+                                                    "puStatus": false,
+                                                    "delStatus": true,
+
+                                                    "facilityName": $("#delivery_name").val(),
+                                                    "address": $("#delivery_address").val(),
+                                                    "city": $("#delivery_city").val(),
+                                                    "state": $("#delivery_state").val(),
+                                                    "country": $("#delivery_country").val(),
+                                                    "zipCode": $("#delivery_zipcode").val(),
+                                                    "date1": delDate1 + "T" + $("#del_time1").val() + ":00",
+                                                    "date2": delDate2 + "T" + $("#del_time2").val() + ":00"
+                                                }
+                                            })
+                                                .done(function (data) {
+
+                                                    delStopId = data.id;
+                                                    //console.log("New DEL stop was created. Id number=" + delStopId);
+                                                    //console.log("confirmationId=" + confirmationId);
+
+                                                    ///////////     CREATE A LEG/////////////////////////////////
+
+                                                    $.ajax({
+                                                        url: "/api/legs",
+                                                        method: "POST",
+                                                        data: {
+                                                            "stop1Id": puStopId,
+                                                            "stop2Id": delStopId,
+                                                            "driverId": 8,
+                                                            "loadConfirmationId": confirmationId
+
+                                                        }
+                                                    })
+                                                        .done(function (data) {
+                                                            console.log("New leg was created. Id number=" + data.id);
+                                                            bootbox.confirm("New confirmation was created", function (result) {
+                                                                if (result) {
+                                                                    window.location = window.location.origin + "/loadconfirmations/edit/" + confirmationId;
+                                                                }
+                                                            });
+
+                                                        })
+                                                        .fail(function () {
+                                                            bootbox.alert("Failed to create LEG");
+                                                        })
+                                                })
+                                                .fail(function () {
+                                                    bootbox.alert("Failed to create a DEL STOP");
+                                                })
+                                        })
+                                        .fail(function () {
+                                            bootbox.alert("Failed to create a new conf");
+                                        })
+                                }
+
+
+
+                            });
+                        }
+
+                        ///////////////////VALIDATION BEFORE SAVE/////////////////////////////////////////////////////
+                        function ValidationBeforeSave() {
+                            ///////////////////VALIDATION/////////////////////////////////////////////////////
+                            var isValid = true;
+
+                            $(".date_input_field").each(function () {
+                                var element = $(this);
+
+                                //console.log("element id=" + element.attr("id") + " length=" + element.val().length);
+                                ////console.log(" stopindex=" + element.attr("id").indexOf("stop"));
+                                ////console.log(" index:=" + element.val().toString().indexOf(":"));
+
+                                var conditions = false;
+
+                                if ((element.val().length != 10 || (element.val().toString().match(/-/g) || []).length != 2) && (element.attr("id") != undefined && element.attr("id").indexOf("stop") == -1)) {
+
+                                    isValid = false;
+                                    element.css("border-color", "#ff4136");
+                                    //console.log("Match conditions. " + element.attr("id"));
+                                }
+
+                            });
+
+                            $(".time_input_field").each(function () {
+                                var element = $(this);
+
+                                //console.log("element id=" + element.attr("id") + " length=" + element.val().length);
+                                ////console.log(" stopindex=" + element.attr("id").indexOf("stop"));
+                                ////console.log(" index:=" + element.val().toString().indexOf(":"));
+
+                                var conditions = false;
+
+                                if ((element.val().length != 5 || element.val().toString().indexOf(":") != 2) && (element.attr("id") != undefined && element.attr("id").indexOf("stop") == -1)) {
+
+                                    isValid = false;
+                                    element.css("border-color", "#ff4136");
+                                    //console.log("Match conditions. " + element.attr("id"));
+                                }
+
+                            });
+
+                            //console.log("dispatch=" + $("#dispatch option:selected").text());                               
+
+
+                            if ($('#dispatch').find(":selected").text() == "") {
+                                console.log("dispatch is empty");
+                                isValid = false;
+                                $("#dispatch").css("border-color", "#ff4136");
+                            }
+
+                            if ($('#hazmat').find(":selected").text() == "") {
+                                console.log("hazmat is empty");
+                                isValid = false;
+                                $("#hazmat").css("border-color", "#ff4136");
+                            }
+
+
+                            $(".mandatory").each(function () {
+                                var element = $(this);
+                                if (element.val() == "" && element.attr("id") != undefined) {
+                                    isValid = false;
+                                    element.css("border-color", "#ff4136");
+                                    //console.log("element id=" + element.attr("id"));
+                                }
+                            });
+                            return isValid;
+                        }
+
+
+                        //---------------------------------------------------------------------------------
+                        //------------------------FILL IN TABLES-------------------------------------
+                        //---------------------------------------------------------------------------------
+
+                        if (!confirmationId.includes("NEW") && confirmationId != "") {
+                            console.log("It's not a new load. Start loading tables");
+                            //$("h2").text("Edit Load");
+
+                            //------------------------FILL IN THE FORM-------------------------------------
+
+                            $.get("/api/stops/" + confirmationId, function (data) {
+                                for (var i = 0, len = data.length; i < len; i++) {
+                                    ////console.log("stop=" + data[i].facilityName);
+                                    if (data[i].puStatus) {
+                                        $("#pickup_name").val(data[i].facilityName);
+                                        $("#pickup_address").val(data[i].address);
+                                        $("#pickup_city").val(data[i].city);
+                                        $("#pickup_state").val(data[i].state);
+                                        $("#pickup_country").val(data[i].country);
+                                        $("#pickup_zipcode").val(data[i].zipCode);
+
+                                        var date1Arr = data[i].date1.split("T")[0].split("-");
+                                        var date2Arr = data[i].date2.split("T")[0].split("-");
+
+                                        $("#pu_date1").val(date1Arr[2] + "-" + date1Arr[1] + "-" + date1Arr[0]);
+                                        $("#pu_date2").val(date2Arr[2] + "-" + date2Arr[1] + "-" + date2Arr[0]);
+
+                                        var date1Arr = data[i].date1.split("T")[1].split(":");
+                                        var date2Arr = data[i].date2.split("T")[1].split(":");
+
+                                        $("#pu_time1").val(date1Arr[0] + ":" + date1Arr[1]);
+                                        $("#pu_time2").val(date2Arr[0] + ":" + date2Arr[1]);
+
+                                        pu_stop_id = data[i].id;
+                                        //console.log("pu_stop_id1=" + pu_stop_id);
+                                    }
+                                    if (data[i].delStatus) {
+                                        $("#delivery_name").val(data[i].facilityName);
+                                        $("#delivery_address").val(data[i].address);
+                                        $("#delivery_city").val(data[i].city);
+                                        $("#delivery_state").val(data[i].state);
+                                        $("#delivery_country").val(data[i].country);
+                                        $("#delivery_zipcode").val(data[i].zipCode);
+
+                                        var date1Arr = data[i].date1.split("T")[0].split("-");
+                                        var date2Arr = data[i].date2.split("T")[0].split("-");
+
+                                        $("#del_date1").val(date1Arr[2] + "-" + date1Arr[1] + "-" + date1Arr[0]);
+                                        $("#del_date2").val(date2Arr[2] + "-" + date2Arr[1] + "-" + date2Arr[0]);
+
+                                        var date1Arr = data[i].date1.split("T")[1].split(":");
+                                        var date2Arr = data[i].date2.split("T")[1].split(":");
+
+                                        $("#del_time1").val(date1Arr[0] + ":" + date1Arr[1]);
+                                        $("#del_time2").val(date2Arr[0] + ":" + date2Arr[1]);
+
+                                        del_stop_id = data[i].id;
+                                        //console.log("del_stop_id1=" + del_stop_id);
+                                    }
+                                }
+                            }, "json");
+
+                            $.get("/api/loadconfirmations/" + confirmationId, function (data) {
+
+                                if (getUrlParameter('customer') == undefined) {
+                                    $("#customer_name").val(data.customer.name);
+                                    $("#customer_address").val(data.customer.address);
+                                    $("#customer_city").val(data.customer.city);
+                                    $("#customer_state").val(data.customer.state);
+                                    $("#customer_country").val(data.customer.country);
+                                    $("#customer_zipcode").val(data.customer.zipcode);
+                                    $("#customer_id").val(data.customer.id);
+                                }
+
+
+                                $("#freight_description").val(data.freightDescription);
+                                $("#confirmation_weight").val(data.weight);
+                                $("#number_of_pallets").val(data.numberOfPallets);
+                                $("#confirmation_rate").val(data.rate);
+                                $("#hazmat_number").val(data.hazMatNumber);
+
+                                $("#hazmat").val(data.hazMatStatusId);
+                                $("#equipment").val(data.equipmentId);
+                                $("#priority_delivery").val(data.priorityDeliveryId);
+                                $("#priority_entry").val(data.priorityEntryId);
+                                $("#dispatch").val(data.dispatchId);
+                                $("#confirmation_number").val(data.confNumber);
+                                $("#customs_broker").val(data.customsBroker);
+
+
+
+                                if (data.creditHold == true) {
+                                    //console.log("creditHold=" + data.creditHold);
+                                    $("#credit_hold").prop("checked", true);
+                                }
+
+                                if (data.pod == true) {
+                                    //console.log("pod=" + data.pod);
+                                    $("#pod_checkbox").prop("checked", true);
+                                }
+
+                                if (data.void == true) {
+                                    //console.log("pod=" + data.pod);
+                                    $("#void_status").prop("checked", true);
+
+                                    $("input").attr("disabled", true);
+                                    $("select").attr("disabled", true);
+                                    $("#closed_status").attr("disabled", false);
+                                    $("#void_status").attr("disabled", false);
+                                    $("#exported_status").attr("disabled", false);
+                                }
+
+                                if (data.exported == true) {
+                                    //console.log("pod=" + data.pod);
+                                    $("#exported_status").prop("checked", true);
+
+                                    $("input").attr("disabled", true);
+                                    $("select").attr("disabled", true);
+                                    $("#closed_status").attr("disabled", false);
+                                    $("#void_status").attr("disabled", false);
+                                    $("#exported_status").attr("disabled", false);
+                                }
+
+                                if (data.closed == true) {
+                                    //console.log("pod=" + data.pod);
+                                    $("#closed_status").prop("checked", true);
+
+                                    $("input").attr("disabled", true);
+                                    $("select").attr("disabled", true);
+                                    $("#closed_status").attr("disabled", false);
+                                    $("#void_status").attr("disabled", false);
+                                    $("#exported_status").attr("disabled", false);
+                                }
+
+                                if ($("#credit_hold").prop("checked")) {
+                                    //console.log("Credit hold checkbox is checked. Change color");
+                                    $("#credit_hold_field").css("background-color", "#ff4136");
+                                    $("#credit_hold_field").css("border-radius", "4px");
+                                    $("#credit_hold_field").css("color", "black");
+                                }
+                                if ($("#pod_checkbox").prop("checked")) {
+                                    //console.log("POD checkbox is checked. Change color");
+                                    $("#POD_field").css("background-color", "#ff4136");
+                                    $("#POD_field").css("border-radius", "4px");
+                                    $("#POD_field").css("color", "black");
+                                }
+                                if ($("#void_status").prop("checked")) {
+                                    //console.log("POD checkbox is checked. Change color");
+                                    $("#void_status_field").css("background-color", "#ff4136");
+                                    $("#void_status_field").css("border-radius", "4px");
+                                    $("#void_status_field").css("color", "black");
+                                }
+                                if ($("#closed_status").prop("checked")) {
+                                    //console.log("POD checkbox is checked. Change color");
+                                    $("#closed_status_field").css("background-color", "#ff4136");
+                                    $("#closed_status_field").css("border-radius", "4px");
+                                    $("#closed_status_field").css("color", "black");
+                                }
+                                if ($("#exported_status").prop("checked")) {
+                                    //console.log("POD checkbox is checked. Change color");
+                                    $("#exported_status_field").css("background-color", "#ff4136");
+                                    $("#exported_status_field").css("border-radius", "4px");
+                                    $("#exported_status_field").css("color", "black");
+                                }
+
+                            }, "json");
+
+                            $("#pb_number").val(confirmationId);
+
+                            //------------------------TABLES-------------------------------------
+
+                            var table = $("#notes-table").DataTable({
+                                ajax: {
+                                    url: "/api/notes/" + confirmationId,
+                                    dataSrc: ""
+                                },
+                                columns: [
+                                    {
+                                        data: "header",
+                                    },
+                                    {
+                                        data: "dateAdded",
+                                    }
+                                ],
+                                order: [[1, "desc"]],
+                                scrollY: '22vh',
+                                searching: false,
+                                scrollCollapse: true,
+                                paging: false,
+                                rowCallback: function (row, data) {
+                                    $(row).css("cursor", "pointer");
+                                    $(row).on("click", function () {
+                                        window.location = "/loadconfirmations/editnote/" + data.id;
+                                    });
+                                }
+
+                            });
+
+                            var table1 = $("#attachmentsTable").DataTable({
+                                ajax: {
+                                    url: "/api/attachments/" + confirmationId,
+                                    dataSrc: ""
+                                },
+                                columns: [
+                                    {
+                                        data: "name",
+                                        render: function (data, type, attachment) {
+                                            return "<a href='" + attachment.path + "' target='_blank' class='download_attachment' style='text-decoration: none;' download>" + data + "</a>";
+                                        }
+                                    },
+                                    {
+                                        data: "",
+                                        render: function (data, type, attachment) {
+                                            return "<button class='btn-link js-delete-attachment' data-attachment-id=" + attachment.id + ">Delete</button>";
+                                        }
+                                    }
+                                ],
+                                scrollY: '20vh',
+                                scrollCollapse: true,
+                                searching: false,
+                                paging: false
+
+                            });
+
+                            var table2 = $("#stopsTable").DataTable({
+                                ajax: {
+                                    url: "/api/stops/" + confirmationId,
+                                    dataSrc: ""
+                                },
+                                columns: [
+                                    {
+                                        data: "orderNumber",
+                                    },
+                                    {
+                                        data: "facilityName",
+                                    },
+                                    {
+                                        data: "address",
+                                    }
+                                    ,
+                                    {
+                                        data: "city",
+                                    },
+                                    {
+                                        data: "state",
+                                    },
+                                    {
+                                        data: "country",
+                                    },
+                                    {
+                                        data: "zipCode",
+                                    },
+                                    //{
+                                    //    data: "date1",
+                                    //    render: function (data) {
+
+                                    //        var arr = data.split("T")[0].split("-");
+
+                                    //        return "<input class='form-control date_input_field' type='text' value='" + arr[2] + "-" + arr[1] + "-" + arr[0]+"'/>" ;
+                                    //    }
+
+
+                                    //},
+                                    {
+                                        data: "date1",
+                                        render: function (data) {
+
+                                            var arr = data.split("T")[0].split("-");
+
+                                            return arr[2] + "-" + arr[1] + "-" + arr[0];
+                                        }
+                                    },
+                                    {
+                                        data: "date1",
+                                        render: function (data) {
+
+                                            var arr = data.split("T")[1].split(":");
+
+                                            return arr[0] + ":" + arr[2];
+                                        }
+                                    },
+                                    {
+                                        data: "date2",
+                                        render: function (data) {
+
+                                            var arr = data.split("T")[0].split("-");
+
+                                            return arr[2] + "-" + arr[1] + "-" + arr[0];
+                                        }
+                                    },
+                                    {
+                                        data: "date2",
+                                        render: function (data) {
+
+                                            var arr = data.split("T")[1].split(":");
+
+                                            return arr[0] + ":" + arr[2];
+                                        }
+                                    },
+                                    {
+                                        data: "",
+                                        render: function (data, type, stop) {
+                                            ////console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!=" + stop.puStatus);
+                                            if (stop.puStatus != true && stop.delStatus != true) {
+                                                return "<button class='btn-link js-delete-stop' data-stop-id=" + stop.id + ">Delete</button>";
+                                            }
+                                            return null;
+
+                                        }
+                                    }
+                                ],
+                                order: [[0, "asc"]],
+                                scrollY: '50vh',
+                                scrollCollapse: true,
+                                paging: false,
+                                searching: false,
+                                rowCallback: function (row, data) {
+                                    $(row).css("cursor", "pointer");
+                                    $(row).on("click", function (e) {
+                                        if (e.target.tagName != 'BUTTON') {
+                                            window.location = "/loadconfirmationslegs/index/" + confirmationId;
+                                        }
+                                    });
+
+
+                                    //$(row).on("change", ".date_input_field", function () {
+                                    //    var input = $(this);
+                                    //    input.val("1111111111");
+                                    //});
+
+                                }
+
+                            });
+
+                        }
+                        else {
+                            console.log("It's a new load");
+                            //$("h2").text("New Load");
+
+                            //$("#confirmation_weight").val("0");
+                            //$("#number_of_pallets").val("0");
+                            //$("#confirmation_rate").val("0");
+                        }
+
+                        //---------------------------------------------------------------------------------
+                        //------------------------BUTTONS TO ADD-------------------------------------------
+                        //---------------------------------------------------------------------------------
+
+                        //-------------------------NEW STOP------------------------------------------------
+
+
+                        /////////////////////STOP VALIDATION/////////////////////////////////////////
+
+
+                        if (!confirmationId.includes("NEW") && confirmationId != "") {
+                            $("#newStopButton").on("click", function () {
+                                //console.log("New stop button was pressed");
+
+
+                                var isValid = true;
+
+                                $(".mandatory_stop").each(function () {
+                                    var element = $(this);
+                                    if (element.val() == "" && element.attr("id") != undefined) {
+                                        isValid = false;
+                                        element.css("border-color", "#ff4136");
+                                        //console.log("element id=" + element.attr("id"));
+                                    }
+                                });
+
+                                $(".date_input_field").each(function () {
+                                    var element = $(this);
+
+                                    //console.log("element id=" + element.attr("id") + " length=" + element.val().length);
+                                    ////console.log(" stopindex=" + element.attr("id").indexOf("stop"));
+                                    ////console.log(" index:=" + element.val().toString().indexOf(":"));
+
+                                    var conditions = false;
+
+                                    if ((element.val().length != 10 || (element.val().toString().match(/-/g) || []).length != 2) && (element.attr("id") != undefined && element.attr("id").indexOf("stop") != -1)) {
+
+                                        isValid = false;
+                                        element.css("border-color", "#ff4136");
+                                        //console.log("Match conditions. " + element.attr("id"));
+                                    }
+
+                                });
+
+                                $(".time_input_field").each(function () {
+                                    var element = $(this);
+
+                                    //console.log("element id=" + element.attr("id") + " length=" + element.val().length);
+                                    ////console.log(" stopindex=" + element.attr("id").indexOf("stop"));
+                                    ////console.log(" index:=" + element.val().toString().indexOf(":"));
+
+                                    var conditions = false;
+
+                                    if ((element.val().length != 5 || element.val().toString().indexOf(":") != 2) && (element.attr("id") != undefined && element.attr("id").indexOf("stop") != -1)) {
+
+                                        isValid = false;
+                                        element.css("border-color", "#ff4136");
+                                        //console.log("Match conditions. " + element.attr("id"));
+                                    }
+
+                                });
+
+
+                                //console.log("isValid=" + isValid);
+
+                                if (isValid == false) {
+                                    bootbox.alert("Warning. Not all fields are filled out. Please fill out highlighted fields to save the information.", function () {
+                                        return console.log("Abort Saving procedure.");
+                                    });
+
+                                }
+                                else {
+                                    var puDate1Arr = $("#stop_date1").val().split("-");
+                                    var puDate1 = puDate1Arr[2] + "-" + puDate1Arr[1] + "-" + puDate1Arr[0];
+                                    var puDate2Arr = $("#stop_date2").val().split("-");
+                                    var puDate2 = puDate2Arr[2] + "-" + puDate2Arr[1] + "-" + puDate2Arr[0];
+                                    $.ajax({
+                                        url: "/api/stops",
+                                        method: "POST",
+                                        data: {
+                                            "loadConfirmationId": confirmationId,
+                                            "facilityName": $("#stop_facility_name").val(),
+                                            "address": $("#stop_address").val(),
+                                            "city": $("#stop_city").val(),
+                                            "state": $("#stop_state").val(),
+                                            "country": $("#stop_country").val(),
+                                            "zipCode": $("#stop_zipcode").val(),
+                                            "date1": puDate1 + "T" + $("#stop_time1").val() + ":00",
+                                            "date2": puDate2 + "T" + $("#stop_time2").val() + ":00"
+                                        }
+                                    })
+                                        .done(function () {
+                                            //console.log("New stop was created");
+                                            $("#stop_facility_name").val("");
+                                            $("#stop_address").val("");
+
+                                            $("#stop_city").val("");
+                                            $("#stop_state").val("");
+                                            $("#stop_country").val("");
+                                            $("#stop_zipcode").val("");
+
+                                            $("#stop_date1").val("");
+                                            $("#stop_date2").val("");
+                                            $("#stop_time1").val("");
+                                            $("#stop_time2").val("");
+
+                                            table2.ajax.reload();
+
+                                            /////////////UPDATE ALL LEGS FOR THIS LOAD///////////////////
+                                            $.ajax({
+                                                url: "/api/legs/" + confirmationId,
+                                                method: "DELETE",
+
+                                            })
+                                                .done(function () {
+                                                    console.log("All legs were deleted for this load");
+                                                    $.ajax({
+                                                        url: "/api/UpdateLegs/" + confirmationId,
+                                                        method: "DELETE",
+
+                                                    })
+                                                        .done(function () {
+                                                            console.log("All legs were updated");
+                                                        })
+                                                        .fail(function () {
+                                                            //console.log("fail");
+                                                            bootbox.alert("Failed to update legs");
+                                                        })
+                                                })
+                                                .fail(function () {
+                                                    //console.log("fail");
+                                                    bootbox.alert("Failed to delete all legs");
+                                                })
+
+                                        })
+                                        .fail(function () {
+                                            //console.log("fail");
+                                            bootbox.alert("Failed to create a stop");
+                                        })
+
+                                }
+
+                               
+                            });
+                        }
+                        else {
+                            $("#newStopButton").on("click", function () {
+                                //console.log("New stop button was pressed");
+                                bootbox.alert("Please, save the changes and get PB number before adding the stop.");
+                            });
+                        }
+
+                        //-------------------------NEW ATTACHMENT------------------------------------------
+                        if (!confirmationId.includes("NEW") && confirmationId != "") {
+                            $("#newAttachmentButton").on("click", function () {
+                                console.log("New attachment button was pressed");
+
+
+                                
+
+                                console.log("FileToAttach=" + $("#fileToAttach").val());
+
+                                
+
+                                
+
+                                if ($("#fileToAttach").val() == "") {
+                                    bootbox.alert("Please, select the file first.");
+                                } else {
+
+                                    ////////////////////FILE VALIDATION///////////////////////////////////////                                
+                                    var fileName = $("#fileToAttach").val();
+                                    fileName = fileName.slice(fileName.lastIndexOf("\\") + 1)
+                                    console.log("fileName=" + fileName);
+                                    var fileSize = $("#fileToAttach")[0].files[0].size;
+                                    fileSize = (fileSize / (1024 * 1024)).toFixed(2);
+                                    console.log("fileSize=" + fileSize);
+
+                                    if (fileSize > 3) {
+                                        bootbox.alert("The file size exceedes limit (3Mb).", function () {
+                                            $("#show_attached_file").val("");
+                                            $("#fileToAttach").val("");
+                                        });
+
+                                    } else {
+
+                                        var extension = fileName.replace(/^.*\./, '');
+                                        if (extension == fileName) {
+                                            extension = '';
+                                        } else {
+                                            extension = extension.toLowerCase();
+                                        }
+                                        console.log("extension=" + extension);
+
+                                        if (extension != "pdf") {
+                                            bootbox.alert("Only pdf files are allowed.", function () {
+                                                $("#show_attached_file").val("");
+                                                $("#fileToAttach").val("");
+
+                                            });
+                                        } else {
+                                            var formData = new FormData();
+                                            formData.append('file', $('#fileToAttach')[0].files[0]);
+                                            $.ajax({
+                                                url: "/api/fileupload/" + confirmationId,
+                                                type: 'POST',
+                                                data: formData,
+                                                processData: false,
+                                                contentType: false,
+                                            })
+                                                .done(function () {
+                                                    //console.log("New attachment was created");
+                                                    $("#show_attached_file").val("");
+                                                    table1.ajax.reload();
+                                                })
+                                                .fail(function () {
+                                                    //console.log("fail");
+                                                    bootbox.alert("Failed to create attachment");
+                                                })
+                                        }
+                                    }
+
+                                    }
+
+                                    
+
+                               
+
+                            });
+                        }
+                        else {
+                            $("#newAttachmentButton").on("click", function () {
+                                //console.log("New note button was pressed");
+                                bootbox.alert("Please, save the changes and get PB number before adding the attachment.");
+                            });
+                        }
+
+                        //-------------------------NEW NOTE------------------------------------------------
+                        if (!confirmationId.includes("NEW") && confirmationId != "") {
+                            $("#newNoteButton").on("click", function () {
+                                //console.log("New note button was pressed");
+                                window.location = window.location.origin + "/loadconfirmations/newnote/" + confirmationId;
+                            });
+                        }
+                        else {
+                            $("#newNoteButton").on("click", function () {
+                                //console.log("New note button was pressed");
+                                bootbox.alert("Please, save the changes and get PB number before adding the note.");
+                            });
+                        }
+
+                        //---------------------------------------------------------------------------------
+                        //------------------------BUTTONS TO DELETE----------------------------------------
+                        //---------------------------------------------------------------------------------
+
+                        $("#attachmentsTable").on("click", ".js-delete-attachment", function () {
+                            //console.log("Delete attachment button was pressed");
+                            var button = $(this);
+                            bootbox.confirm("Are you sure you want to delete the attachment?", function (result) {
+                                if (result) {
+                                    $.ajax({
+                                        url: "/api/attachments/" + button.attr("data-attachment-id"),
+                                        method: "DELETE",
+                                        success: function () {
+                                            //console.log("The attachment was deleted");
+                                            table1.ajax.reload();
+                                        }
+                                    });
+                                }
+                            });
+                        });
+
+                        $("#stopsTable").on("click", ".js-delete-stop", function () {
+                            //console.log("Delete stop button was pressed");
+                            var button = $(this);
+                            bootbox.confirm("Are you sure you want to delete the stop?", function (result) {
+                                if (result) {
+                                    $.ajax({
+                                        url: "/api/legs/" + confirmationId,
+                                        method: "DELETE",
+
+                                    })
+                                        .done(function () {
+                                            console.log("All legs for conf were deleted");
+
+                                            $.ajax({
+                                                url: "/api/stops/" + button.attr("data-stop-id"),
+                                                method: "DELETE",
+
+                                            })
+                                                .done(function () {
+                                                    console.log("The stop was deleted. Start updating legs");
+                                                    $.ajax({
+                                                        url: "/api/UpdateLegs/" + confirmationId,
+                                                        method: "DELETE",
+
+                                                    })
+                                                        .done(function () {
+                                                            console.log("The legs were updated");
+                                                            table2.ajax.reload();
+
+                                                        })
+                                                        .fail(function () {
+                                                            //console.log("fail");
+                                                            bootbox.alert("Failed to update legs");
+                                                        })
+
+                                                })
+                                                .fail(function () {
+                                                    //console.log("fail");
+                                                    bootbox.alert("Failed to delete the stop");
+                                                })
+                                        })
+                                        .fail(function () {
+                                            //console.log("fail");
+                                            bootbox.alert("Failed to delete the legs");
+                                        })
+
+                                }
+                            });
+                        });
+
+                        /////////////////////////REDIRECTED FROM CUSTOMERS LIST////////////////////////////////////////
+                        $("#customer_name").dblclick(function () {
+                            if (confirmationId != null) {
+                                window.location = "/customerstoselect/index?loadconfirmation=" + confirmationId;
+                            }
+                            else {
+                                window.location = "/customerstoselect/index"
+                            }
+
+                        });
+
+                        var getUrlParameter = function getUrlParameter(sParam) {
+                            var sPageURL = window.location.search.substring(1),
+                                sURLVariables = sPageURL.split('&'),
+                                sParameterName,
+                                i;
+
+                            for (i = 0; i < sURLVariables.length; i++) {
+                                sParameterName = sURLVariables[i].split('=');
+
+                                if (sParameterName[0] === sParam) {
+                                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                                }
+                            }
+                        };
+
+                        if (getUrlParameter('customer') != undefined) {
+                            console.log("parameter1=" + getUrlParameter('customer'));
+                            $.get("/api/customers/" + getUrlParameter('customer'), function (data) {
+                                $("#customer_name").val(data.name);
+                                $("#customer_address").val(data.address);
+                                $("#customer_city").val(data.city);
+                                $("#customer_state").val(data.state);
+                                $("#customer_country").val(data.country);
+                                $("#customer_zipcode").val(data.zipCode);
+                                $("#customer_id").val(data.id);
+                            }, "json");
+                        }
+
+
+                        //////////////////////////////CHECKBOXES/////////////////////////////////////////////
+                        $("#pod_checkbox").on("click", function () {
+                            //console.log("Checkbox was clicked");
+                            if ($("#pod_checkbox").prop("checked")) {
+                                //console.log("Change color to red");
+                                $("#POD_field").css("background-color", "#ff4136");
+                                $("#POD_field").css("border-radius", "4px");
+                                $("#POD_field").css("color", "black");
+                            }
+                            else {
+                                //console.log("Change color to white");
+                                $("#POD_field").css("background-color", "");
+                                $("#POD_field").css("color", "");
+                            }
+                        });
+
+                        $("#credit_hold").on("click", function () {
+                            //console.log("Checkbox was clicked");
+                            if ($("#credit_hold").prop("checked")) {
+                                //console.log("Change color to red");
+                                $("#credit_hold_field").css("background-color", "#ff4136");
+                                $("#credit_hold_field").css("border-radius", "4px");
+                                $("#credit_hold_field").css("color", "black");
+                            }
+                            else {
+                                //console.log("Change color to white");
+                                $("#credit_hold_field").css("background-color", "");
+                                $("#credit_hold_field").css("color", "");
+                            }
+                        });
+
+                        $("#void_status").on("click", function () {
+                            //console.log("Checkbox was clicked");
+                            if ($("#void_status").prop("checked")) {
+                                //console.log("Change color to red");
+                                $("#void_status_field").css("background-color", "#ff4136");
+                                $("#void_status_field").css("border-radius", "4px");
+                                $("#void_status_field").css("color", "black");
+                            }
+                            else {
+                                //console.log("Change color to white");
+                                $("#void_status_field").css("background-color", "");
+                                $("#void_status_field").css("color", "");
+                            }
+                        });
+
+                        $("#exported_status").on("click", function () {
+                            //console.log("Checkbox was clicked");
+                            if ($("#exported_status").prop("checked")) {
+                                //console.log("Change color to red");
+                                $("#exported_status_field").css("background-color", "#ff4136");
+                                $("#exported_status_field").css("border-radius", "4px");
+                                $("#exported_status_field").css("color", "black");
+                            }
+                            else {
+                                //console.log("Change color to white");
+                                $("#exported_status_field").css("background-color", "");
+                                $("#exported_status_field").css("color", "");
+                            }
+                        });
+
+                        $("#closed_status").on("click", function () {
+                            //console.log("Checkbox was clicked");
+                            if ($("#closed_status").prop("checked")) {
+                                //console.log("Change color to red");
+                                $("#closed_status_field").css("background-color", "#ff4136");
+                                $("#closed_status_field").css("border-radius", "4px");
+                                $("#closed_status_field").css("color", "black");
+                            }
+                            else {
+                                //console.log("Change color to white");
+                                $("#closed_status_field").css("background-color", "");
+                                $("#closed_status_field").css("color", "");
+                            }
+                        });
+             
+
+                        
+
+                        //------------------------------TYPEAHEAD------------------------------------
+                        var customers = new Bloodhound({
+                            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                            queryTokenizer: Bloodhound.tokenizers.whitespace,
+                            remote: {
+                                url: '/api/customers?query=%QUERY',
+                                wildcard: '%QUERY'
+                            }
+                        });
+
+                        var addresses = new Bloodhound({
+                            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('address'),
+                            queryTokenizer: Bloodhound.tokenizers.whitespace,
+                            remote: {
+                                url: '/api/CustomersAddresses?query=%QUERY',
+                                wildcard: '%QUERY'
+                            }
+                        });
+
+                        $('#customer_name').typeahead({
+                            hint: true,
+                            minLength: 3,
+                            highlight: true
+                        }, {
+                            name: 'customers',
+                            display: 'name',
+                            source: customers,
+                            limit: 10
+                        }).on("typeahead:select", function (e, customer) {
+                            //console.log("The customer was selected");
+                            $("#customer_address").val(customer.address);
+                            $("#customer_city").val(customer.city);
+                            $("#customer_state").val(customer.state);
+                            $("#customer_country").val(customer.country);
+                            $("#customer_zipcode").val(customer.zipcode);
+                            $("#customer_id").val(customer.id);
+                        });
+
+                        $('#customer_address').typeahead({
+                            hint: true,
+                            minLength: 3,
+                            highlight: true
+                        }, {
+                            name: 'addresses',
+                            display: 'address',
+                            source: addresses,
+                            limit: 10
+                        }).on("typeahead:select", function (e, customer) {
+                            //console.log("The customer was selected");
+                            $("#customer_name").val(customer.name);
+                            $("#customer_city").val(customer.city);
+                            $("#customer_state").val(customer.state);
+                            $("#customer_country").val(customer.country);
+                            $("#customer_zipcode").val(customer.zipcode);
+                            $("#customer_id").val(customer.id);
+                        });
+
+
+
+                        var confNumbers = new Bloodhound({
+                            datumTokenizer: Bloodhound.tokenizers.obj.whitespace(''),
+                            queryTokenizer: Bloodhound.tokenizers.whitespace,
+                            remote: {
+                                url: '/api/checkconfirmationnumber?query=%QUERY',
+                                wildcard: '%QUERY'
+                            }
+                        });
+
+                        $('#confirmation_number').typeahead({
+                            hint: true,
+                            minLength: 3,
+                            highlight: true
+                        }, {
+                            name: '',
+                            display: '',
+                            source: confNumbers,
+                            limit: 10
+                        }).on("typeahead:select", function (e, customer) {
+                            console.log("The load was selected");
+
+                        });
+
+                        $('#customer_id').change(function () {
+                            console.log("The customer was selected");
+                            $.ajax({
+                                url: "/api/getcustomerbyid?query=" + $('#customer_id').val().toString().trim(),
+                                type: "GET",
+                                success: function (data) {
+                                    if (data == null) {
+                                        bootbox.alert("Cannot find customer. Either customer doesn't exist or customer is void.");
+                                    } else {
+                                        //bootbox.alert("Customer " + data.name);
+                                        $('#customer_name').val(data.name);
+                                        $('#customer_address').val(data.address);
+                                        $('#customer_city').val(data.city);
+                                        $('#customer_country').val(data.country);
+                                        $('#customer_zipcode').val(data.zipcode);
+                                    }
+                                },
+                                error: function (data) {
+                                    bootbox.alert("Cannot find customer");
+                                }
+                            });
+
+                        });
+
+                        $('#confirmation_number').focusout(function () {
+
+                            $('#confirmation_number').val($('#confirmation_number').val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').toUpperCase().trim());
+
+                        });
+
+                        $('#confirmation_number').change(function () {
+                            console.log("The confnumber was entered");
+
+                            $('#confirmation_number').val($('#confirmation_number').val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').toUpperCase().trim());
+
+                          
+                            $.ajax({
+                                url: "/api/checkconfirmationnumber",
+                                type: 'GET',
+                                success: function (data) {
+
+                                    for (i = 0; i < data.length; i++) {
+                                        //console.log("data=" + data[i]);
+                                        if (data[i] == $('#confirmation_number').val()) {
+                                            var loadId = data[i];
+                                            var dataAboutConf = "";
+
+                                            $.ajax({
+                                                url: "/api/getloadbynumber?query=" + $('#confirmation_number').val(),
+                                                type: "GET",
+                                                success: function (data) {
+
+                                                    console.log("data=" + data.customerId);
+                                                    dataAboutConf = " CustomerId: " + data.customerId + " Customer Name: " + data.customer.name + "<br> Weight: " +
+                                                        data.weight + " Rate: " + data.rate + "<br> <b> Please use another Confirmation Number</b>";
+
+                                                    bootbox.alert("<div>There are duplicates found for load number <b>" + loadId + "</b><br>Data about duplicate: " + dataAboutConf + "</div>", function () {
+                                                        $('#confirmation_number').val("");
+                                                        bootbox.alert("<div>There are duplicates found for load number <b>" + loadId + "</b><br>Data about duplicate: " + dataAboutConf + "</div>", function () {
+                                                            $('#confirmation_number').val("");
+                                                        });
+                                                    });
+
+                                                },
+                                                error: function (data) {
+                                                    bootbox.alert("Failed to download information about duplicate. Please check manualy.");
+                                                }
+                                            });
+                                        }
+                                    }
+
+
+                                },
+                                error: function (data) {
+                                    bootbox.alert("Failed to check load for duplicates. Please check manualy.")
+                                }
+                            });
+                        });
+
+                    });
+
+
+
+
+                                                                                                                                                //"use strict";
+                                                                                                                                                //(() => {
+                                                                                                                                                //    const modified_inputs = new Set;
+                                                                                                                                                //    const defaultValue = "defaultValue";
+                                                                                                                                                //    // store default values
+                                                                                                                                                //    addEventListener("beforeinput", (evt) => {
+                                                                                                                                                //        const target = evt.target;
+                                                                                                                                                //        if (!(defaultValue in target || defaultValue in target.dataset)) {
+                                                                                                                                                //            target.dataset[defaultValue] = ("" + (target.value || target.textContent)).trim();
+                                                                                                                                                //        }
+                                                                                                                                                //    });
+                                                                                                                                                //    // detect input modifications
+                                                                                                                                                //    addEventListener("input", (evt) => {
+                                                                                                                                                //        const target = evt.target;
+                                                                                                                                                //        let original;
+                                                                                                                                                //        if (defaultValue in target) {
+                                                                                                                                                //            original = target[defaultValue];
+                                                                                                                                                //        } else {
+                                                                                                                                                //            original = target.dataset[defaultValue];
+                                                                                                                                                //        }
+                                                                                                                                                //        if (original !== ("" + (target.value || target.textContent)).trim()) {
+                                                                                                                                                //            if (!modified_inputs.has(target)) {
+                                                                                                                                                //                modified_inputs.add(target);
+                                                                                                                                                //            }
+                                                                                                                                                //        } else if (modified_inputs.has(target)) {
+                                                                                                                                                //            modified_inputs.delete(target);
+                                                                                                                                                //        }
+                                                                                                                                                //    });
+                                                                                                                                                //    addEventListener("beforeunload", (evt) => {
+                                                                                                                                                //        if (modified_inputs.size) {
+                                                                                                                                                //            const unsaved_changes_warning = "Changes you made may not be saved.";
+                                                                                                                                                //            evt.returnValue = unsaved_changes_warning;
+                                                                                                                                                //            return unsaved_changes_warning;
+
+                                                                                                                                                //        }
+                                                                                                                                                    //        //    });
+                                                                                                                                                    //})();
+
+
+
+
+</script>
+            }
+
+
+
+
+

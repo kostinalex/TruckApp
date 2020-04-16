@@ -1,0 +1,99 @@
+﻿@model TruckApp.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4 id="user_name" style="display: none;">@User.Identity.Name</h4>
+    <h4>Change your account settings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Password:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+            }
+            ]
+        </dd>
+
+        <dt> <label class="form-check-label" for="black_theme" style="font-size:14px; font-weight:bold;">Black Theme:</label></dt>
+        <dd>
+            <input class="form-check-input" type="checkbox" id="black_theme">
+
+        </dd>
+    </dl>
+</div>
+
+
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");    
+            console.log("User name=" + $("#user_name").html());
+            userName = $("#user_name").html();
+
+            $.ajax({
+                url: "/api/getdarktheme",
+                method: "POST",
+                data: {
+                    "userName": userName
+                },
+                success: function (data) {
+                    console.log("Status=" + data);
+                    $("#black_theme").prop("checked", data)
+                
+                }
+            });
+
+
+            $("#black_theme").on("click", function () {
+                var button = $(this);
+                console.log("Checkbox was pressed. Checkbox=" + $("#black_theme").prop("checked"));
+               
+                    
+                if ($("#black_theme").prop("checked")) {
+                    bootbox.alert("Do you want to change the theme? You'll have to log off and log in again.", function () {
+                        $.ajax({
+                            url: "/api/darktheme",
+                            method: "POST",
+                            data: {
+                                "userName": userName
+                            },
+                            success: function () {
+                                console.log("Theme was changed");
+                                location.reload();
+                            }
+                        });
+                    }); 
+                }
+                else {
+                    bootbox.alert("Do you want to change the theme? You'll have to log off and log in again.", function () {
+                        $.ajax({
+                            url: "/api/darktheme",
+                            method: "DELETE",
+                            data: {
+                                "userName": userName
+                            },
+                            success: function () {
+                                console.log("Theme was changed");
+                                location.reload();
+                            }
+                        });
+                    });
+                           
+                } 
+
+            });
+        });
+    </script>
+}

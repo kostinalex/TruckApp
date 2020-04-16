@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@{if (User.IsInRole("CanEnter"))
+    {
+        @*<h2>Welcome User: @User.Identity.Name</h2>*@
+        @*<h2>User Dark Theme: @User.Identity.DarkTheme</h2>*@
+    }
+}
+
+    <div class="jumbotron my_jumbotron">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="~/Images/TruckHome.jpg" style="width:100%;border-radius:8px;" />
+            </div>
+
+                <div class="col-md-6">
+                    <h1>WELCOME to TruckApp!</h1>
+                    <p class="lead">
+                        The TruckApp has restricted access to simulate the protection of valuable commercial information from anonymous users. 
+                        
+                       
+                        @*<br /> Also you can read about the TruckApp or watch the video presentation on YouTube.*@
+                    </p>
+                    <div class="row">
+                        <div class="form-group col-sm-1">
+                            <p><a class="btn btn-primary home_special" href="/Account/Login?visitor=true">Log In As a Visitor &raquo;</a></p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4" >
+                <h2>TruckApp Functionality</h2>
+                <p>
+                    TruckApp is a Web Application for truck companies.
+                </p>
+                <p><a class="btn btn-primary" id="about">Learn more &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Watch video presentation</h2>
+                <p>From the video you will learn how TruckApp works and what different user roles it has.</p>
+                <p><a class="btn btn-primary" id="video">Learn more &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>More about me</h2>
+                <p>My resume, contacts</p>
+                <p><a class="btn btn-primary" href="/contacts/index">Learn more &raquo;</a></p>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+        @section scripts
+    {
+            <script>
+                $(document).ready(function () {
+                    console.log("Document ready");
+                    $("#video").on("click", function () {
+                        bootbox.alert("Sorry the video is not available at this time. Please try later.");
+                        //window.location = "/loadconfirmations";
+                    });
+
+                    $("#about").on("click", function () {
+                        //bootbox.alert("Sorry the video is not available at this time. Please try later.");
+                        window.location = "/about/index";
+                    });
+
+                });
+            </script>
+        }

@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "UserActionsForLoad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UserActionsForLoad</h2>
+
+
+<table id="actions_table" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Date and Time</th>
+            <th>User Name</th>
+            <th>User Action</th>
+
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+@section scripts
+    {
+    <script>
+            $(document).ready(function () {
+                console.log("Document ready");
+
+
+                var getUrlParameter = function getUrlParameter(sParam) {
+                    var sPageURL = window.location.search.substring(1),
+                        sURLVariables = sPageURL.split('&'),
+                        sParameterName,
+                        i;
+
+                    for (i = 0; i < sURLVariables.length; i++) {
+                        sParameterName = sURLVariables[i].split('=');
+
+                        if (sParameterName[0] === sParam) {
+                            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                        }
+                    }
+                };
+
+                var confirmationId = getUrlParameter("loadconfirmation")
+                console.log("confirmationId=" + confirmationId);
+
+
+
+                
+               
+
+                /////////////TABLE///////////////////////////
+                var table1 = $("#actions_table").DataTable({
+                    ajax: {
+                        url: "/api/GetUsersActionsForLoad/" + confirmationId,
+                        method: "GET",
+                        dataSrc: ""
+                    },
+                    columns: [
+                        {
+                            data: "dateTime"
+                        },
+                        {
+                            data: "userName"
+                        },
+                        {
+                            data: "action"
+                        }
+                    ],
+                    scrollY: '50vh',
+                    scrollCollapse: true,
+                    searching: false,
+                    paging: false
+
+                });
+
+
+            });
+    </script>
+}

@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New</h2>
+
+<form id="newHazMat">
+    <div class="form-group">
+        <label>HazMat Name</label>
+        <input id="hazmat" type="text" value="" class="form-control" />
+    </div>
+    <button class="btn btm-primary">Submit</button>
+</form>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+
+            var hazMatId = window.location.pathname
+                .toUpperCase()
+                .replace("/HAZMAT/EDIT/", "")
+                .replace("#", "")
+                .trim();
+            console.log("hazMatId=" + hazMatId);
+
+            if (window.location.pathname.toUpperCase() != "/HazMat/New".toUpperCase()) {
+                console.log("It's not a new Item.");
+                $("h2").text("Edit HazMat");
+                $.get("/api/hazmat/" + hazMatId, function (data) {
+                    $("#hazmat").val(data.name);
+                    console.log("hazMatNameFromAPI to the input field=" + data.name);
+                }, "json");
+
+                $("#newHazMat").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/hazmat/" + hazMatId,
+                        method: "PUT",
+                        data: { "id": hazMatId, "name": $("#hazmat").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#hazmat").val());
+                            window.location = window.location.origin + "/HazMat";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to update hazmat");
+                        })
+                });
+            }
+            else {
+                console.log("It's a new Item.");
+                $("h2").text("New HazMat")
+                $("#newHazMat").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/hazmat",
+                        method: "POST",
+                        data: { "name": $("#hazmat").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#hazmat").val());
+                            window.location = window.location.origin + "/HazMat";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to create new hazmat");
+                        })
+                });
+            }
+        });
+    </script>
+}

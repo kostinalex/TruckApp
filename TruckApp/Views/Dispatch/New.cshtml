@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New</h2>
+
+<form id="newDispatch">
+    <div class="form-group">
+        <label>Dispatch Name</label>
+        <input id="dispatch" type="text" value="" class="form-control" />
+    </div>
+    <button class="btn btm-primary">Submit</button>
+</form>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+
+            var dispatchId = window.location.pathname
+                .toUpperCase()
+                .replace("/DISPATCH/EDIT/", "")
+                .replace("#", "")
+                .trim();
+            console.log("dispatchId=" + dispatchId);
+
+            if (window.location.pathname.toUpperCase() != "/dispatch/New".toUpperCase()) {
+                console.log("It's not a new Item.");
+                $("h2").text("Edit dispatch");
+                $.get("/api/dispatch/" + dispatchId, function (data) {
+                    $("#dispatch").val(data.name);
+                    console.log("dispatchNameFromAPI to the input field=" + data.name);
+                }, "json");
+
+                $("#newDispatch").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/dispatch/" + dispatchId,
+                        method: "PUT",
+                        data: { "id": dispatchId, "name": $("#dispatch").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#dispatch").val());
+                            window.location = window.location.origin + "/dispatch";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to update dispatch");
+                        })
+                });
+            }
+            else {
+                console.log("It's a new Item.");
+                $("h2").text("New dispatch")
+                $("#newDispatch").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/dispatch",
+                        method: "POST",
+                        data: { "name": $("#dispatch").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#dispatch").val());
+                            window.location = window.location.origin + "/dispatch";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to create new dispatch");
+                        })
+                });
+            }
+        });
+    </script>
+}

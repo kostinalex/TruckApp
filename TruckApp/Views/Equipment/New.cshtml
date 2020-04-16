@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New</h2>
+
+<form id="newEquipment">
+    <div class="form-group">
+        <label>Equipment Name</label>
+        <input id="equipment" type="text" value="" class="form-control" />
+    </div>
+    <button class="btn btm-primary">Submit</button>
+</form>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+
+            var equipmentId = window.location.pathname
+                .toUpperCase()
+                .replace("/EQUIPMENT/EDIT/", "")
+                .replace("#", "")
+                .trim();
+            console.log("equipmentId=" + equipmentId);
+
+            if (window.location.pathname.toUpperCase() != "/EQUIPMENT/New".toUpperCase()) {
+                console.log("It's not a new Item.");
+                $("h2").text("Edit equipment");
+                $.get("/api/equipment/" + equipmentId, function (data) {
+                    $("#equipment").val(data.name);
+                    console.log("equipmentNameFromAPI to the input field=" + data.name);
+                }, "json");
+
+                $("#newEquipment").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/equipment/" + equipmentId,
+                        method: "PUT",
+                        data: { "id": equipmentId, "name": $("#equipment").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#equipment").val());
+                            window.location = window.location.origin + "/equipment";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to update equipment");
+                        })
+                });
+            }
+            else {
+                console.log("It's a new Item.");
+                $("h2").text("New equipment")
+                $("#newEquipment").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/equipment",
+                        method: "POST",
+                        data: { "name": $("#equipment").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#equipment").val());
+                            window.location = window.location.origin + "/equipment";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to create new equipment");
+                        })
+                });
+            }
+        });
+    </script>
+}

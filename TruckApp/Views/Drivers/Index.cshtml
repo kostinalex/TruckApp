@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p><h3>Driver List</h3></p>
+
+<a href="/drivers/New" class="btn btn-primary btn-new-confirmation">New driver</a>
+
+<table id="driver-list" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Driver Id</th>
+            <th>Driver Name</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+            var table = $("#driver-list").DataTable({
+                ajax: {
+                    url: "/api/drivers",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "id"
+                    },
+                    {
+                        data: "name"
+                    }
+                    ,
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-driver-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ],
+                initComplete: function () {
+                    console.log("Table ready");
+                },
+                rowCallback: function (row, data) {
+                    $(row).css("cursor", "pointer");
+                    $(row).on("click", function (e) {
+                        if (e.target.tagName != 'BUTTON') {
+                            window.location = "/drivers/edit/" + data.id;
+                        }
+                    });
+                }
+            });
+
+            $("#driver-list").on("click", ".js-delete", function () {
+                var button = $(this);
+                console.log("Delete button was pressed id="+ button.attr("data-driver-id"));
+                bootbox.confirm("Are you sure you want to delete the item?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/drivers/" + button.attr("data-driver-id"),
+                            method: "DELETE",
+                            success: function () {
+                                console.log("Item was deleted");
+                                //table.row(button.parents("tr")).remove().draw();
+                                table.ajax.reload();
+                            }
+                        });
+                    }
+                });
+
+            });
+        });
+    </script>
+}

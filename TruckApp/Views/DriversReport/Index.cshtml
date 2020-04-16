@@ -1,0 +1,531 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Drivers Report</h2>
+
+
+
+<div class="row">
+
+    <div class="form-group col-sm-1">
+        <label for="driver_id">Driver Id</label>
+        <input class="form-control" type="text" id="driver_id" />
+    </div>
+    <div class="form-group col-sm-2">
+        <label for="driver_name">Driver Name</label>
+        <select class="form-control" id="driver_name"></select>
+    </div>
+    <div class="form-group col-sm-2">
+        <label for="loadConfirmation_id">LoadConfirmation Id</label>
+        <input class="form-control" type="text" id="loadConfirmation_id" />
+    </div>
+
+    <div class="form-group col-sm-1">
+        <a id="export" class="btn btn-primary" style="margin-top:25px;">Export</a>
+    </div>
+
+
+
+
+
+
+    <div class="form-group col-sm-1">
+        <a id="apply_condition" class="btn btn-primary" style="margin-top:25px;">Apply Condition</a>
+    </div>
+
+
+</div>
+
+
+<div id="table_div">
+    <table id="drivers_report" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Driver Id</th>
+                <th>Driver Name</th>
+                <th>Leg Id</th>
+                <th>LoadConfirmation Id</th>
+                <th>Distance</th>
+                <th>Time Spent</th>
+                <th>Driver Pay</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+
+
+<iframe id="myIframe" style="opacity: 0; width: 100%; height: 0px;" seamless="seamless"></iframe>
+
+
+
+
+
+
+
+@section scripts
+    {
+    @*<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>*@
+
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+            var table = $("#drivers_report").DataTable({
+                ajax: {
+                    url: "/api/reports",
+                    method: "POST",
+                    dataSrc: "",
+                    data: {
+
+                    }
+                },
+                columns: [
+                    {
+                        data: "driverId"
+                    },
+                    {
+                        data: "driverName"
+                    },
+                    {
+                        data: "legId"
+                    }
+                    ,
+                    {
+                        data: "loadConfirmationId"
+                    }
+                    ,
+                    {
+                        data: "distance"
+                    }
+                    ,
+                    {
+                        data: "timeSpent"
+                    }
+                    ,
+                    {
+                        data: "driverPay"
+                    }
+                    //,
+                    //{
+                    //    data: "id",
+                    //    render: function (data) {
+                    //        return "<button class='btn-link js-delete' data-hazmat-id=" + data + ">Delete</button>";
+                    //    }
+                    //}
+                ],
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'pdf', 'csv'
+                ],
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                },
+                initComplete: function () {
+                    console.log("Table ready");
+                },
+                //scrollY: '60vh',
+                //scrollCollapse: true,
+                //paging: false,
+                rowCallback: function (row, data) {
+
+                },
+                footerCallback: function (tfoot, data, start, end, display) {
+                    var api = this.api();
+                    $(api.column(6).footer()).html(
+                        api.column(6).data().reduce(function (a, b) {
+                            return a + b;
+                        }, 0)
+                    );
+                }
+            });
+
+            //var table_sceleton = "<table id='drivers_report' class='table table-bordered table-hover'><thead><tr><th>Driver Id</th><th>Driver Name</th><th>Leg Id</th><th>LoadConfirmation Id</th><th>Distance</th><th>Time Spent</th><th>Driver Pay</th></tr></thead><tbody></tbody><tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot></table>"
+
+
+
+            $(table.column(5).footer()).html("Total");
+            /////////////APPLY CONDITIONS///////////////////////////
+
+            $("#apply_condition").on("click", function () {
+                console.log("Condition button was pressed");
+                //$("#initial_table").hide();
+                //$("#usersactions_table_conditions").show();
+
+
+
+                var driverName = "";
+                if ($('#driver_name').find(":selected").text() == "Select driver") {
+                    //console.log("Select driver");
+                    driverName = "";
+                } else {
+                    driverName = $('#driver_name').find(":selected").text();
+                }
+
+                $("#drivers_report").DataTable().clear().destroy();
+                //$("#drivers_report").remove();
+                //$("#table_div").html(table_sceleton);
+
+
+
+                var table = $("#drivers_report").DataTable({
+                    ajax: {
+                        url: "/api/reports",
+                        method: "POST",
+                        dataSrc: "",
+                        data: {
+                            "driverId": $("#driver_id").val(),
+                            "driverName": driverName,
+                            "loadConfirmationId": $("#loadConfirmation_id").val(),
+                        }
+                    },
+                    columns: [
+                        {
+                            data: "driverId"
+                        },
+                        {
+                            data: "driverName"
+                        },
+                        {
+                            data: "legId"
+                        }
+                        ,
+                        {
+                            data: "loadConfirmationId"
+                        }
+                        ,
+                        {
+                            data: "distance"
+                        }
+                        ,
+                        {
+                            data: "timeSpent"
+                        }
+                        ,
+                        {
+                            data: "driverPay"
+                        }
+                        //,
+                        //{
+                        //    data: "id",
+                        //    render: function (data) {
+                        //        return "<button class='btn-link js-delete' data-hazmat-id=" + data + ">Delete</button>";
+                        //    }
+                        //}
+                    ],
+                    initComplete: function () {
+                        console.log("Table ready");
+                    },
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'excel', 'pdf', 'csv'
+                    ],
+                    scrollY: '60vh',
+                    scrollCollapse: true,
+                    paging: false,
+                    //rowCallback: function (row, data) {
+
+                    //},
+                    fixedHeader: {
+                        header: true,
+                        footer: true
+                    }
+                    ,
+                    footerCallback: function (tfoot, data, start, end, display) {
+                        var api = this.api();
+                        $(api.column(6).footer()).html(
+                            api.column(6).data().reduce(function (a, b) {
+                                return a + b;
+                            }, 0)
+                        );
+                    }
+                });
+            });
+
+            $.get("/api/drivers", function (data) {
+                ////console.log("driver=" + data);
+                var driver_html = "<option value=''>Select driver</option>";
+                for (var i = 0, len = data.length; i < len; i++) {
+                    ////console.log("Hazmat=" + data[i].name);
+                    driver_html = driver_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
+                }
+                //console.log("driver=" + driver_html);
+                $("#driver_name").html(driver_html);
+            }, "json");
+
+
+
+
+
+            function exportToExcel(that, id, hasHeader, removeLinks, removeImages, removeInputParams) {
+                if (that == null || typeof that === 'undefined') {
+                    console.log('Sender is required');
+                    return false;
+                }
+
+                if (!(that instanceof HTMLAnchorElement)) {
+                    console.log('Sender must be an anchor element');
+                    return false;
+                }
+
+                if (id == null || typeof id === 'undefined') {
+                    console.log('Table id is required');
+                    return false;
+                }
+                if (hasHeader == null || typeof hasHeader === 'undefined') {
+                    hasHeader = true;
+                }
+                if (removeLinks == null || typeof removeLinks === 'undefined') {
+                    removeLinks = true;
+                }
+                if (removeImages == null || typeof removeImages === 'undefined') {
+                    removeImages = false;
+                }
+                if (removeInputParams == null || typeof removeInputParams === 'undefined') {
+                    removeInputParams = true;
+                }
+
+                var tab_text = "<table border='2px'>";
+                var textRange;
+
+                tab = $(id).get(0);
+
+                if (tab == null || typeof tab === 'undefined') {
+                    console.log('Table not found');
+                    return;
+                }
+
+                var j = 0;
+
+                if (hasHeader && tab.rows.length > 0) {
+                    var row = tab.rows[0];
+                    tab_text += "<tr bgcolor='#87AFC6'>";
+                    for (var l = 0; l < row.cells.length; l++) {
+                        if ($(tab.rows[0].cells[l]).is(':visible')) {//export visible cols only
+                            tab_text += "<td>" + row.cells[l].innerHTML + "</td>";
+                        }
+                    }
+                    tab_text += "</tr>";
+                    j++;
+                }
+
+                for (; j < tab.rows.length; j++) {
+                    var row = tab.rows[j];
+                    tab_text += "<tr>";
+                    for (var l = 0; l < row.cells.length; l++) {
+                        if ($(tab.rows[j].cells[l]).is(':visible')) {//export visible cols only
+                            tab_text += "<td>" + row.cells[l].innerHTML + "</td>";
+                        }
+                    }
+                    tab_text += "</tr>";
+                }
+
+                tab_text = tab_text + "</table>";
+                if (removeLinks)
+                    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");
+                if (removeImages)
+                    tab_text = tab_text.replace(/<img[^>]*>/gi, "");
+                if (removeInputParams)
+                    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, "");
+
+                var ua = window.navigator.userAgent;
+                var msie = ua.indexOf("MSIE ");
+
+                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+                {
+                    myIframe.document.open("txt/html", "replace");
+                    myIframe.document.write(tab_text);
+                    myIframe.document.close();
+                    myIframe.focus();
+                    sa = myIframe.document.execCommand("SaveAs", true, document.title + ".xls");
+                    return true;
+                }
+                else {
+                    //other browser tested on IE 11
+                    var result = "data:application/vnd.ms-excel," + encodeURIComponent(tab_text);
+                    that.href = result;
+                    that.download = document.title + ".xls";
+                    return true;
+                }
+            }
+
+
+
+
+            $("#export").click(function () {
+                exportToExcel(this, '#drivers_report');
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //$("#export").on("click", function () {
+            //    tableId = "drivers_report";
+            //    filename = "Table";
+            //    let dataType = 'application/vnd.ms-excel';
+            //    let extension = '.xls';
+
+            //    let base64 = function (s) {
+            //        return window.btoa(unescape(encodeURIComponent(s)))
+            //    };
+
+            //    let template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+            //    let render = function (template, content) {
+            //        return template.replace(/{(\w+)}/g, function (m, p) { return content[p]; });
+            //    };
+
+            //    let tableElement = document.getElementById(tableId);
+
+            //    let tableExcel = render(template, {
+            //        worksheet: filename,
+            //        table: tableElement.innerHTML
+            //    });
+
+            //    filename = filename + extension;
+
+            //    if (navigator.msSaveOrOpenBlob) {
+            //        let blob = new Blob(
+            //            ['\ufeff', tableExcel],
+            //            { type: dataType }
+            //        );
+
+            //        navigator.msSaveOrOpenBlob(blob, filename);
+            //    } else {
+            //        let downloadLink = document.createElement("a");
+
+            //        document.body.appendChild(downloadLink);
+
+            //        downloadLink.href = 'data:' + dataType + ';base64,' + base64(tableExcel);
+
+            //        downloadLink.download = filename;
+
+            //        downloadLink.click();
+            //    }
+
+            //});
+
+
+
+
+
+
+
+
+
+
+              //$("#export").on("click", function () {
+            //    var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
+            //    var textRange; var j = 0;
+            //    tab = document.getElementById('drivers_report');
+
+            //    for (j = 0; j < tab.rows.length; j++) {
+            //        tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+            //    }
+
+            //    tab_text = tab_text + "</table>";
+
+
+            //    //console.log("tab_text=" + tab_text);
+
+            //    //var ua = window.navigator.userAgent;
+            //    //var msie = ua.indexOf("MSIE ");
+
+            //    tab_text = tab.outerHTML;
+
+            //    sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+
+            //    return (sa);
+            //});
+
+
+            //$("#export").on("click", function () {
+            //    var tab_text = '<table border="1px" style="font-size:20px" ">';
+            //    var textRange;
+            //    var j = 0;
+            //    var tab = document.getElementById('drivers_report'); // id of table
+            //    var lines = tab.rows.length;
+
+            //    // the first headline of the table
+            //    if (lines > 0) {
+            //        tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';
+            //    }
+
+            //    // table data lines, loop starting from 1
+            //    for (j = 1; j < lines; j++) {
+            //        tab_text = tab_text + "<tr>" + tab.rows[j].innerHTML + "</tr>";
+            //    }
+
+            //    tab_text = tab_text + "</table>";
+            //    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");             //remove if u want links in your table
+            //    tab_text = tab_text.replace(/<img[^>]*>/gi, "");                 // remove if u want images in your table
+            //    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, "");    // reomves input params
+            //    console.log(tab_text); // aktivate so see the result (press F12 in browser)
+
+            //    var ua = window.navigator.userAgent;
+            //    //var msie = ua.indexOf("MSIE ");
+
+            //    //// if Internet Explorer
+            //    //if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+            //    //    txtArea1.document.open("txt/html", "replace");
+            //    //    txtArea1.document.write(tab_text);
+            //    //    txtArea1.document.close();
+            //    //    txtArea1.focus();
+            //    //    sa = txtArea1.document.execCommand("SaveAs", true, "DataTableExport.xls");
+            //    //}
+            //    //else // other browser not tested on IE 11
+            //        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+
+            //    return (sa);
+            //});
+
+
+
+            //$("#export").on("click", function exportF(elem) {
+            //    var table = document.getElementById("drivers_report");
+            //    var html = table.outerHTML;
+            //    var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url
+
+            //    //console.log("html=" + html);
+            //    console.log("elem=" + elem[1]);
+
+            //    //elem.setAttribute("href", url);
+            //    //elem.setAttribute("download", "export.xls"); // Choose the file name
+            //    //return false;
+
+
+            //});
+
+
+
+
+
+        });
+    </script>
+}

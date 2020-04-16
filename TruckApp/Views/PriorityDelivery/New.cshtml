@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New</h2>
+
+<form id="newPriorityDelivery">
+    <div class="form-group">
+        <label>PriorityDelivery Name</label>
+        <input id="priorityDelivery" type="text" value="" class="form-control" />
+    </div>
+    <button class="btn btm-primary">Submit</button>
+</form>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+
+            var priorityDeliveryId = window.location.pathname
+                .toUpperCase()
+                .replace("/PRIORITYDELIVERY/EDIT/", "")
+                .replace("#", "")
+                .trim();
+            console.log("priorityDeliveryId=" + priorityDeliveryId);
+
+            if (window.location.pathname.toUpperCase() != "/priorityDelivery/New".toUpperCase()) {
+                console.log("It's not a new Item.");
+                $("h2").text("Edit PriorityDelivery");
+                $.get("/api/priorityDelivery/" + priorityDeliveryId, function (data) {
+                    $("#priorityDelivery").val(data.name);
+                    console.log("priorityDeliveryNameFromAPI to the input field=" + data.name);
+                }, "json");
+
+                $("#newPriorityDelivery").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/priorityDelivery/" + priorityDeliveryId,
+                        method: "PUT",
+                        data: { "id": priorityDeliveryId, "name": $("#priorityDelivery").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#priorityDelivery").val());
+                            window.location = window.location.origin + "/priorityDelivery";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to update priorityDelivery");
+                        })
+                });
+            }
+            else {
+                console.log("It's a new Item.");
+                $("h2").text("New PriorityDelivery")
+                $("#newPriorityDelivery").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/priorityDelivery",
+                        method: "POST",
+                        data: { "name": $("#priorityDelivery").val() }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#priorityDelivery").val());
+                            window.location = window.location.origin + "/priorityDelivery";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to create new priorityDelivery");
+                        })
+                });
+            }
+        });
+    </script>
+}

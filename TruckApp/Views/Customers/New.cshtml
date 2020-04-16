@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New</h2>
+
+<form id="newCustomer">
+    <div class="form-group">
+        <label for="customerName">Customer Name</label>
+        <input id="customerName" type="text" value="" class="form-control" />
+        <label for="address">Address</label>
+        <input id="address" type="text" value="" class="form-control" />
+        <label for="city">City</label>
+        <input id="city" type="text" value="" class="form-control" />
+        <label for="state">State</label>
+        <input id="state" type="text" value="" class="form-control" />
+        <label for="country">Country</label>
+        <input id="country" type="text" value="" class="form-control" />
+        <label for="country">Zipcode</label>
+        <input id="zipcode" type="text" value="" class="form-control" />
+        <input type='checkbox' id="void">
+        <label for="void">Void</label><br>
+    </div>
+    <button class="btn btm-primary">Submit</button>
+</form>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready");
+
+            var customerId = window.location.pathname
+                .toUpperCase()
+                .replace("/CUSTOMERS/EDIT/", "")
+                .replace("#", "")
+                .trim();
+            console.log("customerId=" + customerId);
+
+            if (window.location.pathname.toUpperCase() != "/customers/New".toUpperCase()) {
+                console.log("It's not a new Item.");
+                $("h2").text("Edit customer");
+                $.get("/api/customers/" + customerId, function (data) {
+                    $("#customerName").val(data.name);
+                    $("#address").val(data.address);
+                    $("#city").val(data.city);
+                    $("#state").val(data.state);
+                    $("#country").val(data.country);
+                    $("#zipcode").val(data.zipcode);
+                    $("#void").prop("checked", data.void);
+                   
+                    console.log("customerNameFromAPI to the input field=" + data.name);
+                }, "json");
+
+
+
+                $("#newCustomer").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/customers/" + customerId,
+                        method: "PUT",
+                        data: {
+                            "id": customerId,
+                            "name": $("#customerName").val(),
+                            "address": $("#address").val(),
+                            "city": $("#city").val(),
+                            "state": $("#state").val(),
+                            "country": $("#country").val(),
+                            "zipcode": $("#zipcode").val(),
+                            "void": $("#void").prop("checked")
+                        }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#customer").val());
+                            window.location = window.location.origin + "/customers";
+                        })
+                        .fail(function () {
+                            console.log("fail" + vm);
+                            bootbox.alert("Failed to update customer");
+                        })
+                });
+            }
+            else {
+                console.log("It's a new Item.");
+                $("h2").text("New customer")
+                $("#newCustomer").submit(function (e) {
+                    console.log("Submit button was pressed");
+                    e.preventDefault();
+                    $.ajax({
+                        url: "/api/customers",
+                        method: "POST",
+                        data: {
+                            "name": $("#customerName").val(),
+                            "address": $("#address").val(),
+                            "city": $("#city").val(),
+                            "state": $("#state").val(),
+                            "country": $("#country").val(),
+                            "zipcode": $("#zipcode").val(),
+                            "void": $("#void").prop("checked")
+                        }
+                    })
+                        .done(function () {
+                            console.log("send to API=" + $("#customer").val());
+                            window.location = window.location.origin + "/customers";
+                        })
+                        .fail(function () {
+                            console.log("fail");
+                            bootbox.alert("Failed to create new customer");
+                        })
+                });
+            }
+        });
+    </script>
+}
