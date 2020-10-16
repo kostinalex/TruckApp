@@ -10,6 +10,7 @@ using System.Data.Entity;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class StopsController : ApiController
     {
         private ApplicationDbContext _context;
@@ -33,10 +34,6 @@ namespace TruckApp.Controllers.Api
         public IHttpActionResult GetStops(int id)
         {
             var stopsToGet = _context.Stops.Where(c => c.LoadConfirmationId == id).ToList();
-
-            //if (hazMatToGet == null)
-            //    return NotFound();
-
             return Ok(stopsToGet);
         }
 
@@ -59,6 +56,14 @@ namespace TruckApp.Controllers.Api
                 }             
 
             };
+
+            var userAction = new UserAction
+            {
+                UserName = User.Identity.Name,
+                Action = "New stop was added. Stop address " + stop.Address,
+                DateTime = DateTime.Now
+            };
+            _context.UserActions.Add(userAction);
 
             _context.Stops.Add(stop);
             _context.SaveChanges();
@@ -86,6 +91,14 @@ namespace TruckApp.Controllers.Api
                 stopToEdit.ZipCode = stop.ZipCode;
                 stopToEdit.Date1 = stop.Date1;
                 stopToEdit.Date2 = stop.Date2;
+
+                var userAction = new UserAction
+                {
+                    UserName = User.Identity.Name,
+                    Action = "Stop was edited. Stop address " + stop.Address,
+                    DateTime = DateTime.Now
+                };
+                _context.UserActions.Add(userAction);
 
                 _context.SaveChanges();
 
@@ -118,6 +131,16 @@ namespace TruckApp.Controllers.Api
 
 
             _context.Stops.Remove(stopToDelete);
+
+
+            var userAction = new UserAction
+            {
+                UserName = User.Identity.Name,
+                Action = "Stop was deleted. Stop address " + stopToDelete.Address,
+                DateTime = DateTime.Now
+            };
+            _context.UserActions.Add(userAction);
+
             _context.SaveChanges();
 
         }

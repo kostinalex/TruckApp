@@ -13,6 +13,7 @@ using System.Data.Entity;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class FileUploadController : ApiController
     {
         private ApplicationDbContext _context;

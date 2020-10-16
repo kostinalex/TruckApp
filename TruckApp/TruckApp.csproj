@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -26,6 +29,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
+    <ApplicationInsightsResourceId>/subscriptions/6f76353a-5d66-4486-a0ec-891e2868ef3d/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/TruckApp</ApplicationInsightsResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,18 +50,113 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="AutoMapper, Version=4.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.4.1.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.7\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.6.0\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -65,11 +164,21 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -82,7 +191,7 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
@@ -90,109 +199,31 @@
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Optimization">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="WebGrease">
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
-    </Reference>
-    <Reference Include="Antlr3.Runtime">
-      <Private>True</Private>
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Owin">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="Owin">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Facebook">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Cookies">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.OAuth">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Google">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Twitter">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ApplicationInsights">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.Agent.Intercept">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.DependencyCollector">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.PerfCounterCollector">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.WindowsServer">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AI.Web">
-      <HintPath>..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -206,10 +237,12 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\AttachmentsController.cs" />
+    <Compile Include="Controllers\Api\AuthController.cs" />
     <Compile Include="Controllers\Api\CustomersAddressesController.cs" />
     <Compile Include="Controllers\Api\CustomersController.cs" />
     <Compile Include="Controllers\Api\DispatchController.cs" />
     <Compile Include="Controllers\Api\DriversController.cs" />
+    <Compile Include="Controllers\Api\DropDownListsController.cs" />
     <Compile Include="Controllers\Api\EquipmentController.cs" />
     <Compile Include="Controllers\Api\FileUploadController.cs" />
     <Compile Include="Controllers\Api\HazMatController.cs" />
@@ -239,193 +272,39 @@
     <Compile Include="Controllers\PriorityEntryController.cs" />
     <Compile Include="Controllers\UsersActionsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003292351342_Init.cs" />
-    <Compile Include="Migrations\202003292351342_Init.Designer.cs">
-      <DependentUpon>202003292351342_Init.cs</DependentUpon>
+    <Compile Include="Migrations\202004171904338_Init.cs" />
+    <Compile Include="Migrations\202004171904338_Init.Designer.cs">
+      <DependentUpon>202004171904338_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003300128001_AddPickUpAndDelivery.cs" />
-    <Compile Include="Migrations\202003300128001_AddPickUpAndDelivery.Designer.cs">
-      <DependentUpon>202003300128001_AddPickUpAndDelivery.cs</DependentUpon>
+    <Compile Include="Migrations\202004172221438_LegError.cs" />
+    <Compile Include="Migrations\202004172221438_LegError.Designer.cs">
+      <DependentUpon>202004172221438_LegError.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004011722420_DeletePUandDEL.cs" />
-    <Compile Include="Migrations\202004011722420_DeletePUandDEL.Designer.cs">
-      <DependentUpon>202004011722420_DeletePUandDEL.cs</DependentUpon>
+    <Compile Include="Migrations\202004191711384_AddVoidToDispatchAndDrivers.cs" />
+    <Compile Include="Migrations\202004191711384_AddVoidToDispatchAndDrivers.Designer.cs">
+      <DependentUpon>202004191711384_AddVoidToDispatchAndDrivers.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004011927438_AddPropertiesToConfPUDELTIMEDESC.cs" />
-    <Compile Include="Migrations\202004011927438_AddPropertiesToConfPUDELTIMEDESC.Designer.cs">
-      <DependentUpon>202004011927438_AddPropertiesToConfPUDELTIMEDESC.cs</DependentUpon>
+    <Compile Include="Migrations\202004191751010_AddNullableDispatchId.cs" />
+    <Compile Include="Migrations\202004191751010_AddNullableDispatchId.Designer.cs">
+      <DependentUpon>202004191751010_AddNullableDispatchId.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004012022471_DeleteDateTime.cs" />
-    <Compile Include="Migrations\202004012022471_DeleteDateTime.Designer.cs">
-      <DependentUpon>202004012022471_DeleteDateTime.cs</DependentUpon>
+    <Compile Include="Migrations\202004240257248_DeleteVirtual.cs" />
+    <Compile Include="Migrations\202004240257248_DeleteVirtual.Designer.cs">
+      <DependentUpon>202004240257248_DeleteVirtual.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004012252213_addHazMatTable.cs" />
-    <Compile Include="Migrations\202004012252213_addHazMatTable.Designer.cs">
-      <DependentUpon>202004012252213_addHazMatTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004012254225_addHazMatReference.cs" />
-    <Compile Include="Migrations\202004012254225_addHazMatReference.Designer.cs">
-      <DependentUpon>202004012254225_addHazMatReference.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004012341570_addEquipment.cs" />
-    <Compile Include="Migrations\202004012341570_addEquipment.Designer.cs">
-      <DependentUpon>202004012341570_addEquipment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004020020135_addDispatchAndPriorities.cs" />
-    <Compile Include="Migrations\202004020020135_addDispatchAndPriorities.Designer.cs">
-      <DependentUpon>202004020020135_addDispatchAndPriorities.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004031642534_AddNotes.cs" />
-    <Compile Include="Migrations\202004031642534_AddNotes.Designer.cs">
-      <DependentUpon>202004031642534_AddNotes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004040128536_AddAttachments.cs" />
-    <Compile Include="Migrations\202004040128536_AddAttachments.Designer.cs">
-      <DependentUpon>202004040128536_AddAttachments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004040130218_AddAttachments1.cs" />
-    <Compile Include="Migrations\202004040130218_AddAttachments1.Designer.cs">
-      <DependentUpon>202004040130218_AddAttachments1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004042023401_AddStops.cs" />
-    <Compile Include="Migrations\202004042023401_AddStops.Designer.cs">
-      <DependentUpon>202004042023401_AddStops.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004050512134_RateToInt.cs" />
-    <Compile Include="Migrations\202004050512134_RateToInt.Designer.cs">
-      <DependentUpon>202004050512134_RateToInt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004050514381_RateToDec.cs" />
-    <Compile Include="Migrations\202004050514381_RateToDec.Designer.cs">
-      <DependentUpon>202004050514381_RateToDec.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004050516082_RateToInt1.cs" />
-    <Compile Include="Migrations\202004050516082_RateToInt1.Designer.cs">
-      <DependentUpon>202004050516082_RateToInt1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004051811193_CustomerAnnotations.cs" />
-    <Compile Include="Migrations\202004051811193_CustomerAnnotations.Designer.cs">
-      <DependentUpon>202004051811193_CustomerAnnotations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004051835489_CustomerAnnotations1.cs" />
-    <Compile Include="Migrations\202004051835489_CustomerAnnotations1.Designer.cs">
-      <DependentUpon>202004051835489_CustomerAnnotations1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004052018555_AddDriver.cs" />
-    <Compile Include="Migrations\202004052018555_AddDriver.Designer.cs">
-      <DependentUpon>202004052018555_AddDriver.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004052058006_AddCreditHoldPODAndOthers.cs" />
-    <Compile Include="Migrations\202004052058006_AddCreditHoldPODAndOthers.Designer.cs">
-      <DependentUpon>202004052058006_AddCreditHoldPODAndOthers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004052235598_AddHeaderToNote.cs" />
-    <Compile Include="Migrations\202004052235598_AddHeaderToNote.Designer.cs">
-      <DependentUpon>202004052235598_AddHeaderToNote.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004060210470_AddZipCodes.cs" />
-    <Compile Include="Migrations\202004060210470_AddZipCodes.Designer.cs">
-      <DependentUpon>202004060210470_AddZipCodes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004061826445_ChangeRequiredStatusForLoadConfirmationProperties.cs" />
-    <Compile Include="Migrations\202004061826445_ChangeRequiredStatusForLoadConfirmationProperties.Designer.cs">
-      <DependentUpon>202004061826445_ChangeRequiredStatusForLoadConfirmationProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004070258279_HazMatNullable.cs" />
-    <Compile Include="Migrations\202004070258279_HazMatNullable.Designer.cs">
-      <DependentUpon>202004070258279_HazMatNullable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004070347432_DelStatus.cs" />
-    <Compile Include="Migrations\202004070347432_DelStatus.Designer.cs">
-      <DependentUpon>202004070347432_DelStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004081835524_AddTime.cs" />
-    <Compile Include="Migrations\202004081835524_AddTime.Designer.cs">
-      <DependentUpon>202004081835524_AddTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004081905504_DropDelTime.cs" />
-    <Compile Include="Migrations\202004081905504_DropDelTime.Designer.cs">
-      <DependentUpon>202004081905504_DropDelTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004081915358_DropDelTime1.cs" />
-    <Compile Include="Migrations\202004081915358_DropDelTime1.Designer.cs">
-      <DependentUpon>202004081915358_DropDelTime1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004090422480_AddLegs.cs" />
-    <Compile Include="Migrations\202004090422480_AddLegs.Designer.cs">
-      <DependentUpon>202004090422480_AddLegs.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004091601114_AddConfIdToLeg.cs" />
-    <Compile Include="Migrations\202004091601114_AddConfIdToLeg.Designer.cs">
-      <DependentUpon>202004091601114_AddConfIdToLeg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004092011514_DropStopsFromLeg.cs" />
-    <Compile Include="Migrations\202004092011514_DropStopsFromLeg.Designer.cs">
-      <DependentUpon>202004092011514_DropStopsFromLeg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004092118136_IdontKnow.cs" />
-    <Compile Include="Migrations\202004092118136_IdontKnow.Designer.cs">
-      <DependentUpon>202004092118136_IdontKnow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004092124157_AddStopsAgain.cs" />
-    <Compile Include="Migrations\202004092124157_AddStopsAgain.Designer.cs">
-      <DependentUpon>202004092124157_AddStopsAgain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004102311257_ChangeRateToDecimal.cs" />
-    <Compile Include="Migrations\202004102311257_ChangeRateToDecimal.Designer.cs">
-      <DependentUpon>202004102311257_ChangeRateToDecimal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004120212474_AddUserActions.cs" />
-    <Compile Include="Migrations\202004120212474_AddUserActions.Designer.cs">
-      <DependentUpon>202004120212474_AddUserActions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004120214161_AddDateTimeToUserActions.cs" />
-    <Compile Include="Migrations\202004120214161_AddDateTimeToUserActions.Designer.cs">
-      <DependentUpon>202004120214161_AddDateTimeToUserActions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004120408589_AddLoadToActionUser.cs" />
-    <Compile Include="Migrations\202004120408589_AddLoadToActionUser.Designer.cs">
-      <DependentUpon>202004120408589_AddLoadToActionUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004120420164_AddLoadToActionUser1.cs" />
-    <Compile Include="Migrations\202004120420164_AddLoadToActionUser1.Designer.cs">
-      <DependentUpon>202004120420164_AddLoadToActionUser1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004131638286_AddDarkTheme.cs" />
-    <Compile Include="Migrations\202004131638286_AddDarkTheme.Designer.cs">
-      <DependentUpon>202004131638286_AddDarkTheme.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004131705248_AddVoid.cs" />
-    <Compile Include="Migrations\202004131705248_AddVoid.Designer.cs">
-      <DependentUpon>202004131705248_AddVoid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004131943017_AddDarkTheme1.cs" />
-    <Compile Include="Migrations\202004131943017_AddDarkTheme1.Designer.cs">
-      <DependentUpon>202004131943017_AddDarkTheme1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004132116335_AddTimeDistanceRateToLeg.cs" />
-    <Compile Include="Migrations\202004132116335_AddTimeDistanceRateToLeg.Designer.cs">
-      <DependentUpon>202004132116335_AddTimeDistanceRateToLeg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004132219354_MakeTimeNullable.cs" />
-    <Compile Include="Migrations\202004132219354_MakeTimeNullable.Designer.cs">
-      <DependentUpon>202004132219354_MakeTimeNullable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004142345361_DeleteDriver.cs" />
-    <Compile Include="Migrations\202004142345361_DeleteDriver.Designer.cs">
-      <DependentUpon>202004142345361_DeleteDriver.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004150009010_AddClosedAndExported.cs" />
-    <Compile Include="Migrations\202004150009010_AddClosedAndExported.Designer.cs">
-      <DependentUpon>202004150009010_AddClosedAndExported.cs</DependentUpon>
+    <Compile Include="Migrations\202010161742046_Restore.cs" />
+    <Compile Include="Migrations\202010161742046_Restore.designer.cs">
+      <DependentUpon>202010161742046_Restore.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\UserExtensions.cs" />
     <Compile Include="Models\Delivery.cs" />
     <Compile Include="Models\Dispatch.cs" />
@@ -446,6 +325,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DriversReportViewModel.cs" />
+    <Compile Include="ViewModels\DropDownListsViewModel.cs" />
+    <Compile Include="ViewModels\EditLoadViewForm.cs" />
     <Compile Include="ViewModels\GetUsersAndRolesViewModel.cs" />
     <Compile Include="ViewModels\InputDriversReportViewModel.cs" />
     <Compile Include="ViewModels\InputLoadReportViewModel.cs" />
@@ -625,6 +506,42 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\1.1.PNG" />
+    <Content Include="Images\1.2.PNG" />
+    <Content Include="Images\1.3.PNG" />
+    <Content Include="Images\10.1.PNG" />
+    <Content Include="Images\11.1.PNG" />
+    <Content Include="Images\11.2.PNG" />
+    <Content Include="Images\12.1.PNG" />
+    <Content Include="Images\12.2.PNG" />
+    <Content Include="Images\13.1.PNG" />
+    <Content Include="Images\13.2.PNG" />
+    <Content Include="Images\14.1.PNG" />
+    <Content Include="Images\14.2.PNG" />
+    <Content Include="Images\14.3.PNG" />
+    <Content Include="Images\2.1.PNG" />
+    <Content Include="Images\2.2.PNG" />
+    <Content Include="Images\2.3.PNG" />
+    <Content Include="Images\3.1.PNG" />
+    <Content Include="Images\4.1.PNG" />
+    <Content Include="Images\4.2.PNG" />
+    <Content Include="Images\4.3.PNG" />
+    <Content Include="Images\5.1.PNG" />
+    <Content Include="Images\5.2.PNG" />
+    <Content Include="Images\5.3.PNG" />
+    <Content Include="Images\6.1.PNG" />
+    <Content Include="Images\6.2.PNG" />
+    <Content Include="Images\7.1.PNG" />
+    <Content Include="Images\7.2.PNG" />
+    <Content Include="Images\7.3.PNG" />
+    <Content Include="Images\7.4.PNG" />
+    <Content Include="Images\8.1.PNG" />
+    <Content Include="Images\8.2.PNG" />
+    <Content Include="Images\8.3.PNG" />
+    <Content Include="Images\9.1.PNG" />
+    <Content Include="Images\9.2.PNG" />
+    <Content Include="Images\9.3.PNG" />
+    <Content Include="Images\loader.gif" />
     <Content Include="Images\TruckAppIcon.png" />
     <Content Include="Images\TruckAppIconDark.png" />
     <Content Include="Images\TruckHome.jpg" />
@@ -633,16 +550,20 @@
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\DataTables\css\semanticui.scss" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
-    <None Include="Properties\PublishProfiles\TruckApplication - Web Deploy.pubxml" />
+    <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\kostin - Web Deploy.pubxml" />
+    <Content Include="Resume\Alex_Kostin.docx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap4.js" />
@@ -794,160 +715,29 @@
     <Content Include="Views\DriversReport\Index.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Contacts\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003292351342_Init.resx">
-      <DependentUpon>202003292351342_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004171904338_Init.resx">
+      <DependentUpon>202004171904338_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003300128001_AddPickUpAndDelivery.resx">
-      <DependentUpon>202003300128001_AddPickUpAndDelivery.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004172221438_LegError.resx">
+      <DependentUpon>202004172221438_LegError.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004011722420_DeletePUandDEL.resx">
-      <DependentUpon>202004011722420_DeletePUandDEL.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004191711384_AddVoidToDispatchAndDrivers.resx">
+      <DependentUpon>202004191711384_AddVoidToDispatchAndDrivers.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004011927438_AddPropertiesToConfPUDELTIMEDESC.resx">
-      <DependentUpon>202004011927438_AddPropertiesToConfPUDELTIMEDESC.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004191751010_AddNullableDispatchId.resx">
+      <DependentUpon>202004191751010_AddNullableDispatchId.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004012022471_DeleteDateTime.resx">
-      <DependentUpon>202004012022471_DeleteDateTime.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004240257248_DeleteVirtual.resx">
+      <DependentUpon>202004240257248_DeleteVirtual.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004012252213_addHazMatTable.resx">
-      <DependentUpon>202004012252213_addHazMatTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004012254225_addHazMatReference.resx">
-      <DependentUpon>202004012254225_addHazMatReference.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004012341570_addEquipment.resx">
-      <DependentUpon>202004012341570_addEquipment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004020020135_addDispatchAndPriorities.resx">
-      <DependentUpon>202004020020135_addDispatchAndPriorities.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004031642534_AddNotes.resx">
-      <DependentUpon>202004031642534_AddNotes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004040128536_AddAttachments.resx">
-      <DependentUpon>202004040128536_AddAttachments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004040130218_AddAttachments1.resx">
-      <DependentUpon>202004040130218_AddAttachments1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004042023401_AddStops.resx">
-      <DependentUpon>202004042023401_AddStops.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004050512134_RateToInt.resx">
-      <DependentUpon>202004050512134_RateToInt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004050514381_RateToDec.resx">
-      <DependentUpon>202004050514381_RateToDec.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004050516082_RateToInt1.resx">
-      <DependentUpon>202004050516082_RateToInt1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004051811193_CustomerAnnotations.resx">
-      <DependentUpon>202004051811193_CustomerAnnotations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004051835489_CustomerAnnotations1.resx">
-      <DependentUpon>202004051835489_CustomerAnnotations1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004052018555_AddDriver.resx">
-      <DependentUpon>202004052018555_AddDriver.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004052058006_AddCreditHoldPODAndOthers.resx">
-      <DependentUpon>202004052058006_AddCreditHoldPODAndOthers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004052235598_AddHeaderToNote.resx">
-      <DependentUpon>202004052235598_AddHeaderToNote.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004060210470_AddZipCodes.resx">
-      <DependentUpon>202004060210470_AddZipCodes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004061826445_ChangeRequiredStatusForLoadConfirmationProperties.resx">
-      <DependentUpon>202004061826445_ChangeRequiredStatusForLoadConfirmationProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004070258279_HazMatNullable.resx">
-      <DependentUpon>202004070258279_HazMatNullable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004070347432_DelStatus.resx">
-      <DependentUpon>202004070347432_DelStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004081835524_AddTime.resx">
-      <DependentUpon>202004081835524_AddTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004081905504_DropDelTime.resx">
-      <DependentUpon>202004081905504_DropDelTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004081915358_DropDelTime1.resx">
-      <DependentUpon>202004081915358_DropDelTime1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004090422480_AddLegs.resx">
-      <DependentUpon>202004090422480_AddLegs.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004091601114_AddConfIdToLeg.resx">
-      <DependentUpon>202004091601114_AddConfIdToLeg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004092011514_DropStopsFromLeg.resx">
-      <DependentUpon>202004092011514_DropStopsFromLeg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004092118136_IdontKnow.resx">
-      <DependentUpon>202004092118136_IdontKnow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004092124157_AddStopsAgain.resx">
-      <DependentUpon>202004092124157_AddStopsAgain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004102311257_ChangeRateToDecimal.resx">
-      <DependentUpon>202004102311257_ChangeRateToDecimal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004120212474_AddUserActions.resx">
-      <DependentUpon>202004120212474_AddUserActions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004120214161_AddDateTimeToUserActions.resx">
-      <DependentUpon>202004120214161_AddDateTimeToUserActions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004120408589_AddLoadToActionUser.resx">
-      <DependentUpon>202004120408589_AddLoadToActionUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004120420164_AddLoadToActionUser1.resx">
-      <DependentUpon>202004120420164_AddLoadToActionUser1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004131638286_AddDarkTheme.resx">
-      <DependentUpon>202004131638286_AddDarkTheme.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004131705248_AddVoid.resx">
-      <DependentUpon>202004131705248_AddVoid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004131943017_AddDarkTheme1.resx">
-      <DependentUpon>202004131943017_AddDarkTheme1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004132116335_AddTimeDistanceRateToLeg.resx">
-      <DependentUpon>202004132116335_AddTimeDistanceRateToLeg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004132219354_MakeTimeNullable.resx">
-      <DependentUpon>202004132219354_MakeTimeNullable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004142345361_DeleteDriver.resx">
-      <DependentUpon>202004142345361_DeleteDriver.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004150009010_AddClosedAndExported.resx">
-      <DependentUpon>202004150009010_AddClosedAndExported.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202010161742046_Restore.resx">
+      <DependentUpon>202010161742046_Restore.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -982,9 +772,19 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
     <Error Condition="!Exists('..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\..\Наталья\documents\visual studio 2017\Projects\TruckApp\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-  </Target>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target> -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

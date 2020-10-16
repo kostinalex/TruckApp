@@ -10,6 +10,7 @@ using TruckApp.ViewModels;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanSeeReports)]
     public class ReportsController : ApiController
     {
         private ApplicationDbContext _context;
@@ -89,6 +90,7 @@ namespace TruckApp.Controllers.Api
 
         [HttpPost]
         [Route("api/getloadreport")]
+        [Authorize(Roles = RoleName.CanEnter)]
         public List<LoadConfirmation> GetLoadReport (InputLoadReportViewModel input)
         {
 

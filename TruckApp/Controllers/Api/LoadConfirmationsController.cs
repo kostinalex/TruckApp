@@ -7,9 +7,12 @@ using System.Web.Http;
 using TruckApp.Models;
 using TruckApp.ViewModels;
 using System.Data.Entity;
+using System.Web.Http.Cors;
 
 namespace TruckApp.Controllers.API
 {
+    [Authorize(Roles = RoleName.CanEnter)]
+    [EnableCors(origins: "*", headers: "*", methods: "*", SupportsCredentials = true)]
     public class LoadConfirmationsController : ApiController
     {
         private ApplicationDbContext _context;
@@ -28,7 +31,7 @@ namespace TruckApp.Controllers.API
 
         public IEnumerable<LoadConfirmation> GetLoadConfirmations()
         {
-            return _context.LoadConfirmations.Include(c=>c.Customer).ToList();
+            return _context.LoadConfirmations.Include(c=>c.Customer).Include(c => c.Dispatch).ToList();
         }
 
 
@@ -151,7 +154,7 @@ namespace TruckApp.Controllers.API
             loadConfirmationToEdit.EquipmentId = loadConfirmation.EquipmentId;
             loadConfirmationToEdit.PriorityDeliveryId = loadConfirmation.PriorityDeliveryId;
             loadConfirmationToEdit.PriorityEntryId = loadConfirmation.PriorityEntryId;
-            loadConfirmationToEdit.DispatchId = loadConfirmation.DispatchId;
+            loadConfirmationToEdit.DispatchId = loadConfirmation.DispatchId; 
             loadConfirmationToEdit.CreditHold = loadConfirmation.CreditHold;
             loadConfirmationToEdit.POD = loadConfirmation.POD;
             loadConfirmationToEdit.ConfNumber = loadConfirmation.ConfNumber;

@@ -3,14 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
-
-
-
-@Html.ValidationSummary()
-
-
 <div class="row">
     <div class="form-group col-sm-6">
         @*---------------------------------------------------------------------------------------------------------------------
@@ -421,69 +413,65 @@
 
 
 
-    @Html.AntiForgeryToken()
 
-<div class="row">
-    @*<button type="submit" id="save_confirmation" class="btn btn-primary" style="width:400px;">Save</button>*@
-    <div class="form-group col-sm-4">
-        <a id="save_confirmation" class="btn btn-primary" style="">Save</a>
-    </div>
 
-    @{
-        if (User.IsInRole("CanSeeUsersActionsWithLoad"))
-        {
-            <div class="form-group col-sm-4">
+    <div class="row">
+        @*<button type="submit" id="save_confirmation" class="btn btn-primary" style="width:400px;">Save</button>*@
+        <div class="form-group col-sm-4">
+            <a id="save_confirmation" class="btn btn-primary" style="">Save</a>
+        </div>
+
+        <div class="form-group col-sm-1">
+
+            @if (User.IsInRole("CanSeeUsersActionsWithLoad"))
+            {
                 <a id="user_actions" class="btn btn-primary" style="">Actions</a>
-            </div>
-        }
+            }
+        </div>
 
 
-
-        if (User.IsInRole("CanVoidLoad"))
-        {
-            <div class="form-group col-sm-2" id="void_status_field">
+        <div class="form-group col-sm-1" id="void_status_field">
+            @if (User.IsInRole("CanVoidLoad"))
+            {
                 <input class="form-check-input" type="checkbox" id="void_status">
                 <label class="form-check-label" for="void_status">Void</label>
-            </div>
-
-
-            //<a id="delete_load" class="btn btn-primary" style="">Void Load Confirmation</a>
-        }
-
-
-        if (User.IsInRole("CanCloseLoad"))
-        {
-            <div class="form-group col-sm-2" id="closed_status_field">
+            }
+        </div>
+        <div class="form-group col-sm-1" id="closed_status_field">
+       
+            @if (User.IsInRole("CanCloseLoad"))
+            {
                 <input class="form-check-input" type="checkbox" id="closed_status">
                 <label class="form-check-label" for="closed_status">Close Load</label>
-            </div>
-        }
+            }
 
+          
+        </div>
+        <div class="form-group col-sm-1" id="exported_status_field">
+          
 
-        if (User.IsInRole("CanExportLoad")) 
-        { 
-            <div class="form-group col-sm-2" id="exported_status_field">
+            @if (User.IsInRole("CanExportLoad"))
+            {
                 <input class="form-check-input" type="checkbox" id="exported_status">
                 <label class="form-check-label" for="exported_status">Exported Load</label>
-            </div>
-        }
+            }
+        </div>
 
-    }
+        <div class="form-group col-sm-2">
+            <a href="/LoadConfirmations/New" class="btn btn-primary btn-new-confirmation">New load</a>
+        </div>
 
-</div>
+    </div>
 
 
 
 
-            @section scripts
+@section scripts
 {
                 @Scripts.Render("~/bundles/jqueryval")
 <script>
                     $(document).ready(function () {
                         //console.log("Document ready");
-
-                        
-
                         var confirmationId = window.location.pathname
                             .toUpperCase()
                             .replace("/LOADCONFIRMATIONS/EDIT/", "")
@@ -491,7 +479,10 @@
                             .trim();
                         console.log("confirmationId=" + confirmationId);
 
-
+                        if (Number.isInteger(+confirmationId) == false && confirmationId != "/LOADCONFIRMATIONS/NEW") {
+                            console.log("Wrong ID");
+                            window.location = "/loadconfirmations"
+                        }
                         var currentdate = new Date();
                         var datetime = currentdate.getFullYear() + "-"
                             + ((currentdate.getMonth() + 1) < 10 ? "0" : "") + (currentdate.getMonth() + 1) + "-"
@@ -512,64 +503,6 @@
                             $(this).select();
                         });
 
-                        //------------------------ DROPDOWN--------------------------------
-
-                        $.get("/api/hazmat", function (data) {
-                            ////console.log("hazmat=" + data);
-                            var hazmat_html = "";
-                            for (var i = 0, len = data.length; i < len; i++) {
-                                ////console.log("Hazmat=" + data[i].name);
-                                hazmat_html = hazmat_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
-                            }
-                            //console.log("Hazmat=" + hazmat_html);
-                            $("#hazmat").html(hazmat_html);
-                        }, "json");
-
-                        $.get("/api/equipment", function (data) {
-                            ////console.log("equipment=" + data);
-                            var equipment_html = "";
-                            for (var i = 0, len = data.length; i < len; i++) {
-                                ////console.log("Hazmat=" + data[i].name);
-                                equipment_html = equipment_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
-                            }
-                            //console.log("equipment=" + equipment_html);
-                            $("#equipment").html(equipment_html);
-                        }, "json");
-
-                        $.get("/api/prioritydelivery", function (data) {
-                            ////console.log("priority_delivery=" + data);
-                            var priority_delivery_html = "";
-                            for (var i = 0, len = data.length; i < len; i++) {
-                                ////console.log("Hazmat=" + data[i].name);
-                                priority_delivery_html = priority_delivery_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
-                            }
-                            //console.log("priority_delivery=" + priority_delivery_html);
-                            $("#priority_delivery").html(priority_delivery_html);
-                        }, "json");
-
-                        $.get("/api/priorityentry", function (data) {
-                            ////console.log("priority_entry=" + data);
-                            var priority_entry_html = "";
-                            for (var i = 0, len = data.length; i < len; i++) {
-                                ////console.log("Hazmat=" + data[i].name);
-                                priority_entry_html = priority_entry_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
-                            }
-                            //console.log("priority_entry=" + priority_entry_html);
-                            $("#priority_entry").html(priority_entry_html);
-                        }, "json");
-
-                        $.get("/api/dispatch", function (data) {
-                            ////console.log("dispatch=" + data);
-                            var dispatch_html = "";
-                            for (var i = 0, len = data.length; i < len; i++) {
-                                ////console.log("Hazmat=" + data[i].name);
-                                dispatch_html = dispatch_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
-                            }
-                            //console.log("dispatch=" + dispatch_html);
-                            $("#dispatch").html(dispatch_html);
-                        }, "json");
-
-                        
 
 
                         /////////////////////////////VALIDATION///////////////////////////////////////////////////
@@ -590,16 +523,22 @@
 
                         });
 
-                        $("input[type='text']").change(function () {
+                        $("input[type='text']").keypress(function () {
                             var input = $(this);
-                            input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').toUpperCase().trim());
+                            input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').toUpperCase());
                             input.css("border-color", "");
                             if (input.val().length > 100) {
-                                bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length+" char. Please be more succinct.", function () {
-                                    input.val("");
-                                });
+                                //bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length+" char. Please be more succinct.", function () {
+                                input.val(input.val().slice(0, 100));
+                                //});
                             }
                         });
+
+                        $("input[type='text']").change(function () {
+                            var input = $(this);
+                            input.val(input.val().toString().trim());
+                        });
+
 
                         $("input[type='text']").on("focus", function () {
                             $(this).select();
@@ -780,6 +719,7 @@
                             //console.log("It's not a new confirmation. Conf Id="+confirmationId);
                             $("#save_confirmation").on("click", function () {
                                 console.log("Save confirmation button was pressed");
+                                console.log("dispatch" + $("#dispatch").val());
 
                                 if (ValidationBeforeSave() == false) {
                                     bootbox.alert("Warning. Not all fields are filled out. Please fill out highlighted fields to save the information.", function () {
@@ -891,8 +831,6 @@
                                 //console.log("Save confirmation button was pressed");
 
 
-
-                                
                                 
 
                                 if (ValidationBeforeSave() == false) {
@@ -1008,7 +946,7 @@
                                                         data: {
                                                             "stop1Id": puStopId,
                                                             "stop2Id": delStopId,
-                                                            "driverId": 8,
+                                                            //"driverId": 8,
                                                             "loadConfirmationId": confirmationId
 
                                                         }
@@ -1110,18 +1048,38 @@
 
 
                         //---------------------------------------------------------------------------------
-                        //------------------------FILL IN TABLES-------------------------------------
+                        //------------------------FILL IN FORM-------------------------------------
                         //---------------------------------------------------------------------------------
 
                         if (!confirmationId.includes("NEW") && confirmationId != "") {
-                            console.log("It's not a new load. Start loading tables");
+                            console.log("It's not a new load. Start loading tables" + getUrlParameter('customer'));
                             //$("h2").text("Edit Load");
 
                             //------------------------FILL IN THE FORM-------------------------------------
 
-                            $.get("/api/stops/" + confirmationId, function (data) {
+                            //var data = $.parseJSON($.ajax({
+                            //    url: "/api/getloadinfo/" + confirmationId,
+                            //    dataType: "json",
+                            //    async: false
+                            //}).responseText);
+
+                            $.get("/api/getloadinfo/" + confirmationId, function (data) {
+
+                                fillOutStops(data.stops);
+                                fillOutDropDown(data);
+                                fillOutLoad(data);
+                                fillOutNotesTable(data);
+
+                            }, "json");
+                                
+
+
+                            //------------------------STOPS-------------------------------------
+                            //$.get("/api/stops/" + confirmationId, function (data) {
+
+                            function fillOutStops(data) {
                                 for (var i = 0, len = data.length; i < len; i++) {
-                                    ////console.log("stop=" + data[i].facilityName);
+                                    //console.log("stop=" + data[i].facilityName);
                                     if (data[i].puStatus) {
                                         $("#pickup_name").val(data[i].facilityName);
                                         $("#pickup_address").val(data[i].address);
@@ -1169,49 +1127,106 @@
                                         //console.log("del_stop_id1=" + del_stop_id);
                                     }
                                 }
-                            }, "json");
+                            }
+                                
+                            //}, "json");
 
-                            $.get("/api/loadconfirmations/" + confirmationId, function (data) {
+
+                            //------------------------DROPDOWN-------------------------------------
+
+                            function fillOutDropDown(data) {
+                                var hazmat_html = "";
+                                for (var i = 0, len = data.hazMatStatuses.length; i < len; i++) {
+                                    ////console.log("Hazmat=" + data[i].name);
+                                    hazmat_html = hazmat_html + "<option value='" + data.hazMatStatuses[i].id + "'>" + (data.hazMatStatuses[i].name == null ? "" : data.hazMatStatuses[i].name) + "</option>";
+                                }
+                                //console.log("Hazmat=" + hazmat_html);
+                                $("#hazmat").html(hazmat_html);
+
+                                var equipment_html = "";
+                                for (var i = 0, len = data.equipments.length; i < len; i++) {
+                                    ////console.log("Hazmat=" + data[i].name);
+                                    equipment_html = equipment_html + "<option value='" + data.equipments[i].id + "'>" + (data.equipments[i].name == null ? "" : data.equipments[i].name) + "</option>";
+                                }
+                                //console.log("equipment=" + equipment_html);
+                                $("#equipment").html(equipment_html);
+
+                                var priority_delivery_html = "";
+                                for (var i = 0, len = data.priorityDeliveries.length; i < len; i++) {
+                                    ////console.log("Hazmat=" + data[i].name);
+                                    priority_delivery_html = priority_delivery_html + "<option value='" + data.priorityDeliveries[i].id + "'>" + (data.priorityDeliveries[i].name == null ? "" : data.priorityDeliveries[i].name) + "</option>";
+                                }
+                                //console.log("priority_delivery=" + priority_delivery_html);
+                                $("#priority_delivery").html(priority_delivery_html);
+
+
+                                var priority_entry_html = "";
+                                for (var i = 0, len = data.priorityEntries.length; i < len; i++) {
+                                    ////console.log("Hazmat=" + data[i].name);
+                                    priority_entry_html = priority_entry_html + "<option value='" + data.priorityEntries[i].id + "'>" + (data.priorityEntries[i].name == null ? "" : data.priorityEntries[i].name) + "</option>";
+                                }
+                                //console.log("priority_entry=" + priority_entry_html);
+                                $("#priority_entry").html(priority_entry_html);
+
+                                var dispatch_html = "";
+                                for (var i = 0, len = data.dispatches.length; i < len; i++) {
+                                    ////console.log("Hazmat=" + data[i].name);
+                                    //if (data[i].void==false) {
+                                    dispatch_html = dispatch_html + "<option value='"
+                                        + data.dispatches[i].id + "'>" + (data.dispatches[i].name == null ? "" : data.dispatches[i].name) + "</option>";
+                                    //}
+                                }
+                                //console.log("dispatch=" + dispatch_html);
+                                $("#dispatch").html(dispatch_html);
+
+                            }
+
+                            //------------------------LOAD-------------------------------------
+                            //$.get("/api/loadconfirmations/" + confirmationId, function (data) {
+
+                            function fillOutLoad(data) {
+
+                            
 
                                 if (getUrlParameter('customer') == undefined) {
-                                    $("#customer_name").val(data.customer.name);
-                                    $("#customer_address").val(data.customer.address);
-                                    $("#customer_city").val(data.customer.city);
-                                    $("#customer_state").val(data.customer.state);
-                                    $("#customer_country").val(data.customer.country);
-                                    $("#customer_zipcode").val(data.customer.zipcode);
-                                    $("#customer_id").val(data.customer.id);
+                                    $("#customer_name").val(data.loadConfirmation.customer.name);
+                                    $("#customer_address").val(data.loadConfirmation.customer.address);
+                                    $("#customer_city").val(data.loadConfirmation.customer.city);
+                                    $("#customer_state").val(data.loadConfirmation.customer.state);
+                                    $("#customer_country").val(data.loadConfirmation.customer.country);
+                                    $("#customer_zipcode").val(data.loadConfirmation.customer.zipcode);
+                                    $("#customer_id").val(data.loadConfirmation.customer.id);
                                 }
 
 
-                                $("#freight_description").val(data.freightDescription);
-                                $("#confirmation_weight").val(data.weight);
-                                $("#number_of_pallets").val(data.numberOfPallets);
-                                $("#confirmation_rate").val(data.rate);
-                                $("#hazmat_number").val(data.hazMatNumber);
+                                $("#freight_description").val(data.loadConfirmation.freightDescription);
+                                $("#confirmation_weight").val(data.loadConfirmation.weight);
+                                $("#number_of_pallets").val(data.loadConfirmation.numberOfPallets);
+                                $("#confirmation_rate").val(data.loadConfirmation.rate);
+                                $("#hazmat_number").val(data.loadConfirmation.hazMatNumber);
 
-                                $("#hazmat").val(data.hazMatStatusId);
-                                $("#equipment").val(data.equipmentId);
-                                $("#priority_delivery").val(data.priorityDeliveryId);
-                                $("#priority_entry").val(data.priorityEntryId);
-                                $("#dispatch").val(data.dispatchId);
-                                $("#confirmation_number").val(data.confNumber);
-                                $("#customs_broker").val(data.customsBroker);
+                                $("#hazmat").val(data.loadConfirmation.hazMatStatusId);
+                                $("#equipment").val(data.loadConfirmation.equipmentId);
+                                $("#priority_delivery").val(data.loadConfirmation.priorityDeliveryId);
+                                $("#priority_entry").val(data.loadConfirmation.priorityEntryId);
+                                $("#dispatch").val(data.loadConfirmation.dispatchId);
+                                $("#confirmation_number").val(data.loadConfirmation.confNumber);
+                                $("#customs_broker").val(data.loadConfirmation.customsBroker);
 
 
 
-                                if (data.creditHold == true) {
-                                    //console.log("creditHold=" + data.creditHold);
+                                if (data.loadConfirmation.creditHold == true) {
+                                    //console.log("creditHold=" + data.loadConfirmation.creditHold);
                                     $("#credit_hold").prop("checked", true);
                                 }
 
-                                if (data.pod == true) {
-                                    //console.log("pod=" + data.pod);
+                                if (data.loadConfirmation.pod == true) {
+                                    //console.log("pod=" + data.loadConfirmation.pod);
                                     $("#pod_checkbox").prop("checked", true);
                                 }
 
-                                if (data.void == true) {
-                                    //console.log("pod=" + data.pod);
+                                if (data.loadConfirmation.void == true) {
+                                    //console.log("pod=" + data.loadConfirmation.pod);
                                     $("#void_status").prop("checked", true);
 
                                     $("input").attr("disabled", true);
@@ -1221,8 +1236,8 @@
                                     $("#exported_status").attr("disabled", false);
                                 }
 
-                                if (data.exported == true) {
-                                    //console.log("pod=" + data.pod);
+                                if (data.loadConfirmation.exported == true) {
+                                    //console.log("pod=" + data.loadConfirmation.pod);
                                     $("#exported_status").prop("checked", true);
 
                                     $("input").attr("disabled", true);
@@ -1232,8 +1247,8 @@
                                     $("#exported_status").attr("disabled", false);
                                 }
 
-                                if (data.closed == true) {
-                                    //console.log("pod=" + data.pod);
+                                if (data.loadConfirmation.closed == true) {
+                                    //console.log("pod=" + data.loadConfirmation.pod);
                                     $("#closed_status").prop("checked", true);
 
                                     $("input").attr("disabled", true);
@@ -1273,39 +1288,44 @@
                                     $("#exported_status_field").css("border-radius", "4px");
                                     $("#exported_status_field").css("color", "black");
                                 }
+                            }
 
-                            }, "json");
+                            //}, "json");
 
                             $("#pb_number").val(confirmationId);
 
                             //------------------------TABLES-------------------------------------
-
-                            var table = $("#notes-table").DataTable({
-                                ajax: {
-                                    url: "/api/notes/" + confirmationId,
-                                    dataSrc: ""
-                                },
-                                columns: [
-                                    {
-                                        data: "header",
-                                    },
-                                    {
-                                        data: "dateAdded",
+                            function fillOutNotesTable(data) {
+                                var table = $("#notes-table").DataTable({
+                                    //ajax: {
+                                    //    url: "/api/notes/" + confirmationId,
+                                    //    dataSrc: ""
+                                    //},
+                                    data: data.notes,
+                                    columns: [
+                                        {
+                                            data: "header",
+                                        },
+                                        {
+                                            data: "dateAdded",
+                                        }
+                                    ],
+                                    order: [[1, "desc"]],
+                                    scrollY: '22vh',
+                                    searching: false,
+                                    scrollCollapse: true,
+                                    paging: false,
+                                    rowCallback: function (row, data) {
+                                        $(row).css("cursor", "pointer");
+                                        $(row).on("click", function () {
+                                            window.location = "/loadconfirmations/editnote/" + data.id;
+                                        });
                                     }
-                                ],
-                                order: [[1, "desc"]],
-                                scrollY: '22vh',
-                                searching: false,
-                                scrollCollapse: true,
-                                paging: false,
-                                rowCallback: function (row, data) {
-                                    $(row).css("cursor", "pointer");
-                                    $(row).on("click", function () {
-                                        window.location = "/loadconfirmations/editnote/" + data.id;
-                                    });
-                                }
 
-                            });
+                                });
+                            }
+
+                            
 
                             var table1 = $("#attachmentsTable").DataTable({
                                 ajax: {
@@ -1361,17 +1381,7 @@
                                     {
                                         data: "zipCode",
                                     },
-                                    //{
-                                    //    data: "date1",
-                                    //    render: function (data) {
-
-                                    //        var arr = data.split("T")[0].split("-");
-
-                                    //        return "<input class='form-control date_input_field' type='text' value='" + arr[2] + "-" + arr[1] + "-" + arr[0]+"'/>" ;
-                                    //    }
-
-
-                                    //},
+                                  
                                     {
                                         data: "date1",
                                         render: function (data) {
@@ -1434,10 +1444,7 @@
                                     });
 
 
-                                    //$(row).on("change", ".date_input_field", function () {
-                                    //    var input = $(this);
-                                    //    input.val("1111111111");
-                                    //});
+                                  
 
                                 }
 
@@ -1447,7 +1454,55 @@
                         else {
                             console.log("It's a new load");
                             //$("h2").text("New Load");
+                            //------------------------ DROPDOWN--------------------------------
 
+                            $.get("/api/getdropdownlists", function (data) {
+                                ////console.log("hazmat=" + data);
+                                var hazmat_html = "";
+                                for (var i = 0, len = data.hazMatStatuses.length; i < len; i++) {
+                                    ////console.log("Hazmat=" + data[i].name);
+                                    hazmat_html = hazmat_html + "<option value='" + data.hazMatStatuses[i].id + "'>" + (data.hazMatStatuses[i].name == null ? "" : data.hazMatStatuses[i].name) + "</option>";
+                                }
+                                //console.log("Hazmat=" + hazmat_html);
+                                $("#hazmat").html(hazmat_html);
+
+                                var equipment_html = "";
+                                for (var i = 0, len = data.equipments.length; i < len; i++) {
+                                    ////console.log("Hazmat=" + data[i].name);
+                                    equipment_html = equipment_html + "<option value='" + data.equipments[i].id + "'>" + (data.equipments[i].name == null ? "" : data.equipments[i].name) + "</option>";
+                                }
+                                //console.log("equipment=" + equipment_html);
+                                $("#equipment").html(equipment_html);
+
+                                var priority_delivery_html = "";
+                                for (var i = 0, len = data.priorityDeliveries.length; i < len; i++) {
+                                    ////console.log("Hazmat=" + data[i].name);
+                                    priority_delivery_html = priority_delivery_html + "<option value='" + data.priorityDeliveries[i].id + "'>" + (data.priorityDeliveries[i].name == null ? "" : data.priorityDeliveries[i].name) + "</option>";
+                                }
+                                //console.log("priority_delivery=" + priority_delivery_html);
+                                $("#priority_delivery").html(priority_delivery_html);
+
+
+                                var priority_entry_html = "";
+                                for (var i = 0, len = data.priorityEntries.length; i < len; i++) {
+                                    ////console.log("Hazmat=" + data[i].name);
+                                    priority_entry_html = priority_entry_html + "<option value='" + data.priorityEntries[i].id + "'>" + (data.priorityEntries[i].name == null ? "" : data.priorityEntries[i].name) + "</option>";
+                                }
+                                //console.log("priority_entry=" + priority_entry_html);
+                                $("#priority_entry").html(priority_entry_html);
+
+                                var dispatch_html = "";
+                                for (var i = 0, len = data.dispatches.length; i < len; i++) {
+                                    ////console.log("Hazmat=" + data[i].name);
+                                    //if (data[i].void==false) {
+                                    dispatch_html = dispatch_html + "<option value='"
+                                        + data.dispatches[i].id + "'>" + (data.dispatches[i].name == null ? "" : data.dispatches[i].name) + "</option>";
+                                    //}
+                                }
+                                //console.log("dispatch=" + dispatch_html);
+                                $("#dispatch").html(dispatch_html);
+
+                            }, "json");
                             //$("#confirmation_weight").val("0");
                             //$("#number_of_pallets").val("0");
                             //$("#confirmation_rate").val("0");
@@ -1610,9 +1665,6 @@
                             $("#newAttachmentButton").on("click", function () {
                                 console.log("New attachment button was pressed");
 
-
-                                
-
                                 console.log("FileToAttach=" + $("#fileToAttach").val());
 
                                 
@@ -1655,9 +1707,14 @@
                                             });
                                         } else {
                                             var formData = new FormData();
-                                            formData.append('file', $('#fileToAttach')[0].files[0]);
+                                            //formData.append("to", "kostin2607@gmail.com");
+                                            //formData.append("subject", "Yo man");
+                                            //formData.append("body", "I'm happy");
+                                            formData.append("file[]", $('#fileToAttach')[0].files[0]);
+
                                             $.ajax({
                                                 url: "/api/fileupload/" + confirmationId,
+                                                //url: "/api/emailwithattachment",
                                                 type: 'POST',
                                                 data: formData,
                                                 processData: false,
@@ -1786,7 +1843,7 @@
 
                         });
 
-                        var getUrlParameter = function getUrlParameter(sParam) {
+                        function getUrlParameter(sParam) {
                             var sPageURL = window.location.search.substring(1),
                                 sURLVariables = sPageURL.split('&'),
                                 sParameterName,
@@ -1892,7 +1949,6 @@
                         });
              
 
-                        
 
                         //------------------------------TYPEAHEAD------------------------------------
                         var customers = new Bloodhound({
@@ -2055,49 +2111,7 @@
                             });
                         });
 
-                    });
-
-
-
-
-                                                                                                                                                //"use strict";
-                                                                                                                                                //(() => {
-                                                                                                                                                //    const modified_inputs = new Set;
-                                                                                                                                                //    const defaultValue = "defaultValue";
-                                                                                                                                                //    // store default values
-                                                                                                                                                //    addEventListener("beforeinput", (evt) => {
-                                                                                                                                                //        const target = evt.target;
-                                                                                                                                                //        if (!(defaultValue in target || defaultValue in target.dataset)) {
-                                                                                                                                                //            target.dataset[defaultValue] = ("" + (target.value || target.textContent)).trim();
-                                                                                                                                                //        }
-                                                                                                                                                //    });
-                                                                                                                                                //    // detect input modifications
-                                                                                                                                                //    addEventListener("input", (evt) => {
-                                                                                                                                                //        const target = evt.target;
-                                                                                                                                                //        let original;
-                                                                                                                                                //        if (defaultValue in target) {
-                                                                                                                                                //            original = target[defaultValue];
-                                                                                                                                                //        } else {
-                                                                                                                                                //            original = target.dataset[defaultValue];
-                                                                                                                                                //        }
-                                                                                                                                                //        if (original !== ("" + (target.value || target.textContent)).trim()) {
-                                                                                                                                                //            if (!modified_inputs.has(target)) {
-                                                                                                                                                //                modified_inputs.add(target);
-                                                                                                                                                //            }
-                                                                                                                                                //        } else if (modified_inputs.has(target)) {
-                                                                                                                                                //            modified_inputs.delete(target);
-                                                                                                                                                //        }
-                                                                                                                                                //    });
-                                                                                                                                                //    addEventListener("beforeunload", (evt) => {
-                                                                                                                                                //        if (modified_inputs.size) {
-                                                                                                                                                //            const unsaved_changes_warning = "Changes you made may not be saved.";
-                                                                                                                                                //            evt.returnValue = unsaved_changes_warning;
-                                                                                                                                                //            return unsaved_changes_warning;
-
-                                                                                                                                                //        }
-                                                                                                                                                    //        //    });
-                                                                                                                                                    //})();
-
+                    });                                                                                                         
 
 
 

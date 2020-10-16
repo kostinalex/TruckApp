@@ -19,7 +19,8 @@
     }
     @Scripts.Render("~/bundles/modernizr")
 
-@*<p>Dark Theme=@User.ApplicationUser().DarkTheme</p>*@ 
+
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top my-navbar">
@@ -39,7 +40,7 @@
                     {
                         <a href="/Home"><img id="my-image" src="~/Images/TruckAppIconDark.png" /></a>
                     }
-                }  
+                }
 
             </div>
 
@@ -54,17 +55,18 @@
                     }
 
 
-
-
-                    
-
-
                     @{
-                        if (User.IsInRole("CanManageDispatchDriversAndOther") || User.IsInRole("CanSeeAllUserActions") || User.IsInRole("CanManageUsers")|| User.IsInRole("CanSeeReports"))
+                        if (User.IsInRole("CanManageDispatchDriversAndOther") || User.IsInRole("CanSeeAllUserActions") || User.IsInRole("CanManageUsers") || User.IsInRole("CanSeeReports") || User.IsInRole("CanCreateAndEditCustomer"))
                         {
                             <li class="nav-item dropdown navbar-link2">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manager</a>
                                 <div class="dropdown-menu" style="">
+
+                                    @{ if (User.IsInRole("CanCreateAndEditCustomer"))
+                                        {
+                                            <a class="dropdown-item" href="/customers/index">Customers</a>
+                                        }
+                                    }
 
                                     @{ if (User.IsInRole("CanManageDispatchDriversAndOther"))
                                         {
@@ -73,7 +75,6 @@
                                             <a class="dropdown-item" href="/dispatch/index">Dispatch</a>
                                             <a class="dropdown-item" href="/priorityentry/index">Priority Entry</a>
                                             <a class="dropdown-item" href="/prioritydelivery/index">Priority Delivery</a>
-                                            <a class="dropdown-item" href="/customers/index">Customers</a>
                                             <a class="dropdown-item" href="/drivers/index">Drivers</a>
 
                                         }
@@ -113,15 +114,30 @@
         </div>
     </div>
 
+    <div id="loading"></div>
     <div class="container-fluid page-body">
+
         @RenderBody()
+
+
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My first ASP.NET Application</p>
         </footer>
     </div>
 
+
+
+
     @Scripts.Render("~/bundles/lib")
+
+    <script>
+        $(document).ready(function () {
+            //console.log("Document ready");
+            $('#loading').fadeOut(500);
+        });
+    </script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

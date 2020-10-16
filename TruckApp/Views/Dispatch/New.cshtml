@@ -6,13 +6,15 @@
 
 <h2>New</h2>
 
-<form id="newDispatch">
+
     <div class="form-group">
         <label>Dispatch Name</label>
         <input id="dispatch" type="text" value="" class="form-control" />
+        <input type='checkbox' id="void">
+        <label for="void">Void</label><br>
     </div>
-    <button class="btn btm-primary">Submit</button>
-</form>
+    <button class="btn btn-primary" id="newDispatch">Submit</button>
+
 
 @section scripts
 {
@@ -32,47 +34,101 @@
                 $("h2").text("Edit dispatch");
                 $.get("/api/dispatch/" + dispatchId, function (data) {
                     $("#dispatch").val(data.name);
+                    $("#void").prop("checked", data.void);
                     console.log("dispatchNameFromAPI to the input field=" + data.name);
                 }, "json");
 
-                $("#newDispatch").submit(function (e) {
+                $("#newDispatch").on('click',function (e) {
                     console.log("Submit button was pressed");
-                    e.preventDefault();
-                    $.ajax({
-                        url: "/api/dispatch/" + dispatchId,
-                        method: "PUT",
-                        data: { "id": dispatchId, "name": $("#dispatch").val() }
-                    })
-                        .done(function () {
-                            console.log("send to API=" + $("#dispatch").val());
-                            window.location = window.location.origin + "/dispatch";
+
+                    if (isFormValid() == false) {
+                        bootbox.alert("Please, fill out highlighted fields.");
+                    } else {
+                        $.ajax({
+                            url: "/api/dispatch/" + dispatchId,
+                            method: "PUT",
+                            data: {
+                                "id": dispatchId,
+                                "name": $("#dispatch").val(),
+                                "void": $("#void").prop("checked")
+                            }
                         })
-                        .fail(function () {
-                            console.log("fail");
-                            bootbox.alert("Failed to update dispatch");
-                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#dispatch").val());
+                                window.location = window.location.origin + "/dispatch";
+                            })
+                            .fail(function () {
+                                console.log("fail");
+                                bootbox.alert("Failed to update dispatch");
+                            })
+                    }
+                   
                 });
             }
             else {
                 console.log("It's a new Item.");
                 $("h2").text("New dispatch")
-                $("#newDispatch").submit(function (e) {
+                $("#newDispatch").on('click',function (e) {
                     console.log("Submit button was pressed");
-                    e.preventDefault();
-                    $.ajax({
-                        url: "/api/dispatch",
-                        method: "POST",
-                        data: { "name": $("#dispatch").val() }
-                    })
-                        .done(function () {
-                            console.log("send to API=" + $("#dispatch").val());
-                            window.location = window.location.origin + "/dispatch";
+
+                    if (isFormValid() == false) {
+                        bootbox.alert("Please, fill out highlighted fields.");
+                    } else {
+                        $.ajax({
+                            url: "/api/dispatch",
+                            method: "POST",
+                            data: {
+                                "name": $("#dispatch").val(),
+                                "void": $("#void").prop("checked")
+                            }
                         })
-                        .fail(function () {
-                            console.log("fail");
-                            bootbox.alert("Failed to create new dispatch");
-                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#dispatch").val());
+                                window.location = window.location.origin + "/dispatch";
+                            })
+                            .fail(function () {
+                                console.log("fail");
+                                bootbox.alert("Failed to create new dispatch");
+                            })
+                    }
+                    
                 });
+            }
+
+            $("input[type='text']").keypress(function () {
+                var input = $(this);
+                input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' '));
+                input.css("border-color", "");
+                if (input.val().length > 100) {
+                    //bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
+                    input.val(input.val().slice(0, 100));
+                    //});
+                }
+            });
+
+            $("input[type='text']").change(function () {
+                var input = $(this);
+                input.val(input.val().toString().trim());
+            });
+
+
+
+            $("input[type='text']").on("focus", function () {
+                $(this).select();
+            });
+
+            function isFormValid() {
+                var isValid = true;
+                $("input[type='text']").each(function () {
+                    //console.log("element id=" + element.attr("id"));
+                    var element = $(this);
+                    if (element.val() == "" && element.attr("id") != undefined) {
+                        isValid = false;
+                        element.css("border-color", "#ff4136");
+                        console.log("element id=" + element.attr("id"));
+                    }
+                });
+                return isValid;
             }
         });
     </script>

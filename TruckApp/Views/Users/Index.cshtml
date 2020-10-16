@@ -4,21 +4,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Users</h2>
+<div class="row">
+    <div class="form-group col-sm-4">
 
-<a id="new_user" class="btn btn-primary" href="/account/register">Add User</a>
+        <h2>Users</h2>
 
-<table id="users_table" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>User Id</th>
-            <th>User Name</th>
+        <a id="new_user" class="btn btn-primary" href="/account/register">Add User</a>
 
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+        <table id="users_table" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    @*<th>User Id</th>*@
+                    <th>User Name</th>
 
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
 
 @section scripts
     {
@@ -31,9 +35,9 @@
                     dataSrc: ""
                 },
                 columns: [
-                    {
-                        data: "id"
-                    },
+                    //{
+                    //    data: "id"
+                    //},
                     {
                         data: "userName"
                     }
@@ -55,8 +59,6 @@
                 }
             });
 
-           
-            
         });
     </script>
 }

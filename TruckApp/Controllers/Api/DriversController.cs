@@ -8,6 +8,7 @@ using TruckApp.Models;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class DriversController : ApiController
     {
         private ApplicationDbContext _context;
@@ -28,16 +29,20 @@ namespace TruckApp.Controllers.Api
 
 
 
-        public IEnumerable<Driver> GetDrivers(string query = null)
+        [HttpGet]
+        [Route("api/drivers")]
+        public IEnumerable<Driver> GetNonVoidDrivers()       
         {
-            if (!string.IsNullOrEmpty(query))
-            {
-                var driversQuery = _context.Drivers.Where(c => c.Name.Contains(query));
-                return driversQuery;
-            }
+            return _context.Drivers.Where(c => c.Void == false).ToList();
+        }
 
+        [HttpGet]
+        [Route("api/getalldrivers")]
+        public IEnumerable<Driver> GetAllDrivers()
+        {
             return _context.Drivers.ToList();
         }
+
 
 
         public IHttpActionResult GetDriver(int id)
@@ -51,6 +56,8 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpPost]
+        [Route("api/drivers")]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public IHttpActionResult New(Driver driver)
         {
             if (!ModelState.IsValid)
@@ -72,6 +79,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpPut]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public void EditDriver(int id, Driver driver)
         {
             if (!ModelState.IsValid)
@@ -80,6 +88,7 @@ namespace TruckApp.Controllers.Api
             var DriverToEdit = _context.Drivers.SingleOrDefault(c => c.Id == id);
 
             DriverToEdit.Name = driver.Name;
+            DriverToEdit.Void = driver.Void;
 
             var userAction = new UserAction
             {
@@ -94,27 +103,54 @@ namespace TruckApp.Controllers.Api
 
         }
 
+
+
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public void DeleteDriver(int id)
         {
-            var driverToDelete = _context.Drivers.SingleOrDefault(c => c.Id == id);
+            var driverToVoid = _context.Drivers.SingleOrDefault(c => c.Id == id);
 
-            if (driverToDelete == null)
+            if (driverToVoid == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
 
-
-            _context.Drivers.Remove(driverToDelete);
+            driverToVoid.Void = true;
+            //_context.Drivers.Remove(driverToVoid);
 
             var userAction = new UserAction
             {
                 UserName = User.Identity.Name,
-                Action = "Driver was deleted. Driver name " + driverToDelete.Name,
+                Action = "Driver was voided. Driver name " + driverToVoid.Name,
                 DateTime = DateTime.Now
             };
             _context.UserActions.Add(userAction);
             _context.SaveChanges();
 
         }
+
+        //[HttpDelete]
+        //[Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
+        //public void DeleteDriver(int id)
+        //{
+        //    var driverToDelete = _context.Drivers.SingleOrDefault(c => c.Id == id);
+
+        //    if (driverToDelete == null)
+        //        throw new HttpResponseException(HttpStatusCode.NotFound);
+
+
+
+        //    _context.Drivers.Remove(driverToDelete);
+
+        //    var userAction = new UserAction
+        //    {
+        //        UserName = User.Identity.Name,
+        //        Action = "Driver was deleted. Driver name " + driverToDelete.Name,
+        //        DateTime = DateTime.Now
+        //    };
+        //    _context.UserActions.Add(userAction);
+        //    _context.SaveChanges();
+
+        //}
     }
 }

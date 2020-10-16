@@ -6,13 +6,13 @@
 
 <h2>New</h2>
 
-<form id="newEquipment">
+
     <div class="form-group">
         <label>Equipment Name</label>
         <input id="equipment" type="text" value="" class="form-control" />
     </div>
-    <button class="btn btm-primary">Submit</button>
-</form>
+    <button class="btn btn-primary" id="newEquipment">Submit</button>
+
 
 @section scripts
 {
@@ -35,44 +35,88 @@
                     console.log("equipmentNameFromAPI to the input field=" + data.name);
                 }, "json");
 
-                $("#newEquipment").submit(function (e) {
+                $("#newEquipment").on('click',function (e) {
                     console.log("Submit button was pressed");
-                    e.preventDefault();
-                    $.ajax({
-                        url: "/api/equipment/" + equipmentId,
-                        method: "PUT",
-                        data: { "id": equipmentId, "name": $("#equipment").val() }
-                    })
-                        .done(function () {
-                            console.log("send to API=" + $("#equipment").val());
-                            window.location = window.location.origin + "/equipment";
+
+                    if (isFormValid() == false) {
+                        bootbox.alert("Please, fill out highlighted fields.");
+                    } else {
+                        $.ajax({
+                            url: "/api/equipment/" + equipmentId,
+                            method: "PUT",
+                            data: { "id": equipmentId, "name": $("#equipment").val() }
                         })
-                        .fail(function () {
-                            console.log("fail");
-                            bootbox.alert("Failed to update equipment");
-                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#equipment").val());
+                                window.location = window.location.origin + "/equipment";
+                            })
+                            .fail(function () {
+                                console.log("fail");
+                                bootbox.alert("Failed to update equipment");
+                            })
+                    }
+                   
                 });
             }
             else {
                 console.log("It's a new Item.");
                 $("h2").text("New equipment")
-                $("#newEquipment").submit(function (e) {
+                $("#newEquipment").on('click',function (e) {
                     console.log("Submit button was pressed");
-                    e.preventDefault();
-                    $.ajax({
-                        url: "/api/equipment",
-                        method: "POST",
-                        data: { "name": $("#equipment").val() }
-                    })
-                        .done(function () {
-                            console.log("send to API=" + $("#equipment").val());
-                            window.location = window.location.origin + "/equipment";
+
+                    if (isFormValid() == false) {
+                        bootbox.alert("Please, fill out highlighted fields.");
+                    } else {
+                        $.ajax({
+                            url: "/api/equipment",
+                            method: "POST",
+                            data: { "name": $("#equipment").val() }
                         })
-                        .fail(function () {
-                            console.log("fail");
-                            bootbox.alert("Failed to create new equipment");
-                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#equipment").val());
+                                window.location = window.location.origin + "/equipment";
+                            })
+                            .fail(function () {
+                                console.log("fail");
+                                bootbox.alert("Failed to create new equipment");
+                            })
+                    }
+                   
                 });
+            }
+
+            $("input[type='text']").keypress(function () {
+                var input = $(this);
+                input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' '));
+                input.css("border-color", "");
+                if (input.val().length > 100) {
+                    //bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
+                    input.val(input.val().slice(0, 100));
+                    //});
+                }
+            });
+
+            $("input[type='text']").change(function () {
+                var input = $(this);
+                input.val(input.val().toString().trim());
+            });
+
+            $("input[type='text']").on("focus", function () {
+                $(this).select();
+            });
+
+            function isFormValid() {
+                var isValid = true;
+                $("input[type='text']").each(function () {
+                    //console.log("element id=" + element.attr("id"));
+                    var element = $(this);
+                    if (element.val() == "" && element.attr("id") != undefined) {
+                        isValid = false;
+                        element.css("border-color", "#ff4136");
+                        console.log("element id=" + element.attr("id"));
+                    }
+                });
+                return isValid;
             }
         });
     </script>

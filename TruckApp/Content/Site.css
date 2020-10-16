@@ -5,9 +5,17 @@
     color: #52a9bd;
 }
 #save_confirmation {
-    width: 400px;
+    width: 100%;
     background-color: #6dc5ab;
     border-color: #60b79d;
+}
+
+#loading {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: #f7fafb url('../Images/loader.gif') no-repeat center center;
+    z-index: 9999;
 }
 /*/////////////////////////////////////////////////////////////////////////////////////////////////*/
 .my_jumbotron {
@@ -37,6 +45,9 @@ hr {
         border-color: #3a8fb1!important;
 
     }
+option:disabled {
+    color: red
+}
 /*/////////////////////////////////////////////////////////////////////////////////////////////////*/
 #save_confirmation:hover {
     background-color: #5ba28d;

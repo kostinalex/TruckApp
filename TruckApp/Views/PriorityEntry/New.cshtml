@@ -6,13 +6,13 @@
 
 <h2>New</h2>
 
-<form id="newPriorityEntry">
+
     <div class="form-group">
         <label>PriorityEntry Name</label>
         <input id="priorityEntry" type="text" value="" class="form-control" />
     </div>
-    <button class="btn btm-primary">Submit</button>
-</form>
+    <button class="btn btn-primary" id="newPriorityEntry">Submit</button>
+
 
 @section scripts
 {
@@ -35,44 +35,88 @@
                     console.log("priorityEntryNameFromAPI to the input field=" + data.name);
                 }, "json");
 
-                $("#newPriorityEntry").submit(function (e) {
+                $("#newPriorityEntry").on('click',function (e) {
                     console.log("Submit button was pressed");
-                    e.preventDefault();
-                    $.ajax({
-                        url: "/api/priorityEntry/" + priorityEntryId,
-                        method: "PUT",
-                        data: { "id": priorityEntryId, "name": $("#priorityEntry").val() }
-                    })
-                        .done(function () {
-                            console.log("send to API=" + $("#priorityEntry").val());
-                            window.location = window.location.origin + "/priorityEntry";
+
+                    if (isFormValid() == false) {
+                        bootbox.alert("Please, fill out highlighted fields.");
+                    } else {
+                        $.ajax({
+                            url: "/api/priorityEntry/" + priorityEntryId,
+                            method: "PUT",
+                            data: { "id": priorityEntryId, "name": $("#priorityEntry").val() }
                         })
-                        .fail(function () {
-                            console.log("fail");
-                            bootbox.alert("Failed to update priorityEntry");
-                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#priorityEntry").val());
+                                window.location = window.location.origin + "/priorityEntry";
+                            })
+                            .fail(function () {
+                                console.log("fail");
+                                bootbox.alert("Failed to update priorityEntry");
+                            })
+                    }
+                   
                 });
             }
             else {
                 console.log("It's a new Item.");
                 $("h2").text("New PriorityEntry")
-                $("#newPriorityEntry").submit(function (e) {
+                $("#newPriorityEntry").on('click',function (e) {
                     console.log("Submit button was pressed");
-                    e.preventDefault();
-                    $.ajax({
-                        url: "/api/priorityEntry",
-                        method: "POST",
-                        data: { "name": $("#priorityEntry").val() }
-                    })
-                        .done(function () {
-                            console.log("send to API=" + $("#priorityEntry").val());
-                            window.location = window.location.origin + "/priorityEntry";
+
+                    if (isFormValid() == false) {
+                        bootbox.alert("Please, fill out highlighted fields.");
+                    } else {
+                        $.ajax({
+                            url: "/api/priorityEntry",
+                            method: "POST",
+                            data: { "name": $("#priorityEntry").val() }
                         })
-                        .fail(function () {
-                            console.log("fail");
-                            bootbox.alert("Failed to create new priorityEntry");
-                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#priorityEntry").val());
+                                window.location = window.location.origin + "/priorityEntry";
+                            })
+                            .fail(function () {
+                                console.log("fail");
+                                bootbox.alert("Failed to create new priorityEntry");
+                            })
+                    }
+                   
                 });
+            }
+
+            $("input[type='text']").keypress(function () {
+                var input = $(this);
+                input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' '));
+                input.css("border-color", "");
+                if (input.val().length > 100) {
+                    //bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
+                    input.val(input.val().slice(0, 100));
+                    //});
+                }
+            });
+
+            $("input[type='text']").change(function () {
+                var input = $(this);
+                input.val(input.val().toString().trim());
+            });
+
+            $("input[type='text']").on("focus", function () {
+                $(this).select();
+            });
+
+            function isFormValid() {
+                var isValid = true;
+                $("input[type='text']").each(function () {
+                    //console.log("element id=" + element.attr("id"));
+                    var element = $(this);
+                    if (element.val() == "" && element.attr("id") != undefined) {
+                        isValid = false;
+                        element.css("border-color", "#ff4136");
+                        console.log("element id=" + element.attr("id"));
+                    }
+                });
+                return isValid;
             }
         });
     </script>

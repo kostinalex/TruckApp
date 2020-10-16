@@ -4,21 +4,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p><h3>Equipment List</h3></p>
 
-<a href="/Equipment/New" class="btn btn-primary btn-new-confirmation">New Equipment item</a>
+<div class="row">
+    <div class="form-group col-sm-4">
+        <p><h3>Equipment List</h3></p>
 
-<table id="equipment-list" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Equipment Id</th>
-            <th>Equipment Name</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+        <a href="/Equipment/New" class="btn btn-primary btn-new-confirmation">New Equipment item</a>
 
+        <table id="equipment-list" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    @*<th>Equipment Id</th>*@
+                    <th>Equipment Name</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
 
 @section scripts
     {
@@ -31,9 +35,9 @@
                     dataSrc: ""
                 },
                 columns: [
-                    {
-                        data: "id"
-                    },
+                    //{
+                    //    data: "id"
+                    //},
                     {
                         data: "name"
                     }
@@ -60,7 +64,7 @@
 
             $("#equipment-list").on("click", ".js-delete", function () {
                 var button = $(this);
-                console.log("Delete button was pressed id="+ button.attr("data-equipment-id"));
+                console.log("Delete button was pressed id=" + button.attr("data-equipment-id"));
                 bootbox.confirm("Are you sure you want to delete the item?", function (result) {
                     if (result) {
                         $.ajax({

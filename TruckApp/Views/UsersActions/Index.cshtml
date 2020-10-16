@@ -199,7 +199,7 @@
                 $("#usersactions_table").DataTable().clear().destroy();
 
                 var userName = "";
-                if ($('#user_name').find(":selected").text() == "Select User") {
+                if ($('#user_name').find(":selected").text() == "All Users") {
                     //console.log("Select User");
                     userName = "";
                 } else {
@@ -256,7 +256,7 @@
 
             /////////////DROPDOWN///////////////////////////
             $.get("/api/users", function (data) {
-                var users_html = "<option value=''>Select User</option>";
+                var users_html = "<option value=''>All Users</option>";
                 for (var i = 0, len = data.length; i < len; i++) {
                     ////console.log("Hazmat=" + data[i].name);
                     users_html = users_html + "<option value='" + i + "'>" + data[i].userName + "</option>";
@@ -279,7 +279,6 @@
                 },
                 columns: [
                     {
-
                         data: "dateTime",
                         render: function (data) {
                             return String(data).replace("T", " ").slice(0, 19);
@@ -302,39 +301,6 @@
                 ]
 
             });
-
-
-
-
-            ///////////FILL DROPDOWN MENU/////////////////////
-            //$.get("/api/roles", function (data) {
-            //    ////console.log("hazmat=" + data);
-            //    var roles_html = "";
-            //    for (var i = 0, len = data.length; i < len; i++) {
-            //        ////console.log("Hazmat=" + data[i].name);
-            //        roles_html = roles_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
-            //    }
-            //    //console.log("roles_html=" + roles_html);
-            //    $("#roles_select").html(roles_html);
-            //}, "json");
-
-            ///////////////GET USER NAME///////////////////////////
-
-            //$.ajax({
-            //    url: "/api/getusername",
-            //    method: "POST",
-            //    data: {
-            //        "userId": userId
-            //    },
-            //    success: function (data) {
-            //        //console.log("The attachment was deleted");
-            //        $("#user_name").html("User name: " + data);
-            //    },
-            //    error: function () {
-            //        bootbox.alert("Failed to get name");
-            //    }
-            //});
-
 
 
         });

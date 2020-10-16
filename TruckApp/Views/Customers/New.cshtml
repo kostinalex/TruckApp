@@ -6,7 +6,7 @@
 
 <h2>New</h2>
 
-<form id="newCustomer">
+
     <div class="form-group">
         <label for="customerName">Customer Name</label>
         <input id="customerName" type="text" value="" class="form-control" />
@@ -23,8 +23,8 @@
         <input type='checkbox' id="void">
         <label for="void">Void</label><br>
     </div>
-    <button class="btn btm-primary">Submit</button>
-</form>
+    <button class="btn btn-primary" id="newCustomer">Submit</button>
+
 
 @section scripts
 {
@@ -39,8 +39,13 @@
                 .trim();
             console.log("customerId=" + customerId);
 
+            
+
             if (window.location.pathname.toUpperCase() != "/customers/New".toUpperCase()) {
                 console.log("It's not a new Item.");
+
+
+
                 $("h2").text("Edit customer");
                 $.get("/api/customers/" + customerId, function (data) {
                     $("#customerName").val(data.name);
@@ -56,62 +61,113 @@
 
 
 
-                $("#newCustomer").submit(function (e) {
-                    console.log("Submit button was pressed");
-                    e.preventDefault();
-                    $.ajax({
-                        url: "/api/customers/" + customerId,
-                        method: "PUT",
-                        data: {
-                            "id": customerId,
-                            "name": $("#customerName").val(),
-                            "address": $("#address").val(),
-                            "city": $("#city").val(),
-                            "state": $("#state").val(),
-                            "country": $("#country").val(),
-                            "zipcode": $("#zipcode").val(),
-                            "void": $("#void").prop("checked")
-                        }
-                    })
-                        .done(function () {
-                            console.log("send to API=" + $("#customer").val());
-                            window.location = window.location.origin + "/customers";
+                $("#newCustomer").on('click',function (e) {
+                    //console.log("Submit button was pressed " + isFormValid());
+                   
+
+                    if (isFormValid() == false) {
+                        bootbox.alert("Please, fill out highlighted fields.");
+                    } else {
+                        $.ajax({
+                            url: "/api/customers/" + customerId,
+                            method: "PUT",
+                            data: {
+                                "id": customerId,
+                                "name": $("#customerName").val(),
+                                "address": $("#address").val(),
+                                "city": $("#city").val(),
+                                "state": $("#state").val(),
+                                "country": $("#country").val(),
+                                "zipcode": $("#zipcode").val(),
+                                "void": $("#void").prop("checked")
+                            }
                         })
-                        .fail(function () {
-                            console.log("fail" + vm);
-                            bootbox.alert("Failed to update customer");
-                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#customer").val());
+                                window.location = window.location.origin + "/customers";
+                            })
+                            .fail(function () {
+                                console.log("fail" + vm);
+                                bootbox.alert("Failed to update customer");
+                            })
+
+                    }
+
+
+
                 });
             }
             else {
                 console.log("It's a new Item.");
                 $("h2").text("New customer")
-                $("#newCustomer").submit(function (e) {
-                    console.log("Submit button was pressed");
-                    e.preventDefault();
-                    $.ajax({
-                        url: "/api/customers",
-                        method: "POST",
-                        data: {
-                            "name": $("#customerName").val(),
-                            "address": $("#address").val(),
-                            "city": $("#city").val(),
-                            "state": $("#state").val(),
-                            "country": $("#country").val(),
-                            "zipcode": $("#zipcode").val(),
-                            "void": $("#void").prop("checked")
-                        }
-                    })
-                        .done(function () {
-                            console.log("send to API=" + $("#customer").val());
-                            window.location = window.location.origin + "/customers";
+                $("#newCustomer").on('click',function (e) {
+                    //console.log("Submit button was pressed " + isFormValid());
+                    
+
+                    if (isFormValid() == false) {
+                        bootbox.alert("Please, fill out highlighted fields.");
+                    } else {
+                        $.ajax({
+                            url: "/api/customers",
+                            method: "POST",
+                            data: {
+                                "name": $("#customerName").val(),
+                                "address": $("#address").val(),
+                                "city": $("#city").val(),
+                                "state": $("#state").val(),
+                                "country": $("#country").val(),
+                                "zipcode": $("#zipcode").val(),
+                                "void": $("#void").prop("checked")
+                            }
                         })
-                        .fail(function () {
-                            console.log("fail");
-                            bootbox.alert("Failed to create new customer");
-                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#customer").val());
+                                window.location = window.location.origin + "/customers";
+                            })
+                            .fail(function () {
+                                console.log("fail");
+                                bootbox.alert("Failed to create new customer");
+                            })
+                    }
+                    
                 });
             }
+
+            $("input[type='text']").keypress(function () {
+                var input = $(this);
+                input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').toUpperCase());
+                input.css("border-color", "");
+                if (input.val().length > 100) {
+                    //bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
+                    input.val(input.val().slice(0, 100));
+                    //});
+                }
+            });
+
+            $("input[type='text']").change(function () {
+                var input = $(this);
+                input.val(input.val().toString().trim());
+            });
+
+            $("input[type='text']").on("focus", function () {
+                $(this).select();
+            });
+
+            function isFormValid() {
+                var isValid = true;
+                $("input[type='text']").each(function () {
+                    //console.log("element id=" + element.attr("id"));
+                    var element = $(this);
+                    if (element.val() == "" && element.attr("id") != undefined) {
+                        isValid = false;
+                        element.css("border-color", "#ff4136");
+                        console.log("element id=" + element.attr("id"));
+                    }
+                });
+                return isValid;
+            }
+
+           
         });
     </script>
 }

@@ -25,7 +25,13 @@
                     </p>
                     <div class="row">
                         <div class="form-group col-sm-1">
-                            <p><a class="btn btn-primary home_special" href="/Account/Login?visitor=true">Log In As a Visitor &raquo;</a></p>
+                            @{
+                                if (!User.IsInRole("CanEnter"))
+                                {
+                                   <p><a id="enter_button" class="btn btn-primary home_special" >Log In As a Visitor &raquo;</a></p>
+                                }
+                            }
+                            
                         </div>
 
                     </div>
@@ -76,6 +82,13 @@
                         window.location = "/about/index";
                     });
 
+                    $("#enter_button").on("click", function () {
+                        $.ajax({url: "/api/email", type: "POST"});
+                        window.location = "/Account/Login?visitor=true";                        
+                    });
+
                 });
+
+
             </script>
         }

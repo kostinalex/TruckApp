@@ -8,6 +8,7 @@ using TruckApp.Models;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class CustomersAddressesController : ApiController
     {
         private ApplicationDbContext _context;

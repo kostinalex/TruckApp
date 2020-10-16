@@ -11,6 +11,9 @@ namespace TruckApp
     {
         public static void Register(HttpConfiguration config)
         {
+
+            config.EnableCors();
+
             var settings = config.Formatters.JsonFormatter.SerializerSettings;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             settings.Formatting = Formatting.Indented;

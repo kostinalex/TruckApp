@@ -10,6 +10,7 @@ using TruckApp.ViewModels;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class LegsController : ApiController
     {
         private ApplicationDbContext _context;
@@ -111,7 +112,7 @@ namespace TruckApp.Controllers.Api
                     var leg = new Leg
                     {
                         LoadConfirmationId = id,
-                        DriverId = 8,
+                        //DriverId = 8,
                         Stop1Id = previousStop.Id,
                         Stop2Id = currentStop.Id
                     };

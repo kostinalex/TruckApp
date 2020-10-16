@@ -10,6 +10,7 @@ using System.Data.Entity;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class NotesController : ApiController
     {
         private ApplicationDbContext _context;

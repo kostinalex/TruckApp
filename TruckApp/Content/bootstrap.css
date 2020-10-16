@@ -4497,7 +4497,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default .navbar-link:hover {
-  color: red;
+  color: #333333;
 }
 
 .navbar-inverse {
@@ -4616,7 +4616,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse .navbar-link:hover {
-  color: red;
+  color: #ffffff;
 }
 
 .breadcrumb {

@@ -8,6 +8,7 @@ using TruckApp.Models;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class DispatchController : ApiController
     {
         private ApplicationDbContext _context;
@@ -23,8 +24,16 @@ namespace TruckApp.Controllers.Api
 
         /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        [HttpGet]
+        [Route("api/dispatch")]
+        public IEnumerable<Dispatch> GetNonVoidDispatch()
+        {
+            return _context.Dispatches.Where(c => c.Void == false).ToList(); //
+        }
 
-        public IEnumerable<Dispatch> Getdispatch()
+        [HttpGet]
+        [Route("api/getalldispatch")]
+        public IEnumerable<Dispatch> GetAllDispatch()
         {
             return _context.Dispatches.ToList();
         }
@@ -41,6 +50,8 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpPost]
+        [Route("api/dispatch")]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public IHttpActionResult New(Dispatch dispatch)
         {
             if (!ModelState.IsValid)
@@ -63,6 +74,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpPut]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public void Editdispatch(int id, Dispatch dispatch)
         {
             if (!ModelState.IsValid)
@@ -71,6 +83,7 @@ namespace TruckApp.Controllers.Api
             var dispatchToEdit = _context.Dispatches.SingleOrDefault(c => c.Id == id);
 
             dispatchToEdit.Name = dispatch.Name;
+            dispatchToEdit.Void = dispatch.Void;
 
             var userAction = new UserAction
             {
@@ -86,19 +99,20 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpDelete]
-        public void Deletedispatch(int id)
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
+        public void VoidDispatch(int id)
         {
-            var dispatchToDelete = _context.Dispatches.SingleOrDefault(c => c.Id == id);
+            var dispatchToVoid = _context.Dispatches.SingleOrDefault(c => c.Id == id);
 
-            if (dispatchToDelete == null)
+            if (dispatchToVoid == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            _context.Dispatches.Remove(dispatchToDelete);
+            dispatchToVoid.Void = true;
 
             var userAction = new UserAction
             {
                 UserName = User.Identity.Name,
-                Action = "Dispatch was deleted. Dispatch name " + dispatchToDelete.Name,
+                Action = "Dispatch was voided. Dispatch name " + dispatchToVoid.Name,
                 DateTime = DateTime.Now
             };
             _context.UserActions.Add(userAction);
@@ -107,5 +121,33 @@ namespace TruckApp.Controllers.Api
             _context.SaveChanges();
 
         }
+
+
+
+
+
+        //[HttpDelete]
+        //[Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
+        //public void Deletedispatch(int id)
+        //{
+        //    var dispatchToDelete = _context.Dispatches.SingleOrDefault(c => c.Id == id);
+
+        //    if (dispatchToDelete == null)
+        //        throw new HttpResponseException(HttpStatusCode.NotFound);
+
+        //    _context.Dispatches.Remove(dispatchToDelete);
+
+        //    var userAction = new UserAction
+        //    {
+        //        UserName = User.Identity.Name,
+        //        Action = "Dispatch was deleted. Dispatch name " + dispatchToDelete.Name,
+        //        DateTime = DateTime.Now
+        //    };
+        //    _context.UserActions.Add(userAction);
+
+
+        //    _context.SaveChanges();
+
+        //}
     }
 }

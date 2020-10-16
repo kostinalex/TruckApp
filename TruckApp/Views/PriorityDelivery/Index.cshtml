@@ -4,21 +4,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p><h3>PriorityDelivery List</h3></p>
 
-<a href="/priorityDelivery/New" class="btn btn-primary btn-new-confirmation">New PriorityDelivery item</a>
+<div class="row">
+    <div class="form-group col-sm-4">
+        <p><h3>PriorityDelivery List</h3></p>
 
-<table id="priorityDelivery-list" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>PriorityDelivery Id</th>
-            <th>PriorityDelivery Name</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+        <a href="/priorityDelivery/New" class="btn btn-primary btn-new-confirmation">New PriorityDelivery item</a>
 
+        <table id="priorityDelivery-list" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    @*<th>PriorityDelivery Id</th>*@
+                    <th>PriorityDelivery Name</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
 
 @section scripts
     {
@@ -31,9 +35,9 @@
                     dataSrc: ""
                 },
                 columns: [
-                    {
-                        data: "id"
-                    },
+                    //{
+                    //    data: "id"
+                    //},
                     {
                         data: "name"
                     }
@@ -60,7 +64,7 @@
 
             $("#priorityDelivery-list").on("click", ".js-delete", function () {
                 var button = $(this);
-                console.log("Delete button was pressed id="+ button.attr("data-priorityDelivery-id"));
+                console.log("Delete button was pressed id=" + button.attr("data-priorityDelivery-id"));
                 bootbox.confirm("Are you sure you want to delete the item?", function (result) {
                     if (result) {
                         $.ajax({

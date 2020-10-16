@@ -12,16 +12,13 @@ using System.Threading.Tasks;
 using System.Web;
 using TruckApp.ViewModels;
 using TruckApp.Controllers;
-
-
-
-
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using System.Runtime.Remoting.Contexts;
+
+
 
 namespace TruckApp.Controllers.Api
 {
+    
     public class UsersController : ApiController
     {
         //         
@@ -62,6 +59,8 @@ namespace TruckApp.Controllers.Api
 
 
         //////////////////FOR USERS INDEX LIST
+        [Authorize(Roles = "CanSeeAllUserActions,CanManageUsers")]
+       
         public IEnumerable<ApplicationUser> GetUsers()
         {
             return _context.Users.ToList();
@@ -71,6 +70,7 @@ namespace TruckApp.Controllers.Api
         //////////////////GET ALL ROLES ASSIGNED TO ONE USER
         [HttpPost]
         [Route("api/getuser")]
+        [Authorize(Roles = RoleName.CanManageUsers)]
         public List<string> GetUser(RoleViewModel roleViewModel)
         {
             var userToGet= _context.Users.SingleOrDefault(c => c.Id == roleViewModel.UserId);
@@ -96,6 +96,7 @@ namespace TruckApp.Controllers.Api
 
         [HttpPost]
         [Route("api/getusername")]
+        [Authorize(Roles = RoleName.CanManageUsers)]
         public string GetUserName(RoleViewModel roleViewModel)
         {
             var userToGet = _context.Users.SingleOrDefault(c => c.Id == roleViewModel.UserId);
@@ -106,6 +107,7 @@ namespace TruckApp.Controllers.Api
 
         ///////////////NEW ONE ROLE FOR ONE USER
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageUsers)]
         public async Task New(RoleViewModel roleViewModel)
         {
             var userAction = new UserAction
@@ -122,12 +124,10 @@ namespace TruckApp.Controllers.Api
             await UserManager.AddToRoleAsync(roleViewModel.UserId, roleViewModel.UserRole);
         }
 
-
-
-
         ////////////////////DELETE ONE ROLE
 
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageUsers)]
         public async Task DeleteUserRoles(RoleViewModel roleViewModel)
         {
 
@@ -145,27 +145,18 @@ namespace TruckApp.Controllers.Api
             await UserManager.RemoveFromRoleAsync(roleViewModel.UserId, roleViewModel.UserRole);
         }
 
-
-
-
         ////////////////////GET LIST OF  ALL ROLES FOR DROPDOWN
         [Route("api/roles")]
+        [Authorize(Roles = RoleName.CanManageUsers)]
         public IEnumerable<IdentityRole> GetRoles()//Table in the middle
         {
             return _context.Roles.ToList();
         }
 
-
-
-
-
-
-
-
-
         ///////////////DARK THEME ASSIGN//////////////////
         [HttpPost]
         [Route("api/darktheme")]
+        [Authorize(Roles = RoleName.CanEnter)]
         public async Task DarkThemeApply(RoleViewModel roleViewModel)
         {
 
@@ -181,6 +172,7 @@ namespace TruckApp.Controllers.Api
 
         [HttpDelete]
         [Route("api/darktheme")]
+        [Authorize(Roles = RoleName.CanEnter)]
         public async Task DarkThemeDisable(RoleViewModel roleViewModel)
         {
 
@@ -195,6 +187,7 @@ namespace TruckApp.Controllers.Api
 
         [HttpPost]
         [Route("api/getdarktheme")]
+        [Authorize(Roles = RoleName.CanEnter)]
         public bool DarkThemeStatus(RoleViewModel roleViewModel)
         {
 
@@ -209,111 +202,6 @@ namespace TruckApp.Controllers.Api
 
             return darkThemeStatus;
         }
-
-
-
-
-
-
-
-
-        //[HttpDelete]
-        //public async Task DeleteUserRoles(RoleViewModel roleViewModel)
-        //{            
-        //    await UserManager.RemoveFromRolesAsync(roleViewModel.UserId, UserManager.GetRoles(roleViewModel.UserId).ToArray());
-        //}
-        //[HttpPost]
-        //public async Task New()
-        //{
-
-        //    var userId = "ec6ea171-70f5-4fd9-93f2-5a05a2f88e3b";
-        //    var role = "CanDeleteCustomer";
-
-        //    await UserManager.AddToRoleAsync(userId, role);
-
-        //}
-
-
-        //{
-
-        //"userId":"ec6ea171-70f5-4fd9-93f2-5a05a2f88e3b",
-        //"userRole":"HasAccessToLegs"
-
-        //}
-
-
-
-        //[HttpPut]
-        //public void EditUserRole(ApplicationUser user)
-        //{
-        //    if (!ModelState.IsValid)
-        //        throw new HttpResponseException(HttpStatusCode.BadRequest);
-
-        //    var userToEdit = _context.Users.SingleOrDefault(c => c.Id == user.Id);
-
-        //    userToEdit.Roles = user.Roles;
-
-        //    _context.SaveChanges();
-
-        //}
-
-
-
-
-
-        //            var user = await UserManager.FindByIdAsync(userId);
-        //IdentityResult deletionResult = await UserManager.RemoveFromRoleAsync("ec6ea171-70f5-4fd9-93f2-5a05a2f88e3b", "CanDeleteCustomer");
-
-        //await UserManager.AddToRoleAsync(userId, "NewRole");
-        //await UserManager.UpdateAsync(user);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //public IdentityRole GetRole()//Table in the middle
-        //{
-        //    return _context.Roles.Single(c=>c.Name== "CanDeleteCustomer");
-        //}
-
-
-
-
-
-        //public IEnumerable<AspNetUser> GetRoles()//Table in the middle
-        //{
-        //    return _context.Roles.Include(c => c.Users).ToList();
-        //}
-
-
-        //var roles = await UserManager.GetRolesAsync(userid);
-        //await UserManager.RemoveFromRolesAsync(userid, roles.ToArray());
-
-        //var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
-        //var roleManager = new RoleManager<IdentityRole>(roleStore);
-        //await roleManager.CreateAsync(new IdentityRole("CanManageNotes"));
-        //await UserManager.AddToRoleAsync(user.Id, "CanManageNotes");
-
-        //if (User.IsInRole(RoleModels.CanManageCustomers))
-        //            {
-        //                var usersList1 = _context.Users.ToList();
-        //                return View("Index", usersList1);
-        //    }
-        //            else
-        //            {
-        //                return View("ReadOnlyList");
-        //}
-
-
 
     }
 }

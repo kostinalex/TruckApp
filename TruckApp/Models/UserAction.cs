@@ -12,6 +12,6 @@ namespace TruckApp.Models
         public string Action { get; set; }
         public DateTime DateTime { get; set; }
         public int? LoadConfirmationId { get; set; }
-        public virtual LoadConfirmation LoadConfirmation { get; set; }
+        public LoadConfirmation LoadConfirmation { get; set; }
     }
 }

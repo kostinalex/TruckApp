@@ -76,7 +76,7 @@ namespace TruckApp.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -139,6 +139,7 @@ namespace TruckApp.Controllers
 
         //
         // GET: /Account/Register
+
         public ActionResult Register()
         {
             return View();
@@ -159,16 +160,59 @@ namespace TruckApp.Controllers
 
                     //var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                     //var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    //await roleManager.CreateAsync(new IdentityRole("CanEnter"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanEnter");
+
+                    //await roleManager.CreateAsync(new IdentityRole("CanAssignDriversToLegs"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanAssignDriversToLegs");
+
+                    //await roleManager.CreateAsync(new IdentityRole("CanCreateAndEditCustomer"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanCreateAndEditCustomer");
+
+                    //await roleManager.CreateAsync(new IdentityRole("CanVoidLoad"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanVoidLoad");
+
+                    //await roleManager.CreateAsync(new IdentityRole("CanManageDispatchDriversAndOther"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanManageDispatchDriversAndOther");
+
+                    //await roleManager.CreateAsync(new IdentityRole("CanManageNotes"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanManageNotes");
+
+                    //await roleManager.CreateAsync(new IdentityRole("CanManageUsers"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanManageUsers");
+
+                    //await roleManager.CreateAsync(new IdentityRole("CanUpdateRate"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanUpdateRate");
+
+                    //await roleManager.CreateAsync(new IdentityRole("CanSeeAllUserActions"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanSeeAllUserActions");
+
+                    //await roleManager.CreateAsync(new IdentityRole("CanSeeUsersActionsWithLoad"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanSeeUsersActionsWithLoad");
+
+                    //await roleManager.CreateAsync(new IdentityRole("DarkTheme"));
+                    //await UserManager.AddToRoleAsync(user.Id, "DarkTheme");
+
+                    //await roleManager.CreateAsync(new IdentityRole("CanSeeReports"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanSeeReports");
+
+                    //await roleManager.CreateAsync(new IdentityRole("CanCloseLoad"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanCloseLoad");
+
+
                     //await roleManager.CreateAsync(new IdentityRole("CanExportLoad"));
                     //await UserManager.AddToRoleAsync(user.Id, "CanExportLoad");
 
-                    //var userId = "ec6ea171-70f5-4fd9-93f2-5a05a2f88e3b";
+
+
 
                     //await UserManager.RemoveFromRolesAsync(userId, UserManager.GetRoles(userId).ToArray());
 
 
 
-                    //I DID THAT//await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //I DID THAT//
+
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

@@ -49,31 +49,51 @@
                 + (currentdate.getSeconds() < 10 ? "0" : "") + currentdate.getSeconds();
             console.log("current datetime=" + datetime);
 
-            $("input[type='text']").change(function () {
+            $("input[type='text']").keypress(function () {
                 var input = $(this);
-                input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').toUpperCase().trim());
+                input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').toUpperCase());
                 input.css("border-color", "");
                 if (input.val().length > 100) {
-                    bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
-                        input.val("");
-                    });
+                    //bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
+                        input.val(input.val().slice(0,100));
+                    //});
                 }
             });
 
-            $("input[type='text']").on("focus", function () {
-                $(this).select();
+            $("input[type='text']").change(function () {
+                var input = $(this);
+                input.val(input.val().toString().trim());
+            });
+
+            $("textarea").keypress(function () {
+                var input = $(this);
+                input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' '));
+                input.css("border-color", "");
+                if (input.val().length > 200) {
+                    //bootbox.alert("You exceeded maximum length of input (200 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
+                        input.val(input.val().slice(0, 200));
+                    //});
+                }
             });
 
             $("textarea").change(function () {
                 var input = $(this);
-                input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').trim());
-                input.css("border-color", "");
-                if (input.val().length > 200) {
-                    bootbox.alert("You exceeded maximum length of input (200 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
-                        input.val("");
-                    });
-                }
+                input.val(input.val().toString().trim());
             });
+
+            function isFormValid() {
+                var isValid = true;
+                $(".mandatory").each(function () {
+
+                    var element = $(this);
+                    if (element.val() == "" && element.attr("id") != undefined) {
+                        isValid = false;
+                        element.css("border-color", "#ff4136");
+                        console.log("element id=" + element.attr("id"));
+                    }
+                });
+                return isValid;
+            }
 
             $("textarea").on("focus", function () {
                 $(this).select();
@@ -166,19 +186,7 @@
                 });
             }
 
-            function isFormValid() {
-                var isValid = true;
-                $(".mandatory").each(function () {
-                    
-                    var element = $(this);
-                    if (element.val() == "" && element.attr("id") != undefined) {
-                        isValid = false;
-                        element.css("border-color", "#ff4136");
-                        console.log("element id=" + element.attr("id"));
-                    }
-                });
-                return isValid;
-            }
+           
 
             $("#deleteButton").on("click", function () {
                 bootbox.confirm("Are you sure you want to delete the note?", function (result) {

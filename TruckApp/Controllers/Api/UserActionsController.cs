@@ -10,6 +10,7 @@ using TruckApp.ViewModels;
 
 namespace TruckApp.Controllers.Api
 {
+    
     public class UserActionsController : ApiController
     {
         private ApplicationDbContext _context;
@@ -30,6 +31,7 @@ namespace TruckApp.Controllers.Api
 
         [HttpGet]
         [Route("api/GetAllUsersActions")]
+        [Authorize(Roles = RoleName.CanSeeAllUserActions)]
         public IEnumerable<UserAction> GetAllUsersActions()
         {
             return _context.UserActions.ToList();
@@ -37,6 +39,7 @@ namespace TruckApp.Controllers.Api
 
         [HttpGet]
         [Route("api/GetUsersActionsForLoad/{id}")]
+        [Authorize(Roles = RoleName.CanSeeUsersActionsWithLoad)]
         public IEnumerable<UserAction> GetUserActionsForLoad(int id)
         {
             return _context.UserActions.Where(c=>c.LoadConfirmationId==id).ToList();
@@ -45,6 +48,7 @@ namespace TruckApp.Controllers.Api
 
         [HttpPost]
         [Route("api/GetAllActionsWithCondition")]
+        [Authorize(Roles = RoleName.CanSeeAllUserActions)]
         public IEnumerable<UserAction> GetAllActionsWithCondition(UserActionsViewModel userActions)
         {
 

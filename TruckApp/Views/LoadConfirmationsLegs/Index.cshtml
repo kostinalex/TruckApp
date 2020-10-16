@@ -82,13 +82,7 @@
             console.log("current datetime=" + datetime);
 
 
-            $("input[type='text']").click(function () {
-                $(this).select();
-            });
 
-            $("input[type='text']").on("focus", function () {
-                $(this).select();
-            });
 
 
             $.get("/api/legs/" + confirmationId, function (data) {
@@ -134,15 +128,54 @@
                         "<td style='width: 105px !important;'><input value='" + date2 + "' class='form-control date_input_field' id='date2_"+(i+1)+"' type='text'></td>" +
                         "<td style='width: 75px !important;'><input value='" + time2 + "' class='form-control time_input_field' id='time2_"+(i+1)+"' type='text'></td>" +
                         "<td></td>" +
-                        "<td style='width: 90px !important;text-align: right!important;'><input value='" + data[i].distance + "' class='form-control' id='distance_" + (i + 1) +"' type='text' style='text-align:right;'></td>" +
+                        "<td style='width: 90px !important;'><input value='" + data[i].distance + "' class='form-control number' id='distance_" + (i + 1) + "' type='text' style='text-align:right;'></td>" +  
+
                         "<td></td>" +
                         "<td></td>" + 
                         "<td></td>" +  
-                        "<td style='width: 90px !important;'><input value='" + data[i].driverPay + "' class='form-control' id='driver_pay_" + (i + 1) + "' type='text' style='text-align:right;'></td>" +  
+                        "<td style='width: 90px !important;'><input value='" + data[i].driverPay + "' class='form-control number' id='driver_pay_" + (i + 1) + "' type='text' style='text-align:right;'></td>" +  
+
                         "</tr>");
 
-                    $("#driver_" + (i + 1)).val(data[i].driver.id);
+                    $("#driver_" + (i + 1)).val(data[i].driver != null ? data[i].driver.id:null);
                 }
+
+                /////////////////////////////VALIDATION///////////////////////////////////////////////////
+                $("input.number").change(function () {
+                    console.log("You changed a number.");
+                    var input = $(this);
+                    input.val(input.val().toString().replace(/\D/g, '').trim());
+                    if (input.val() > 60000) {
+                        bootbox.alert("You exceeded maximum number limit (60000). You entered " + input.val() + ". Please make sure it's not a mistake.");
+                    }
+                    if (input.attr("id") == "number_of_pallets" && input.val() > 60) {
+                        bootbox.alert("You exceeded limit for pallets (60). You entered " + input.val() + ". Please make sure it's not a mistake.");
+                    }
+                    if (input.attr("id") == "confirmation_rate" && input.val() > 10000) {
+                        bootbox.alert("You exceeded limit for rate (10000). You entered " + input.val() + ". Please make sure it's not a mistake.");
+                    }
+
+                });
+
+                $("input[type='text']").keypress(function () {
+                    var input = $(this);
+                    input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' ').toUpperCase());
+                    input.css("border-color", "");
+                    if (input.val().length > 100) {
+                        //bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
+                        input.val(input.val().slice(0, 100));
+                        //});
+                    }
+                });
+
+                $("input[type='text']").change(function () {
+                    var input = $(this);
+                    input.val(input.val().toString().trim());
+                });
+
+                $("input[type='text']").on("focus", function () {
+                    $(this).select();
+                });
 
                 $(".date_input_field").change(function () {
                     $(this).css("background-color", "");
@@ -293,25 +326,15 @@
 
                 });
 
-                $("input[type='text']").click(function () {
-                    $(this).select();
-                });
-
-                $("input[type='text']").on("focus", function () {
-                    $(this).select();
-                });
-
 
                 //$("#driver_1").val(10);
 
             }, "json");
 
-
-
             $("#driver_button").on("click", function () {
                 console.log("Submit button was pressed");
 
-                console.log("rowNumber=" + rowNumber);
+                //console.log("rowNumber=" + rowNumber);
 
                 //for (var i = 1, len = rowNumber; i <= len; i++) {
                 //    if ($("#driver_" + i).val() == 8) {
@@ -342,7 +365,8 @@
                         dateTime2 = date2Arr[2] + "-" + date2Arr[1] + "-" + date2Arr[0] + "T" + $("#time2_" + i).val() + ":00";
                     }
 
-                    console.log("dateTime2=" + dateTime2);
+                    //console.log("dateTime2=" + dateTime2);
+                    console.log("distance=" + $("#distance_" + i).val());
 
                     $.ajax({
                         url: "/api/legs",
@@ -373,80 +397,7 @@
 
 
 
-            });
-
-            //console.log("User name=@User.Identity.Name");
-
-            @*//console.log("User name=@User.IsInRole('CanEnter')");*@
-
-
-
-            //$("#customer_1").val("10");
-
-            //$("#customer_1").get(0).selectedIndex = 2; //WORKING
-
-
-
-
-
-
-
-
-
-
-
-            //var table = $("#stopsTable").DataTable({
-            //    ajax: {
-            //        url: "/api/legs/" + confirmationId,
-            //        dataSrc: ""
-            //    },
-            //    columns: [
-            //        {
-            //            data: "id"
-            //        },
-            //        {
-            //            data: "",
-            //            render: function (data, type, leg) {
-            //                return leg.stop1.facilityName;
-            //            }
-            //        },
-            //        {
-            //            data: "",
-            //            render: function (data, type, leg) {
-            //                return leg.stop2.facilityName;
-            //            }
-            //        },
-            //        {
-            //            data: "",
-            //            render: function (data, type, leg) {
-
-
-
-
-            //                return "<select class='form-control' id='sel_" + leg.id + "'>" + driver_html + "</select>";
-
-
-            //            }
-            //        }
-            //    ],
-            //    //order: [[1, "desc"]],
-            //    //scrollY: '14vh',
-
-            //    //scrollCollapse: true,
-            //    //paging: false,
-            //    rowCallback: function (row,data) {
-            //        //$(row).css("cursor", "pointer");
-            //        //$(row).on("click", function () {
-            //        //    window.location = "/loadconfirmations/editnote/" + data.id;
-            //        //});
-            //        //$("#" + leg.id).val("10");
-
-            //        console.log("driver=" + data.driver.name+" id="+data.id);
-
-            //        $("#sel_" + data.id).attr("selected", true);
-            //    }
-
-            //});
+            });  
 
         });
     </script>

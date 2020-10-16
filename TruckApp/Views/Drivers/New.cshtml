@@ -5,13 +5,15 @@
 
 <h2>New</h2>
 
-<form id="newDriver">
+
     <div class="form-group">
         <label>Driver Name</label>
         <input id="driver" type="text" value="" class="form-control" />
+        <input type='checkbox' id="void">
+        <label for="void">Void</label><br>
     </div>
-    <button class="btn btm-primary">Submit</button>
-</form>
+    <button class="btn btn-primary" id="newDriver">Submit</button>
+
 
 @section scripts
 {
@@ -31,47 +33,104 @@
                 $("h2").text("Edit driver");
                 $.get("/api/drivers/" + driverId, function (data) {
                     $("#driver").val(data.name);
+                    $("#void").prop("checked", data.void);
                     console.log("driverNameFromAPI to the input field=" + data.name);
                 }, "json");
 
-                $("#newDriver").submit(function (e) {
+                $("#newDriver").on('click',function (e) {
                     console.log("Submit button was pressed");
-                    e.preventDefault();
-                    $.ajax({
-                        url: "/api/drivers/" + driverId,
-                        method: "PUT",
-                        data: { "id": driverId, "name": $("#driver").val() }
-                    })
-                        .done(function () {
-                            console.log("send to API=" + $("#driver").val());
-                            window.location = window.location.origin + "/drivers";
+
+                    if (isFormValid() == false) {
+                        bootbox.alert("Please, fill out highlighted fields.");
+                    } else {
+                        $.ajax({
+                            url: "/api/drivers/" + driverId,
+                            method: "PUT",
+                            data: {
+                                "id": driverId,
+                                "name": $("#driver").val(),
+                                "void": $("#void").prop("checked")
+                            }
                         })
-                        .fail(function () {
-                            console.log("fail");
-                            bootbox.alert("Failed to update driver");
-                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#driver").val());
+                                window.location = window.location.origin + "/drivers";
+                            })
+                            .fail(function () {
+                                console.log("fail");
+                                bootbox.alert("Failed to update driver");
+                            })
+                    }
+                   
                 });
             }
             else {
                 console.log("It's a new Item.");
                 $("h2").text("New driver")
-                $("#newDriver").submit(function (e) {
+                $("#newDriver").on('click',function (e) {
                     console.log("Submit button was pressed");
-                    e.preventDefault();
-                    $.ajax({
-                        url: "/api/drivers",
-                        method: "POST",
-                        data: { "name": $("#driver").val() }
-                    })
-                        .done(function () {
-                            console.log("send to API=" + $("#driver").val());
-                            window.location = window.location.origin + "/drivers";
+
+                    if (isFormValid() == false) {
+                        bootbox.alert("Please, fill out highlighted fields.");
+                    } else {
+                        $.ajax({
+                            url: "/api/drivers",
+                            method: "POST",
+                            data: {
+                                "name": $("#driver").val(),
+                                "void": $("#void").prop("checked")
+                            }
                         })
-                        .fail(function () {
-                            console.log("fail");
-                            bootbox.alert("Failed to create new driver");
-                        })
+                            .done(function () {
+                                console.log("send to API=" + $("#driver").val());
+                                window.location = window.location.origin + "/drivers";
+                            })
+                            .fail(function () {
+                                console.log("fail");
+                                bootbox.alert("Failed to create new driver");
+                            })
+                    }
+                    
                 });
+            }
+
+            $("input[type='text']").keypress(function () {
+                var input = $(this);
+                input.val(input.val().toString().replace(/[^a-z0-9\s]/gi, ' ').replace(/[_\s]/g, ' ').replace(/\s\s+/g, ' '));
+                input.css("border-color", "");
+                if (input.val().length > 100) {
+                    //bootbox.alert("You exceeded maximum length of input (100 char.). You entered " + input.val().length + " char. Please be more succinct.", function () {
+                    input.val(input.val().slice(0, 100));
+                    //});
+                }
+            });
+
+            $("input[type='text']").change(function () {
+                var input = $(this);
+                input.val(input.val().toString().trim());
+            });
+
+            $("input[type='text']").change(function () {
+                var input = $(this);
+                input.val(input.val().toString().trim());
+            });
+
+            $("input[type='text']").on("focus", function () {
+                $(this).select();
+            });
+
+            function isFormValid() {
+                var isValid = true;
+                $("input[type='text']").each(function () {
+                    //console.log("element id=" + element.attr("id"));
+                    var element = $(this);
+                    if (element.val() == "" && element.attr("id") != undefined) {
+                        isValid = false;
+                        element.css("border-color", "#ff4136");
+                        console.log("element id=" + element.attr("id"));
+                    }
+                });
+                return isValid;
             }
         });
     </script>

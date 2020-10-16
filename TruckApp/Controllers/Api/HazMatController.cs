@@ -10,6 +10,7 @@ using System.Data.Entity;
 
 namespace TruckApp.Controllers.API
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class HazMatController : ApiController
     {
         private ApplicationDbContext _context;
@@ -43,6 +44,7 @@ namespace TruckApp.Controllers.API
         }
 
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public IHttpActionResult New(HazMatStatus hazMatStatus)
         {
             if (!ModelState.IsValid)
@@ -67,6 +69,7 @@ namespace TruckApp.Controllers.API
         }
 
         [HttpPut]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public void EditHazMat(int id, HazMatStatus hazMatStatus)
         {
             if (!ModelState.IsValid)
@@ -90,6 +93,7 @@ namespace TruckApp.Controllers.API
         }
 
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public void DeleteHazMat(int id)
         {
             var hazMatToDelete = _context.HazMatStatuses.SingleOrDefault(c => c.Id == id);

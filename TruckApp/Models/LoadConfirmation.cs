@@ -41,7 +41,7 @@ namespace TruckApp.Models
         public int PriorityEntryId { get; set; }
         public PriorityEntry PriorityEntry { get; set; }
 
-        public int DispatchId { get; set; }
+        public int? DispatchId { get; set; }
         public Dispatch Dispatch { get; set; }
 
         //public int DriverId { get; set; }

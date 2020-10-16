@@ -11,6 +11,7 @@ using System.Data.Entity;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class NoteController : ApiController
     {
         private ApplicationDbContext _context;
@@ -38,6 +39,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpPut]
+        [Authorize(Roles = RoleName.CanManageNotes)]
         public void EditNote(int id, Note note)
         {
             if (!ModelState.IsValid)
@@ -64,6 +66,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageNotes)]
         public void DeleteNote(int id)
         {
             var noteToDelete = _context.Notes.SingleOrDefault(c => c.Id == id);

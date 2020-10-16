@@ -8,6 +8,7 @@ using TruckApp.Models;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class EquipmentController : ApiController
     {
 
@@ -42,6 +43,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public IHttpActionResult New(Equipment equipment)
         {
             if (!ModelState.IsValid)
@@ -64,6 +66,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpPut]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public void Editequipment(int id, Equipment equipment)
         {
             if (!ModelState.IsValid)
@@ -86,6 +89,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public void DeleteEquipment(int id)
         {
             var equipmentToDelete = _context.Equipments.SingleOrDefault(c => c.Id == id);

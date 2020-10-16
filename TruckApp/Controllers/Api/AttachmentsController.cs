@@ -12,6 +12,7 @@ using System.Web;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class AttachmentsController : ApiController
     {
         private ApplicationDbContext _context;

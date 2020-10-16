@@ -8,6 +8,7 @@ using TruckApp.Models;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class CustomersController : ApiController
     {
         private ApplicationDbContext _context;
@@ -51,6 +52,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpPost]
+        [Authorize(Roles = RoleName.CanCreateAndEditCustomer)]
         public IHttpActionResult New(Customer customer)
         {
             if (!ModelState.IsValid)
@@ -72,6 +74,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpPut]
+        [Authorize(Roles = RoleName.CanCreateAndEditCustomer)]
         public void EditCustomer(int id, Customer customer)
         {
             if (!ModelState.IsValid)
@@ -100,6 +103,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanCreateAndEditCustomer)]
         public void VoidCustomer(int id)
         {
             var customerToVoid = _context.Customers.SingleOrDefault(c => c.Id == id);

@@ -4,21 +4,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p><h3>Dispatch List</h3></p>
+<div class="row">
+    <div class="form-group col-sm-4">
+        <p><h3>Dispatch List</h3></p>
 
-<a href="/dispatch/New" class="btn btn-primary btn-new-confirmation">New dispatch item</a>
+        <a href="/dispatch/New" class="btn btn-primary btn-new-confirmation">New dispatch item</a>
 
-<table id="dispatch-list" class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Dispatch Id</th>
-            <th>Dispatch Name</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+        <table id="dispatch-list" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    @*<th>Dispatch Id</th>*@
+                    <th>Dispatch Name</th>
+                    <th>Void</th>
 
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
 
 @section scripts
     {
@@ -27,21 +31,27 @@
             console.log("Document ready");
             var table = $("#dispatch-list").DataTable({
                 ajax: {
-                    url: "/api/dispatch",
+                    url: "/api/getalldispatch",
                     dataSrc: ""
                 },
                 columns: [
-                    {
-                        data: "id"
-                    },
+                    //{
+                    //    data: "id"
+                    //},
                     {
                         data: "name"
                     }
                     ,
                     {
-                        data: "id",
+                        data: "void",
                         render: function (data) {
-                            return "<button class='btn-link js-delete' data-dispatch-id=" + data + ">Delete</button>";
+                            if (data == true) {
+                                return "<input type='checkbox' onclick='return false;' checked><p style='display:none'>1</p>";
+                            }
+                            else {
+                                return "<input type='checkbox' onclick='return false;'><p style='display:none'>0</p>";
+                            }
+
                         }
                     }
                 ],
@@ -58,24 +68,7 @@
                 }
             });
 
-            $("#dispatch-list").on("click", ".js-delete", function () {
-                var button = $(this);
-                console.log("Delete button was pressed id="+ button.attr("data-dispatch-id"));
-                bootbox.confirm("Are you sure you want to delete the item?", function (result) {
-                    if (result) {
-                        $.ajax({
-                            url: "/api/dispatch/" + button.attr("data-dispatch-id"),
-                            method: "DELETE",
-                            success: function () {
-                                console.log("Item was deleted");
-                                //table.row(button.parents("tr")).remove().draw();
-                                table.ajax.reload();
-                            }
-                        });
-                    }
-                });
 
-            });
         });
     </script>
 }

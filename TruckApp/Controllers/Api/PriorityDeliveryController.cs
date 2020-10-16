@@ -8,6 +8,7 @@ using TruckApp.Models;
 
 namespace TruckApp.Controllers.Api
 {
+    [Authorize(Roles = RoleName.CanEnter)]
     public class PriorityDeliveryController : ApiController
     {
         private ApplicationDbContext _context;
@@ -41,6 +42,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public IHttpActionResult New(PriorityDelivery priorityDelivery)
         {
             if (!ModelState.IsValid)
@@ -65,6 +67,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpPut]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public void EditpriorityDelivery(int id, PriorityDelivery priorityDelivery)
         {
             if (!ModelState.IsValid)
@@ -88,6 +91,7 @@ namespace TruckApp.Controllers.Api
         }
 
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageDispatchDriversAndOther)]
         public void DeletepriorityDelivery(int id)
         {
             var priorityDeliveryToDelete = _context.PriorityDeliveries.SingleOrDefault(c => c.Id == id);

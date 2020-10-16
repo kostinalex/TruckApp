@@ -11,13 +11,24 @@
 
 <div class="row">
 
-    <div class="form-group col-sm-2">
+    <div class="form-group col-sm-2" style="max-width:200px;padding-right:0;">
         <label for="customer_name">Customer name</label>
         <input class="form-control" id="customer_name" type="text">
     </div>
 
+    <div class="form-group col-sm-1" >
+        <label for="customer_id">Customer Id</label>
+        <input class="form-control" id="customer_id" type="text">
+    </div>
+
+    <div class="form-group col-sm-2">
+        <label for="dispatch">Dispatch</label>
+        <select class="form-control" id="dispatch"></select>
+    </div>
+
+
     <div style="margin-top:20px;">
-        <div class="form-group col-sm-1" id="credit_hold_field" >
+        <div class="form-group col-sm-1" id="credit_hold_field">
             <div class="row">
                 <input class="form-check-input" type="checkbox" id="credit_hold">
                 <label class="form-check-label" for="credit_hold">Credit hold</label>
@@ -51,15 +62,21 @@
 
 
 
-        <div class="form-group col-sm-1" style="margin-top:5px;">
+        <div class="form-group col-sm-1" style="margin-top:5px;padding:0;">
             <a id="apply_condition" class="btn btn-primary" style="margin-top:0px;">Apply Condition</a>
         </div>
+
+        <div class="form-group col-sm-1" style="margin-top:5px;margin-left:20px;">
+            <a id="export" class="btn btn-primary" style="margin-top:0px;">Export</a>
+        </div>
+
 
     </div>
 
 
 </div>
 
+<iframe id="myIframe" style="opacity: 0; width: 100%; height: 0px;" seamless="seamless"></iframe>
 
 
 <table id="load_confirmations" class="table table-bordered table-hover">
@@ -67,9 +84,8 @@
         <tr>
             <th>Load Id</th>
             <th>Confirmation number</th>
-            @*<th>Customer Id</th>*@
+            <th>Customer Id</th>
             <th>Customer Name</th>
-            @*<th>Dispatch Id</th>*@
             <th>Dispatch Name</th>
             <th>Credit Hold</th>
             <th>POD</th>
@@ -90,6 +106,20 @@
     {
     <script>
         $(document).ready(function () {
+
+            ////////////////////DROPDOWN LIST//////////////////////////////////////////
+            $.get("/api/dispatch", function (data) {
+                ////console.log("dispatch=" + data);
+                var dispatch_html = "";
+                for (var i = 0, len = data.length; i < len; i++) {
+                    ////console.log("Hazmat=" + data[i].name);
+                    dispatch_html = dispatch_html + "<option value='" + data[i].id + "'>" + (data[i].name == null ? "" : data[i].name) + "</option>";
+                }
+                //console.log("dispatch=" + dispatch_html);
+                $("#dispatch").html(dispatch_html);
+            }, "json");
+
+            ////////////////////TABLE//////////////////////////////////////////
             var table = $("#load_confirmations").DataTable({
                 ajax: {
                     url: "/api/loadconfirmations",
@@ -102,49 +132,36 @@
                     {
                         data: "confNumber",
                     },
-                    //{
-                    //    data: "customer.id",
-                    //},
+                    {
+                        data: "customer.id",
+                    },
                     {
                         data: "customer.name",
                     },
-                    //{
-                    //    data: "",
-                    //    render: function (data, type, dispatch) {
-                    //        return dispatch.id;
-                    //    }
-                    //},
-                    //{
-                    //    data: "dispatch.name",
-                    //},
                     {
-                        data: "",
-                        render: function (data, type, dispatch) {
-                            console.log("Yo" + dispatch.name);
-                            return "";
-                        }
+                        data: "dispatch.name",
                     },
-
                     {
                         data: "creditHold",
                         render: function (data) {
                             if (data == true) {
-                                return "<input type='checkbox' onclick='return false;' checked>";
+                                return "<input type='checkbox' onclick='return false;' checked><p style='display:none'>1</p>";
                             }
                             else {
-                                return "<input type='checkbox' onclick='return false;'>";
+                                return "<input type='checkbox' onclick='return false;'><p style='display:none'>0</p>";
                             }
 
                         }
                     },
+
                     {
                         data: "pod",
                         render: function (data) {
                             if (data == true) {
-                                return "<input type='checkbox' onclick='return false;' checked>";
+                                return "<input type='checkbox' onclick='return false;' checked><p style='display:none'>1</p>";
                             }
                             else {
-                                return "<input type='checkbox' onclick='return false;'>";
+                                return "<input type='checkbox' onclick='return false;'><p style='display:none'>0</p>";
                             }
 
                         }
@@ -154,10 +171,10 @@
                         data: "void",
                         render: function (data) {
                             if (data == true) {
-                                return "<input type='checkbox' onclick='return false;' checked>";
+                                return "<input type='checkbox' onclick='return false;' checked><p style='display:none'>1</p>";
                             }
                             else {
-                                return "<input type='checkbox' onclick='return false;'>";
+                                return "<input type='checkbox' onclick='return false;'><p style='display:none'>0</p>";
                             }
 
                         }
@@ -166,10 +183,10 @@
                         data: "closed",
                         render: function (data) {
                             if (data == true) {
-                                return "<input type='checkbox' onclick='return false;' checked>";
+                                return "<input type='checkbox' onclick='return false;' checked><p style='display:none'>1</p>";
                             }
                             else {
-                                return "<input type='checkbox' onclick='return false;'>";
+                                return "<input type='checkbox' onclick='return false;'><p style='display:none'>0</p>";
                             }
 
                         }
@@ -178,10 +195,10 @@
                         data: "exported",
                         render: function (data) {
                             if (data == true) {
-                                return "<input type='checkbox' onclick='return false;' checked>";
+                                return "<input type='checkbox' onclick='return false;' checked><p style='display:none'>1</p>";
                             }
                             else {
-                                return "<input type='checkbox' onclick='return false;'>";
+                                return "<input type='checkbox' onclick='return false;'><p style='display:none'>0</p>";
                             }
 
                         }
@@ -194,8 +211,6 @@
                 ],
                 paging: false,
                 rowCallback: function (row, data) {
-                    //$(row).attr("data-href","/loadconfirmations/edit/"+data.id);
-                    //$(row).addClass("clickable-row");
                     $(row).css("cursor", "pointer");
                     $(row).on("click", function () {
                         window.location = "/loadconfirmations/edit/" + data.id;
@@ -204,15 +219,12 @@
 
             });
 
-
-           
-
-
+            ////////////////////APPLY CONDITION//////////////////////////////////////////
             $("#apply_condition").on("click", function () {
-                console.log("Condition button was pressed");
+                //console.log("Condition button was pressed");
+                //console.log("dispatch="+$("#dispatch").val());
 
                 $("#load_confirmations").DataTable().clear().destroy();
-
 
                 var table = $("#load_confirmations").DataTable({
                     ajax: {
@@ -220,8 +232,10 @@
                         method: "POST",
                         dataSrc: "",
                         data: {
+                            "customerId": $("#customer_id").val(),
+                            "dispatchId": ($("#dispatch").val() == "1" ? null : $("#dispatch").val()),
                             "creditHold": ($("#credit_hold").prop("checked") == false ? null : true),
-                            "pod": ($("#pod_checkbox").prop("checked") == false ? null : true), 
+                            "pod": ($("#pod_checkbox").prop("checked") == false ? null : true),
                             "void": ($("#void_status").prop("checked") == false ? null : true),
                             "closed": ($("#closed_status").prop("checked") == false ? null : true),
                             "exported": ($("#exported_status").prop("checked") == false ? null : true)
@@ -234,28 +248,17 @@
                         {
                             data: "confNumber",
                         },
-                        //{
-                        //    data: "customer.id",
-                        //},
+                        {
+                            data: "customer.id",
+                        },
                         {
                             data: "customer.name",
                         },
-                        //{
-                        //    data: "",
-                        //    render: function (data, type, dispatch) {
-                        //        return dispatch.id;
-                        //    }
-                        //},
-                        //{
-                        //    data: "dispatch.name",
-                        //},
+
                         {
-                            data: "",
-                            render: function (data, type, dispatch) {
-                                console.log("Yo" + dispatch.name);
-                                return "";
-                            }
+                            data: "dispatch.name",
                         },
+
 
                         {
                             data: "creditHold",
@@ -335,14 +338,9 @@
                     }
 
                 });
-
-
             });
 
-
-
             ////////////////////TYPEAHEAD//////////////////////////////////////////
-
             var customers = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -351,7 +349,6 @@
                     wildcard: '%QUERY'
                 }
             });
-
 
             $('#customer_name').typeahead({
                 hint: true,
@@ -363,16 +360,108 @@
                 source: customers,
                 limit: 10
             }).on("typeahead:select", function (e, customer) {
-                console.log("The customer was selected");
-
+                //console.log("The customer was selected=" + customer.id);
+                $("#customer_id").val(customer.id)
             });
 
+            $("#export").click(function () {
+                exportToExcel(this, '#load_confirmations');
+            });
+
+            function exportToExcel(that, id, hasHeader, removeLinks, removeImages, removeInputParams) {
+                if (that == null || typeof that === 'undefined') {
+                    console.log('Sender is required');
+                    return false;
+                }
+
+                if (!(that instanceof HTMLAnchorElement)) {
+                    console.log('Sender must be an anchor element');
+                    return false;
+                }
+
+                if (id == null || typeof id === 'undefined') {
+                    console.log('Table id is required');
+                    return false;
+                }
+                if (hasHeader == null || typeof hasHeader === 'undefined') {
+                    hasHeader = true;
+                }
+                if (removeLinks == null || typeof removeLinks === 'undefined') {
+                    removeLinks = true;
+                }
+                if (removeImages == null || typeof removeImages === 'undefined') {
+                    removeImages = false;
+                }
+                if (removeInputParams == null || typeof removeInputParams === 'undefined') {
+                    removeInputParams = true;
+                }
+
+                var tab_text = "<table border='2px'>";
+                var textRange;
+
+                tab = $(id).get(0);
+
+                if (tab == null || typeof tab === 'undefined') {
+                    console.log('Table not found');
+                    return;
+                }
+
+                var j = 0;
+
+                if (hasHeader && tab.rows.length > 0) {
+                    var row = tab.rows[0];
+                    tab_text += "<tr bgcolor='#87AFC6'>";
+                    for (var l = 0; l < row.cells.length; l++) {
+                        if ($(tab.rows[0].cells[l]).is(':visible')) {//export visible cols only
+                            tab_text += "<td>" + row.cells[l].innerHTML + "</td>";
+                        }
+                    }
+                    tab_text += "</tr>";
+                    j++;
+                }
+
+                for (; j < tab.rows.length; j++) {
+                    var row = tab.rows[j];
+                    tab_text += "<tr>";
+                    for (var l = 0; l < row.cells.length; l++) {
+                        if ($(tab.rows[j].cells[l]).is(':visible')) {//export visible cols only
+                            tab_text += "<td>" + row.cells[l].innerHTML + "</td>";
+                        }
+                    }
+                    tab_text += "</tr>";
+                }
+
+                tab_text = tab_text + "</table>";
+                if (removeLinks)
+                    tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");
+                if (removeImages)
+                    tab_text = tab_text.replace(/<img[^>]*>/gi, "");
+                if (removeInputParams)
+                    tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, "");
+
+                var ua = window.navigator.userAgent;
+                var msie = ua.indexOf("MSIE ");
+
+                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+                {
+                    myIframe.document.open("txt/html", "replace");
+                    myIframe.document.write(tab_text);
+                    myIframe.document.close();
+                    myIframe.focus();
+                    sa = myIframe.document.execCommand("SaveAs", true, document.title + ".xls");
+                    return true;
+                }
+                else {
+                    //other browser tested on IE 11
+                    var result = "data:application/vnd.ms-excel," + encodeURIComponent(tab_text);
+                    that.href = result;
+                    that.download = document.title + ".xls";
+                    return true;
+                }
+            }
 
         });
 
-
-        
-     
 
 
     </script>

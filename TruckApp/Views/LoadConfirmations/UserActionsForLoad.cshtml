@@ -43,11 +43,7 @@
                 };
 
                 var confirmationId = getUrlParameter("loadconfirmation")
-                console.log("confirmationId=" + confirmationId);
-
-
-
-                
+                console.log("confirmationId=" + confirmationId);               
                
 
                 /////////////TABLE///////////////////////////
@@ -59,7 +55,10 @@
                     },
                     columns: [
                         {
-                            data: "dateTime"
+                            data: "dateTime",
+                            render: function (data) {
+                                return String(data).replace("T", " ").slice(0, 19);
+                            }
                         },
                         {
                             data: "userName"

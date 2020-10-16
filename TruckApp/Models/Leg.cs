@@ -12,7 +12,7 @@ namespace TruckApp.Models
         public Stop Stop1 { get; set; }
         public int Stop2Id { get; set; }
         public Stop Stop2 { get; set; }
-        public int DriverId { get; set; }
+        public int? DriverId { get; set; }
         public Driver Driver { get; set; }
         public int LoadConfirmationId { get; set; }
         public LoadConfirmation LoadConfirmation { get; set; }
