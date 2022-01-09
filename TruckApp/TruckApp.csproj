@@ -558,6 +558,7 @@
     <Content Include="Content\DataTables\css\common.scss" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Properties\PublishProfiles\kostin - Web Deploy.pubxml" />
     <Content Include="Resume\Alex_Kostin.docx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -758,7 +759,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50040</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50040/</IISUrl>
+          <IISUrl>http://localhost:40333/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
